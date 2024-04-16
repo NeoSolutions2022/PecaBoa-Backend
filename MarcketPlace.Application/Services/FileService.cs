@@ -15,9 +15,7 @@ public class FileService : BaseService, IFileService
 
     public async Task<string> Upload(IFormFile arquivo, EUploadPath uploadPath)
     {
-        var connectionString =
-            "DefaultEndpointsProtocol=https;AccountName=mundowebstorage;AccountKey=vE+74F/98vAM6NArX65ZnAHl0DayrxhP/UppuG1dJiHR3p4/Pv/kkAoGMOeTTfyhDnONtXQIqC1C+AStD0KtKQ==;EndpointSuffix=core.windows.net";
-
+        var connectionString = "";
         var fileName = GenerateNewFileName(arquivo.FileName);
 
         BlobContainerClient container = new BlobContainerClient(connectionString, "bob");
