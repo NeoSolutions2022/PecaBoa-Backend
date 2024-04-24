@@ -4,7 +4,7 @@
 
 namespace PecaBoa.Infra.Migrations
 {
-    public partial class AjusteDasEntidadesClienteEFornecedor : Migration
+    public partial class AjusteDasEntidadesUsuarioEFornecedor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -84,7 +84,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: false,
@@ -94,7 +94,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Cep",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(9)",
                 maxLength: 9,
                 nullable: false,
@@ -102,7 +102,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Cidade",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: false,
@@ -110,14 +110,14 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Complemento",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "Rua",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: false,
@@ -125,14 +125,14 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "Numero",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<string>(
                 name: "Uf",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(2)",
                 maxLength: 2,
                 nullable: false,
@@ -167,27 +167,27 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Cep",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.DropColumn(
                 name: "Cidade",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.DropColumn(
                 name: "Complemento",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.DropColumn(
                 name: "Rua",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.DropColumn(
                 name: "Numero",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.DropColumn(
                 name: "Uf",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.RenameColumn(
                 name: "Complemento",
@@ -216,7 +216,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(80)",
                 maxLength: 80,
                 nullable: false,

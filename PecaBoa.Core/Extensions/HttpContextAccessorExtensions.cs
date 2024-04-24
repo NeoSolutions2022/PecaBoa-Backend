@@ -16,9 +16,9 @@ public static class HttpContextAccessorExtensions
         return string.IsNullOrWhiteSpace(id) ? null : int.Parse(id);
     }
 
-    public static ETipoUsuario? ObterTipoUsuario(this IHttpContextAccessor? contextAccessor)
+    public static ETipoUsuario? ObterTipoUsuarios(this IHttpContextAccessor? contextAccessor)
     {
-        var tipo = contextAccessor?.HttpContext?.User?.ObterTipoUsuario() ?? string.Empty;
+        var tipo = contextAccessor?.HttpContext?.User?.ObterTipoUsuarios() ?? string.Empty;
         return string.IsNullOrWhiteSpace(tipo) ? null : Enum.Parse<ETipoUsuario>(tipo);
     }
 
@@ -34,9 +34,9 @@ public static class HttpContextAccessorExtensions
         return string.IsNullOrWhiteSpace(tipo) ? null : Enum.Parse<ETipoUsuario>(tipo);
     }
 
-    public static ETipoUsuario? ObterTipoCliente(this IHttpContextAccessor? contextAccessor)
+    public static ETipoUsuario? ObterTipoUsuario(this IHttpContextAccessor? contextAccessor)
     {
-        var tipo = contextAccessor?.HttpContext?.User?.ObterTipoCliente() ?? string.Empty;
+        var tipo = contextAccessor?.HttpContext?.User?.ObterTipoUsuario() ?? string.Empty;
         return string.IsNullOrWhiteSpace(tipo) ? null : Enum.Parse<ETipoUsuario>(tipo);
     }
 

@@ -1,9 +1,9 @@
 ﻿using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Core.Extensions;
 
-namespace PecaBoa.Application.Dtos.V1.Cliente;
+namespace PecaBoa.Application.Dtos.V1.Usuario;
 
-public class BuscarClienteDto : BuscaPaginadaDto<Domain.Entities.Cliente>
+public class BuscarUsuarioDto : BuscaPaginadaDto<Domain.Entities.Usuario>
 {
     public string? Nome { get; set; }
     public string? NomeSocial { get; set; }
@@ -15,7 +15,7 @@ public class BuscarClienteDto : BuscaPaginadaDto<Domain.Entities.Cliente>
     public string? Uf { get; set; }
     public string? Bairro { get; set; }
 
-    public override void AplicarFiltro(ref IQueryable<Domain.Entities.Cliente> query)
+    public override void AplicarFiltro(ref IQueryable<Domain.Entities.Usuario> query)
     {
         var expression = MontarExpressao();
 
@@ -58,7 +58,7 @@ public class BuscarClienteDto : BuscaPaginadaDto<Domain.Entities.Cliente>
         query = query.Where(expression);
     }
 
-    public override void AplicarOrdenacao(ref IQueryable<Domain.Entities.Cliente> query)
+    public override void AplicarOrdenacao(ref IQueryable<Domain.Entities.Usuario> query)
     {
         if (DirecaoOrdenacao.EqualsIgnoreCase("asc"))
         {

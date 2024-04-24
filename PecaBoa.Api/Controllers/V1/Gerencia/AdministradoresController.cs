@@ -25,8 +25,8 @@ public class AdministradoresController : MainController
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Buscar([FromQuery] BuscarAdministradorDto dto)
     {
-        var cliente = await _administradorService.Buscar(dto);
-        return OkResponse(cliente);
+        var Usuario = await _administradorService.Buscar(dto);
+        return OkResponse(Usuario);
     }
 
     [HttpGet("{id}")]

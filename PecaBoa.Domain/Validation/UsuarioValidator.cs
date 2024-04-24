@@ -3,9 +3,9 @@ using PecaBoa.Domain.Entities;
 
 namespace PecaBoa.Domain.Validation;
 
-public class ClienteValidator : AbstractValidator<Cliente>
+public class UsuarioValidator : AbstractValidator<Usuario>
 {
-    public ClienteValidator()
+    public UsuarioValidator()
     {
         RuleFor(u => u.Bairro)
             .MinimumLength(3)

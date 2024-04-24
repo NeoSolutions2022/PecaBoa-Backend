@@ -21,27 +21,27 @@ public class AutoMapperProfile : Profile
 
         #endregion
 
-        #region Cliente
+        #region Usuario
 
-        CreateMap<PecaBoa.Application.Dtos.V1.Cliente.ClienteDto, Cliente>()
+        CreateMap<PecaBoa.Application.Dtos.V1.Usuario.UsuarioDto, Usuario>()
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
             .ReverseMap();
 
-        CreateMap<PecaBoa.Application.Dtos.V1.Cliente.AlterarClienteDto, Cliente>()
+        CreateMap<PecaBoa.Application.Dtos.V1.Usuario.AlterarUsuarioDto, Usuario>()
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
             .ReverseMap();
 
-        CreateMap<PecaBoa.Application.Dtos.V1.Cliente.CadastrarClienteDto, Cliente>()
+        CreateMap<PecaBoa.Application.Dtos.V1.Usuario.CadastrarUsuarioDto, Usuario>()
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
             .ReverseMap();
 
-        CreateMap<PagedDto<PecaBoa.Application.Dtos.V1.Cliente.ClienteDto>, ResultadoPaginado<Cliente>>()
+        CreateMap<PagedDto<PecaBoa.Application.Dtos.V1.Usuario.UsuarioDto>, ResultadoPaginado<Usuario>>()
             .ReverseMap();
 
         #endregion

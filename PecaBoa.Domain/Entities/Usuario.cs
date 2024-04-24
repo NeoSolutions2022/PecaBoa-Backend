@@ -4,7 +4,7 @@ using PecaBoa.Domain.Validation;
 
 namespace PecaBoa.Domain.Entities;
 
-public class Cliente : Entity, ISoftDelete, IAggregateRoot
+public class Usuario : Entity, ISoftDelete, IAggregateRoot
 {
     public string Nome { get; set; } = null!;
     public string? NomeSocial { get; set; }
@@ -27,7 +27,7 @@ public class Cliente : Entity, ISoftDelete, IAggregateRoot
 
     public override bool Validar(out ValidationResult validationResult)
     {
-        validationResult = new ClienteValidator().Validate(this);
+        validationResult = new UsuarioValidator().Validate(this);
         return validationResult.IsValid;
     }
 }

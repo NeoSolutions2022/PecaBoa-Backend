@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace PecaBoa.Application.Dtos.V1.Cliente;
+namespace PecaBoa.Application.Dtos.V1.Usuario;
 
-public class CadastrarClienteDto
+public class CadastrarUsuarioDto
 {
     public string Nome { get; set; } = null!;
     public string? NomeSocial { get; set; }

@@ -42,7 +42,7 @@ public static class DependencyInjection
     public static void ConfigureRepositories(this IServiceCollection service)
     {
         service
-            .AddScoped<IClienteRepository,ClienteRepository>()
+            .AddScoped<IUsuarioRepository,UsuarioRepository>()
             .AddScoped<IFornecedorRepository, FornecedorRepository>()
             .AddScoped<IAdministradorRepository, AdministradorRepository>()
             .AddScoped<IProdutoServicoCaracteristicaRepository, ProdutoServicoCaracteristicaRepository>()

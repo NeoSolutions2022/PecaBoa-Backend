@@ -61,7 +61,7 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Administradores");
                 });
 
-            modelBuilder.Entity("PecaBoa.Domain.Entities.Cliente", b =>
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,7 +159,7 @@ namespace PecaBoa.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Fornecedor", b =>

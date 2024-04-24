@@ -12,8 +12,8 @@ using PecaBoa.Infra.Context;
 namespace PecaBoa.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230402202524_AddFotoFornecedorECliente")]
-    partial class AddFotoFornecedorECliente
+    [Migration("20230402202524_AddFotoFornecedorEUsuario")]
+    partial class AddFotoFornecedorEUsuario
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,7 +57,7 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Administradores");
                 });
 
-            modelBuilder.Entity("PecaBoa.Domain.Entities.Cliente", b =>
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace PecaBoa.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Fornecedor", b =>

@@ -62,15 +62,15 @@ public class FornecedorAuthService : BaseService, IFornecedorAuthService
 
     public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaFornecedorDto dto)
     {
-        var cliente = await _fornecedorRepository.FistOrDefault(c =>
+        var usuario = await _fornecedorRepository.FistOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
-        if (cliente == null)
+        if (usuario == null)
         {
             Notificator.Handle("Código inválido ou expirado!");
             return false;
         }
 
-        if (cliente.CodigoResetarSenha == dto.CodigoResetarSenha && cliente.CodigoResetarSenhaExpiraEm >= DateTime.Now)
+        if (usuario.CodigoResetarSenha == dto.CodigoResetarSenha && usuario.CodigoResetarSenhaExpiraEm >= DateTime.Now)
         {
             return true;
         }
@@ -157,7 +157,7 @@ public class FornecedorAuthService : BaseService, IFornecedorAuthService
                 new Claim("TipoUsuario", ETipoUsuario.Fornecedor.ToDescriptionString()),
                 new Claim("Administrador", ETipoUsuario.Fornecedor.ToDescriptionString()),
                 new Claim("Fornecedor", ETipoUsuario.Fornecedor.ToDescriptionString()),
-                new Claim("Cliente", ETipoUsuario.Fornecedor.ToDescriptionString()),
+                new Claim("Usuario", ETipoUsuario.Fornecedor.ToDescriptionString()),
             }),
             Expires = DateTime.UtcNow.AddHours(2),
             SigningCredentials =

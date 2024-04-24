@@ -23,15 +23,15 @@ public static class ClaimsPrincipalExtension
     {
         return principal?.Identity!.IsAuthenticated ?? false;
     }
-
-    public static string? ObterTipoUsuario(this ClaimsPrincipal? principal) => GetClaim(principal, "TipoUsuario");
+//ToDo: conflito de nomes: ObterTipoDeUsuarios
+    public static string? ObterTipoUsuarios(this ClaimsPrincipal? principal) => GetClaim(principal, "TipoUsuario");
 
     public static string? ObterTipoAdministrador(this ClaimsPrincipal? principal) =>
         GetClaim(principal, "Administrador");
 
     public static string? ObterTipoFornecedor(this ClaimsPrincipal? principal) => GetClaim(principal, "Fornecedor");
 
-    public static string? ObterTipoCliente(this ClaimsPrincipal? principal) => GetClaim(principal, "Cliente");
+    public static string? ObterTipoUsuario(this ClaimsPrincipal? principal) => GetClaim(principal, "Usuario");
 
     public static string? ObterUsuarioId(this ClaimsPrincipal? principal) =>
         GetClaim(principal, ClaimTypes.NameIdentifier);

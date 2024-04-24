@@ -61,7 +61,7 @@ public class FornecedoresController : MainController
     }
 
     [HttpDelete]
-    [SwaggerOperation(Summary = "Remover um Fornecedor.", Tags = new[] { "Gerencia - Cliente" })]
+    [SwaggerOperation(Summary = "Remover um Fornecedor.", Tags = new[] { "Gerencia - Usuario" })]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]

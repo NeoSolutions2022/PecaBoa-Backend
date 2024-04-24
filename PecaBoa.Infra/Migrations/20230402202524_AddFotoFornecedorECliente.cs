@@ -4,7 +4,7 @@
 
 namespace PecaBoa.Infra.Migrations
 {
-    public partial class AddFotoFornecedorECliente : Migration
+    public partial class AddFotoFornecedorEUsuario : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Foto",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -29,7 +29,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Foto",
-                table: "Clientes");
+                table: "Usuarios");
         }
     }
 }

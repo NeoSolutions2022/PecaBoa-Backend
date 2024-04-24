@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PecaBoa.Api.Controllers.V1.Cliente;
+namespace PecaBoa.Api.Controllers.V1.Usuario;
 
-[Route("v{version:apiVersion}/Cliente/[controller]")]
+[Route("v{version:apiVersion}/Usuario/[controller]")]
 public class PagamentosController : MainController
 {
     private readonly IPagamentosService _pagamentos;
@@ -20,7 +20,7 @@ public class PagamentosController : MainController
     }
     
     [HttpPost("/Cartao")]
-    [SwaggerOperation(Summary = "Realizar pagamento.", Tags = new[] { "Usuario - Cliente" })]
+    [SwaggerOperation(Summary = "Realizar pagamento.", Tags = new[] { "Usuario - Usuario" })]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

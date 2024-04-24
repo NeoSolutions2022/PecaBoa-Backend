@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace PecaBoa.Infra.Mappings;
 
-public class ClienteMap : IEntityTypeConfiguration<Cliente>
+public class UsuarioMap : IEntityTypeConfiguration<Usuario>
 {
-    public void Configure(EntityTypeBuilder<Cliente> builder)
+    public void Configure(EntityTypeBuilder<Usuario> builder)
     {
         builder
             .Property(c => c.Bairro)

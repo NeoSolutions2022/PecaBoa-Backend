@@ -26,7 +26,7 @@ namespace PecaBoa.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clientes",
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -51,7 +51,7 @@ namespace PecaBoa.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,7 +123,7 @@ namespace PecaBoa.Infra.Migrations
                 name: "Administradores");
 
             migrationBuilder.DropTable(
-                name: "Clientes");
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "ProdutoServicos");

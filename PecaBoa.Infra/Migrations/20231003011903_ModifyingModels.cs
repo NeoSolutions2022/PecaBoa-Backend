@@ -19,15 +19,15 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Complemento",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.DropColumn(
                 name: "DataPagamento",
-                table: "Clientes");
+                table: "Usuarios");
 
             migrationBuilder.DropColumn(
                 name: "Inadiplente",
-                table: "Clientes");
+                table: "Usuarios");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -48,21 +48,21 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Complemento",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "DataPagamento",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<bool>(
                 name: "Inadiplente",
-                table: "Clientes",
+                table: "Usuarios",
                 type: "bit",
                 nullable: true,
                 defaultValue: false);

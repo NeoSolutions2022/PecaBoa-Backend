@@ -4,7 +4,7 @@ using System.Text;
 using AutoMapper;
 using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Auth;
-using PecaBoa.Application.Dtos.V1.Cliente;
+using PecaBoa.Application.Dtos.V1.Usuario;
 using PecaBoa.Application.Email;
 using PecaBoa.Application.Notification;
 using PecaBoa.Core.Enums;
@@ -18,18 +18,18 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace PecaBoa.Application.Services;
 
-public class ClienteAuthService : BaseService, IClienteAuthService
+public class UsuarioAuthService : BaseService, IUsuarioAuthService
 {
-    private readonly IClienteRepository _clienteRepository;
-    private readonly IPasswordHasher<Cliente> _passwordHasher;
+    private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IPasswordHasher<Usuario> _passwordHasher;
     private readonly IEmailService _emailService;
     private readonly AppSettings _appSettings;
 
-    public ClienteAuthService(IMapper mapper, INotificator notificator, IClienteRepository clienteRepository,
-        IPasswordHasher<Cliente> passwordHasher, IEmailService emailService, IOptions<AppSettings> appSettings) : base(
+    public UsuarioAuthService(IMapper mapper, INotificator notificator, IUsuarioRepository usuarioRepository,
+        IPasswordHasher<Usuario> passwordHasher, IEmailService emailService, IOptions<AppSettings> appSettings) : base(
         mapper, notificator)
     {
-        _clienteRepository = clienteRepository;
+        _usuarioRepository = usuarioRepository;
         _passwordHasher = passwordHasher;
         _emailService = emailService;
         _appSettings = appSettings.Value;
@@ -37,22 +37,22 @@ public class ClienteAuthService : BaseService, IClienteAuthService
 
     public async Task<UsuarioAutenticadoDto?> Login(LoginDto loginDto)
     {
-        var cliente = await _clienteRepository.ObterPorEmail(loginDto.Email);
-        if (cliente == null)
+        var Usuario = await _usuarioRepository.ObterPorEmail(loginDto.Email);
+        if (Usuario == null)
         {
             Notificator.HandleNotFoundResource();
             return null;
         }
 
-        var result = _passwordHasher.VerifyHashedPassword(cliente, cliente.Senha, loginDto.Senha);
+        var result = _passwordHasher.VerifyHashedPassword(Usuario, Usuario.Senha, loginDto.Senha);
         if (result != PasswordVerificationResult.Failed)
         {
             return new UsuarioAutenticadoDto
             {
-                Id = cliente.Id,
-                Email = cliente.Email,
-                Nome = cliente.Nome,
-                Token = await CreateTokenCliente(cliente)
+                Id = Usuario.Id,
+                Email = Usuario.Email,
+                Nome = Usuario.Nome,
+                Token = await CreateTokenUsuario(Usuario)
             };
         }
 
@@ -60,17 +60,17 @@ public class ClienteAuthService : BaseService, IClienteAuthService
         return null;
     }
 
-    public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaClienteDto dto)
+    public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaUsuarioDto dto)
     {
-        var cliente = await _clienteRepository.FistOrDefault(c =>
+        var Usuario = await _usuarioRepository.FistOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
-        if (cliente == null)
+        if (Usuario == null)
         {
             Notificator.Handle("Código inválido ou expirado!");
             return false;
         }
 
-        if (cliente.CodigoResetarSenha == dto.CodigoResetarSenha && cliente.CodigoResetarSenhaExpiraEm >= DateTime.Now)
+        if (Usuario.CodigoResetarSenha == dto.CodigoResetarSenha && Usuario.CodigoResetarSenhaExpiraEm >= DateTime.Now)
         {
             return true;
         }
@@ -79,48 +79,48 @@ public class ClienteAuthService : BaseService, IClienteAuthService
         return false;
     }
 
-    public async Task RecuperarSenha(RecuperarSenhaClienteDto dto)
+    public async Task RecuperarSenha(RecuperarSenhaUsuarioDto dto)
     {
-        var cliente = await _clienteRepository.FistOrDefault(f => f.Email == dto.Email);
-        if (cliente == null)
+        var Usuario = await _usuarioRepository.FistOrDefault(f => f.Email == dto.Email);
+        if (Usuario == null)
         {
             Notificator.HandleNotFoundResource();
             return;
         }
 
         var codigoExpiraEmHoras = 3;
-        cliente.CodigoResetarSenha = Guid.NewGuid();
-        cliente.CodigoResetarSenhaExpiraEm = DateTime.Now.AddHours(codigoExpiraEmHoras);
-        _clienteRepository.Alterar(cliente);
-        if (await _clienteRepository.UnitOfWork.Commit())
+        Usuario.CodigoResetarSenha = Guid.NewGuid();
+        Usuario.CodigoResetarSenhaExpiraEm = DateTime.Now.AddHours(codigoExpiraEmHoras);
+        _usuarioRepository.Alterar(Usuario);
+        if (await _usuarioRepository.UnitOfWork.Commit())
         {
             _emailService.Enviar(
-                cliente.Email,
+                Usuario.Email,
                 "Seu link para alterar a senha",
                 "Usuario/CodigoResetarSenha",
                 new
                 {
-                    cliente.Nome,
-                    cliente.Email,
-                    Codigo = cliente.CodigoResetarSenha,
+                    Usuario.Nome,
+                    Usuario.Email,
+                    Codigo = Usuario.CodigoResetarSenha,
                     Url = _appSettings.UrlComum,
                     ExpiracaoEmHoras = codigoExpiraEmHoras
                 });
         }
     }
 
-    public async Task AlterarSenha(AlterarSenhaClienteDto dto)
+    public async Task AlterarSenha(AlterarSenhaUsuarioDto dto)
     {
-        var cliente = await _clienteRepository.FistOrDefault(c =>
+        var Usuario = await _usuarioRepository.FistOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
-        if (cliente == null)
+        if (Usuario == null)
         {
             Notificator.Handle("Cóidigo inválido ou expirado!");
             return;
         }
 
-        if (!(cliente.CodigoResetarSenha == dto.CodigoResetarSenha &&
-              cliente.CodigoResetarSenhaExpiraEm >= DateTime.Now))
+        if (!(Usuario.CodigoResetarSenha == dto.CodigoResetarSenha &&
+              Usuario.CodigoResetarSenhaExpiraEm >= DateTime.Now))
         {
             Notificator.Handle("Código inválido ou expirado!");
             return;
@@ -132,18 +132,18 @@ public class ClienteAuthService : BaseService, IClienteAuthService
             return;
         }
 
-        cliente.Senha = _passwordHasher.HashPassword(cliente, dto.Senha);
-        cliente.CodigoResetarSenha = null;
-        cliente.CodigoResetarSenhaExpiraEm = null;
+        Usuario.Senha = _passwordHasher.HashPassword(Usuario, dto.Senha);
+        Usuario.CodigoResetarSenha = null;
+        Usuario.CodigoResetarSenhaExpiraEm = null;
 
-        _clienteRepository.Alterar(cliente);
-        if (!await _clienteRepository.UnitOfWork.Commit())
+        _usuarioRepository.Alterar(Usuario);
+        if (!await _usuarioRepository.UnitOfWork.Commit())
         {
             Notificator.Handle("Não foi possível alterar a senha");
         }
     }
 
-    public Task<string> CreateTokenCliente(Cliente cliente)
+    public Task<string> CreateTokenUsuario(Usuario usuario)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(Settings.Settings.Secret);
@@ -151,13 +151,13 @@ public class ClienteAuthService : BaseService, IClienteAuthService
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, cliente.Id.ToString()),
-                new Claim(ClaimTypes.Name, cliente.Nome),
-                new Claim(ClaimTypes.Email, cliente.Email),
-                new Claim("TipoUsuario", ETipoUsuario.Cliente.ToDescriptionString()),
-                new Claim("Administrador", ETipoUsuario.Cliente.ToDescriptionString()),
-                new Claim("Fornecedor", ETipoUsuario.Cliente.ToDescriptionString()),
-                new Claim("Cliente", ETipoUsuario.Cliente.ToDescriptionString()),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                new Claim(ClaimTypes.Name, usuario.Nome),
+                new Claim(ClaimTypes.Email, usuario.Email),
+                new Claim("TipoUsuario", ETipoUsuario.Usuario.ToDescriptionString()),
+                new Claim("Administrador", ETipoUsuario.Usuario.ToDescriptionString()),
+                new Claim("Fornecedor", ETipoUsuario.Usuario.ToDescriptionString()),
+                new Claim("Usuario", ETipoUsuario.Usuario.ToDescriptionString()),
             }),
             Expires = DateTime.UtcNow.AddHours(2),
             SigningCredentials =

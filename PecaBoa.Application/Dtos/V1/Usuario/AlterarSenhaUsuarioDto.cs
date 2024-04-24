@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 
-namespace PecaBoa.Application.Dtos.V1.Cliente;
+namespace PecaBoa.Application.Dtos.V1.Usuario;
 
-public class AlterarSenhaClienteDto
+public class AlterarSenhaUsuarioDto
 {
     public string Email { get; set; } = null!;
     public string Senha { get; set; } = null!;
@@ -12,7 +12,7 @@ public class AlterarSenhaClienteDto
 
     public bool Validar(out ValidationResult validationResult)
     {
-        var validator = new InlineValidator<AlterarSenhaClienteDto>();
+        var validator = new InlineValidator<AlterarSenhaUsuarioDto>();
         
         validator.RuleFor(c => c.Senha)
             .MinimumLength(8)

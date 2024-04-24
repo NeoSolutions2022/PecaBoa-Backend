@@ -1,12 +1,9 @@
-using System.Net;
 using AutoMapper;
 using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Notification;
 using PecaBoa.Domain.Contracts.Repositories;
-using MercadoPago;
 using MercadoPago.Client;
 using MercadoPago.Client.Payment;
-using MercadoPago.Client.PaymentMethod;
 using MercadoPago.Config;
 using MercadoPago.Resource.Payment;
 using Microsoft.AspNetCore.Http;
@@ -17,11 +14,11 @@ public class PagamentosService : BaseService, IPagamentosService
 
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IClienteRepository _clienteRepository;
-    public PagamentosService(IMapper mapper, INotificator notificator, IHttpContextAccessor httpContextAccessor, IClienteRepository clienteRepository) : base(mapper, notificator)
+    private readonly IUsuarioRepository _usuarioRepository;
+    public PagamentosService(IMapper mapper, INotificator notificator, IHttpContextAccessor httpContextAccessor, IUsuarioRepository usuarioRepository) : base(mapper, notificator)
     {
         _httpContextAccessor = httpContextAccessor;
-        _clienteRepository = clienteRepository;
+        _usuarioRepository = usuarioRepository;
         MercadoPagoConfig.AccessToken = "YOUR_ACCESS_TOKEN";
     }
 
@@ -33,8 +30,8 @@ public class PagamentosService : BaseService, IPagamentosService
             return;
         }
 
-        var cliente = await _clienteRepository.ObterPorEmail(claimEmail.Value);
-        if (cliente == null)
+        var usuario = await _usuarioRepository.ObterPorEmail(claimEmail.Value);
+        if (usuario == null)
         {
             return;
         }
@@ -60,8 +57,8 @@ public class PagamentosService : BaseService, IPagamentosService
 
         if (payment.Status == "approved")
         {
-            //cliente.Inadiplente = false;
-            //cliente.DataPagamento = DateTime.Now.AddMonths(1);
+            //Usuario.Inadiplente = false;
+            //Usuario.DataPagamento = DateTime.Now.AddMonths(1);
             return;
         }
         
