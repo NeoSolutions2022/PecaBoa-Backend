@@ -78,14 +78,14 @@ public class LojistaValidator : AbstractValidator<Lojista>
             .WithMessage("Numero não pode ser vazio!")
             .NotNull()
             .WithMessage("Numero não pode ser null!");
-        
-        RuleFor(u => u.Responsavel)
+
+        RuleFor(u => u.NomeFantasia)
             .MinimumLength(2)
-            .WithMessage("Responsavel deve ter no mínimo 2 caracteres!")
+            .WithMessage("Nome fantasia deve ter no mínimo 2 caracteres!")
             .MaximumLength(60)
-            .WithMessage("Responsavel deve ter no máximo 60 caracteres!")
-            .NotEmpty()
-            .WithMessage("Responsavel não pode ser vazio!");
+            .WithMessage("Nome fantasia deve ter no máximo 60 caracteres!");
+            //.NotEmpty()
+            //.WithMessage("Nome fantasia não pode ser vazio!");
 
         RuleFor(u => u.Senha)
             .MinimumLength(8)

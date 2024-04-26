@@ -112,19 +112,7 @@ public class LojistaesController : MainController
         await _lojistaService.AlterarDescricao(id, descricao);
         return OkResponse();
     }
-
-    [HttpPatch("{id}/alterar-foto")]
-    [SwaggerOperation(Summary = "Alterar foto.", Tags = new[] { "Usuario - Lojista" })]
-    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> AlterarFoto(int id, [FromForm] AlterarFotoLojistaDto foto)
-    {
-        await _lojistaService.AlterarFoto(id, foto);
-        return OkResponse();
-    }
-
+    
     [HttpPost("{id}/alterar-senha")]
     [SwaggerOperation(Summary = "Enviar email para alterar a senha.", Tags = new[] { "Usuario - Lojista" })]
     [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]

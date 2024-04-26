@@ -65,7 +65,7 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .IsRequired();
         
         builder
-            .Property(c => c.Responsavel)
+            .Property(c => c.NomeFantasia)
             .IsRequired()
             .HasMaxLength(60);
         

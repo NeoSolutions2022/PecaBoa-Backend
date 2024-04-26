@@ -12,7 +12,7 @@ public class Lojista : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
     public string? Cnpj { get; set; }
     public Guid? CodigoResetarSenha { get; set; }
     public DateTime? CodigoResetarSenhaExpiraEm { get; set; }
-    //public string? Complemento { get; set; }
+    public string? Complemento { get; set; }
     public string Cpf { get; set; } = null!;
     public bool Desativado { get; set; }
     public string Email { get; set; } = null!;
@@ -20,13 +20,11 @@ public class Lojista : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
     public string Rua { get; set; } = null!;
     public string Bairro { get; set; } = null!;
     public string Nome { get; set; } = null!;
+    public string? NomeFantasia { get; set; }
     public int Numero { get; set; }
-    //public string Categoria { get; set; } = null!;
-    public string Responsavel { get; set; } = null!;
     public string Senha { get; set; } = null!;
     public string? Telefone { get; set; }
     public string Uf { get; set; } = null!;
-    public string? Foto { get; set; }
     
     public bool AnuncioPago { get; set; }
     public DateTime? DataPagamentoAnuncio { get; set; }

@@ -24,8 +24,6 @@ public class CadastrarLojistaDto
     
     [Required(ErrorMessage = "A confirmação da senha é necessária")]
     public string ConfirmacaoSenha { get; set; } = null!;
-
-    //public IFormFile? Foto { get; set; }
-    public string? Foto { get; set; }
+    
     public bool Desativado { get; set; }
 }

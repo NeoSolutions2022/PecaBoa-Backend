@@ -6,7 +6,7 @@ namespace PecaBoa.Application.Dtos.V1.Lojista;
 public class BuscarLojistaDto : BuscaPaginadaDto<Domain.Entities.Lojista>
 {
     public string? Nome { get; set; }
-    public string? Responsavel { get; set; }
+    public string? NomeFantasia { get; set; }
     public bool? Desativado { get; set; }
     public string? Cep { get; set; }
     public string? Cidade { get; set; }
@@ -24,9 +24,9 @@ public class BuscarLojistaDto : BuscaPaginadaDto<Domain.Entities.Lojista>
             query = query.Where(c => c.Nome.Contains(Nome));
         }
         
-        if (!string.IsNullOrWhiteSpace(Responsavel))
+        if (!string.IsNullOrWhiteSpace(NomeFantasia))
         {
-            query = query.Where(c => c.Responsavel.Contains(Responsavel));
+            query = query.Where(c => c.NomeFantasia.Contains(NomeFantasia));
         }
         
         if (!string.IsNullOrWhiteSpace(Cep))
@@ -72,7 +72,7 @@ public class BuscarLojistaDto : BuscaPaginadaDto<Domain.Entities.Lojista>
                 "nome" => query.OrderBy(c => c.Nome),
                 "desativado" => query.OrderBy(c => c.Desativado),
                 "cep" => query.OrderBy(c => c.Cep),
-                "responsavel" => query.OrderBy(c => c.Responsavel),
+                "nome fantasia" => query.OrderBy(c => c.NomeFantasia),
                 "bairro" => query.OrderBy(c => c.Bairro),
                 "cidade" => query.OrderBy(c => c.Cidade),
                 "uf" => query.OrderBy(c => c.Uf),
@@ -86,7 +86,7 @@ public class BuscarLojistaDto : BuscaPaginadaDto<Domain.Entities.Lojista>
             "nome" => query.OrderByDescending(c => c.Nome),
             "cep" => query.OrderByDescending(c => c.Cep),
             "cidade" => query.OrderByDescending(c => c.Cidade),
-            "responsavel" => query.OrderByDescending(c => c.Responsavel),
+            "nome fantasia" => query.OrderByDescending(c => c.NomeFantasia),
             "bairro" => query.OrderBy(c => c.Bairro),
             "uf" => query.OrderByDescending(c => c.Uf),
             "desativado" => query.OrderByDescending(c => c.Desativado),

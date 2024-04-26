@@ -66,11 +66,6 @@ public class LojistaService : BaseService, ILojistaService
 
     public async Task<LojistaDto?> Cadastrar(CadastrarLojistaDto dto)
     {
-        if (!ValidarAnexos(dto))
-        {
-            return null;
-        }
-
         if (dto.Senha != dto.ConfirmacaoSenha)
         {
             Notificator.Handle("As senhas não conferem!");
@@ -82,11 +77,6 @@ public class LojistaService : BaseService, ILojistaService
         {
             return null;
         }
-
-        //if (dto.Foto is { Length: > 0 })
-        //{
-        //    lojista.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoLojista);
-        //}
 
         lojista.Senha = _passwordHasher.HashPassword(lojista, lojista.Senha);
         lojista.Uf = lojista.Uf.ToLower();
@@ -170,7 +160,7 @@ public class LojistaService : BaseService, ILojistaService
         return null;
     }
 
-    public async Task<LojistaDto?> ObterPorCpf(string cpf)
+    public async Task<LojistaDto?> ObterPorCpf(string cpf) //ToDo: olhar depois
     {
         var lojista = await _lojistaRepository.ObterPorCpf(cpf);
         if (lojista != null)
@@ -314,25 +304,6 @@ public class LojistaService : BaseService, ILojistaService
         Notificator.Handle("Não foi possível reativar o lojista");
     }
 
-    public async Task AlterarFoto(int id, AlterarFotoLojistaDto foto)
-    {
-        var lojista = await _lojistaRepository.ObterPorId(id);
-        if (lojista == null)
-        {
-            Notificator.HandleNotFoundResource();
-            return;
-        }
-
-        lojista.Foto = await _fileService.Upload(foto.Foto, EUploadPath.FotoLojista);
-        _lojistaRepository.Alterar(lojista);
-        if (await _lojistaRepository.UnitOfWork.Commit())
-        {
-            return;
-        }
-
-        Notificator.Handle("Não foi possível reativar o lojista");
-    }
-
     public async Task Remover(int id)
     {
         var lojista = await _lojistaRepository.FistOrDefault(c => c.Id == id);
@@ -365,23 +336,6 @@ public class LojistaService : BaseService, ILojistaService
         {
             Notificator.Handle("Já existe um lojista cadastrado com essas identificações");
         }
-
-        return !Notificator.HasNotification;
-    }
-
-    private bool ValidarAnexos(CadastrarLojistaDto dto)
-    {
-        if (dto.Foto?.Length > 10000000)
-        {
-            Notificator.Handle("Foto deve ter no máximo 10Mb");
-        }
-
-        //if (dto.Foto != null && dto.Foto.FileName.Split(".").Last() != "jfif" &&
-        //    dto.Foto.FileName.Split(".").Last() != "png" && dto.Foto.FileName.Split(".").Last() != "jpg"
-        //    && dto.Foto.FileName.Split(".").Last() != "jpeg")
-        //{
-        //    Notificator.Handle("Foto deve do tipo png, jfif ou jpg");
-        //}
 
         return !Notificator.HasNotification;
     }

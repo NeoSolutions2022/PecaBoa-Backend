@@ -16,8 +16,6 @@ public interface ILojistaService
     Task AlterarSenha(int id);
     Task Desativar(int id);
     Task AlterarDescricao(int id, string descricao);
-    
-    Task AlterarFoto(int id, AlterarFotoLojistaDto foto);
     Task Reativar(int id);
     Task AtivarAnuncio(int id);
     Task DesativarAnuncio(int id);

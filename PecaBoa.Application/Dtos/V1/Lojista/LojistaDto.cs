@@ -21,6 +21,5 @@ public class LojistaDto
     public string Categoria { get; set; } = null!;
     public string? Telefone { get; set; }
     public string Uf { get; set; } = null!;
-    public string? Foto { get; set; }
     public List<ProdutoServicoDto> ProdutoServicos { get; set; } = new();
 }
