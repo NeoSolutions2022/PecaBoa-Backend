@@ -20,7 +20,7 @@ public abstract class BaseApplicationDbContext : DbContext, IUnitOfWork
 
     public DbSet<Administrador> Administradores { get; set; } = null!;
     public DbSet<Usuario> Usuarios { get; set; } = null!;
-    public DbSet<Fornecedor> Fornecedores { get; set; } = null!;
+    public DbSet<Lojista> Lojistas { get; set; } = null!;
     public DbSet<ProdutoServico> ProdutoServicos { get; set; } = null!;
     public DbSet<ProdutoServicoCaracteristica> ProdutoServicoCaracteristicas { get; set; } = null!;
 

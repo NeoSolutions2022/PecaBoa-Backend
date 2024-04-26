@@ -22,7 +22,7 @@ public static class CustomAuthorization
         {
             "Administrador" => context.User.Identity!.IsAuthenticated &&
                                context.User.ObterTipoAdministrador() == claimValue,
-            "Fornecedor" => context.User.Identity!.IsAuthenticated && context.User.ObterTipoFornecedor() == claimValue,
+            "Lojista" => context.User.Identity!.IsAuthenticated && context.User.ObterTipoLojista() == claimValue,
             _ => context.User.Identity!.IsAuthenticated && context.User.ObterTipoUsuario() == claimValue
         };
     }
@@ -67,7 +67,7 @@ public class RequirementClaimFilter : IAuthorizationFilter
             return;
         }
 
-        if (_claim.Type == "Fornecedor")
+        if (_claim.Type == "Lojista")
         {
             if (!CustomAuthorization.ValidateUserType(context.HttpContext, _claim.Type, _claim.Value))
             {

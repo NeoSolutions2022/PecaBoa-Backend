@@ -7,9 +7,9 @@ using PecaBoa.Core.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PecaBoa.Api.Controllers.V1.Fornecedor;
+namespace PecaBoa.Api.Controllers.V1.Lojista;
 
-[Route("v{version:apiVersion}/Fornecedor/[controller]")]
+[Route("v{version:apiVersion}/Lojista/[controller]")]
 public class ProdutosServicoController : MainController
 {
     private readonly IProdutoServicoService _produtoServicoService;
@@ -21,7 +21,7 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpGet("{id}")]
-    [SwaggerOperation(Summary = "Obter Produto/Serviço - Fornecedor.", Tags = new[] { "Fornecedor - Produto-Serviço" })]
+    [SwaggerOperation(Summary = "Obter Produto/Serviço - Lojista.", Tags = new[] { "Lojista - Produto-Serviço" })]
     [ProducesResponseType(typeof(ProdutoServicoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -33,8 +33,8 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpGet]
-    [SwaggerOperation(Summary = "Buscar Produto/Serviço - Fornecedor.",
-        Tags = new[] { "Fornecedor - Produto-Serviço" })]
+    [SwaggerOperation(Summary = "Buscar Produto/Serviço - Lojista.",
+        Tags = new[] { "Lojista - Produto-Serviço" })]
     [ProducesResponseType(typeof(PagedDto<ProdutoServicoDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -45,9 +45,9 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpPost]
-    [SwaggerOperation(Summary = "Cadastrar Produto/Serviço - Fornecedor.",
-        Tags = new[] { "Fornecedor - Produto-Serviço" })]
-    [ClaimsAuthorize("Fornecedor", ETipoUsuario.Fornecedor)]
+    [SwaggerOperation(Summary = "Cadastrar Produto/Serviço - Lojista.",
+        Tags = new[] { "Lojista - Produto-Serviço" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
     [ProducesResponseType(typeof(ProdutoServicoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(UnauthorizedObjectResult), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Cadastrar([FromForm] CadastrarProdutoServicoDto dto)
@@ -57,9 +57,9 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpPut("{id}")]
-    [SwaggerOperation(Summary = "Alterar Produto/Serviço - Fornecedor.",
-        Tags = new[] { "Fornecedor - Produto-Serviço" })]
-    [ClaimsAuthorize("Fornecedor", ETipoUsuario.Fornecedor)]
+    [SwaggerOperation(Summary = "Alterar Produto/Serviço - Lojista.",
+        Tags = new[] { "Lojista - Produto-Serviço" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
     [ProducesResponseType(typeof(ProdutoServicoDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(UnauthorizedObjectResult), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Alterar(int id, [FromForm] AlterarProdutoServicoDto dto)
@@ -69,9 +69,9 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpPatch("desativar/{id}")]
-    [SwaggerOperation(Summary = "Desativar Produto/Serviço - Fornecedor.",
-        Tags = new[] { "Fornecedor - Produto-Serviço" })]
-    [ClaimsAuthorize("Fornecedor", ETipoUsuario.Fornecedor)]
+    [SwaggerOperation(Summary = "Desativar Produto/Serviço - Lojista.",
+        Tags = new[] { "Lojista - Produto-Serviço" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -82,9 +82,9 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpPatch("reativar/{id}")]
-    [SwaggerOperation(Summary = "Reativar Produto/Serviço - Fornecedor.",
-        Tags = new[] { "Fornecedor - Produto-Serviço" })]
-    [ClaimsAuthorize("Fornecedor", ETipoUsuario.Fornecedor)]
+    [SwaggerOperation(Summary = "Reativar Produto/Serviço - Lojista.",
+        Tags = new[] { "Lojista - Produto-Serviço" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -95,9 +95,9 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpPatch("alterar-foto")]
-    [SwaggerOperation(Summary = "Alterar a foto de um produto ou serviço - Fornecedor.",
-        Tags = new[] { "Fornecedor - Produto-Serviço" })]
-    [ClaimsAuthorize("Fornecedor", ETipoUsuario.Fornecedor)]
+    [SwaggerOperation(Summary = "Alterar a foto de um produto ou serviço - Lojista.",
+        Tags = new[] { "Lojista - Produto-Serviço" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -108,9 +108,9 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpPatch("remover-foto")]
-    [SwaggerOperation(Summary = "Remover a foto de um produto ou serviço - Fornecedor.",
-        Tags = new[] { "Fornecedor - Produto-Serviço" })]
-    [ClaimsAuthorize("Fornecedor", ETipoUsuario.Fornecedor)]
+    [SwaggerOperation(Summary = "Remover a foto de um produto ou serviço - Lojista.",
+        Tags = new[] { "Lojista - Produto-Serviço" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -121,7 +121,7 @@ public class ProdutosServicoController : MainController
     }
 
     [HttpDelete]
-    [SwaggerOperation(Summary = "Remover um produto ou fornecedor.", Tags = new[] { "Fornecedor - Produto-Serviço" })]
+    [SwaggerOperation(Summary = "Remover um produto ou lojista.", Tags = new[] { "Lojista - Produto-Serviço" })]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]

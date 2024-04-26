@@ -55,7 +55,7 @@ namespace PecaBoa.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Fornecedores",
+                name: "Lojistaes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -79,7 +79,7 @@ namespace PecaBoa.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Fornecedores", x => x.Id);
+                    table.PrimaryKey("PK_Lojistaes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,7 +92,7 @@ namespace PecaBoa.Infra.Migrations
                     Titulo = table.Column<string>(type: "nvarchar(180)", maxLength: 180, nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
                     Desativado = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    FornecedorId = table.Column<int>(type: "int", nullable: false),
+                    LojistaId = table.Column<int>(type: "int", nullable: false),
                     CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CriadoPor = table.Column<int>(type: "int", nullable: true),
                     CriadoPorAdmin = table.Column<bool>(type: "bit", nullable: false),
@@ -104,17 +104,17 @@ namespace PecaBoa.Infra.Migrations
                 {
                     table.PrimaryKey("PK_ProdutoServicos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProdutoServicos_Fornecedores_FornecedorId",
-                        column: x => x.FornecedorId,
-                        principalTable: "Fornecedores",
+                        name: "FK_ProdutoServicos_Lojistaes_LojistaId",
+                        column: x => x.LojistaId,
+                        principalTable: "Lojistaes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProdutoServicos_FornecedorId",
+                name: "IX_ProdutoServicos_LojistaId",
                 table: "ProdutoServicos",
-                column: "FornecedorId");
+                column: "LojistaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -129,7 +129,7 @@ namespace PecaBoa.Infra.Migrations
                 name: "ProdutoServicos");
 
             migrationBuilder.DropTable(
-                name: "Fornecedores");
+                name: "Lojistaes");
         }
     }
 }

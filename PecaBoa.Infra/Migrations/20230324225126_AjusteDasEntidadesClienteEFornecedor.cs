@@ -4,18 +4,18 @@
 
 namespace PecaBoa.Infra.Migrations
 {
-    public partial class AjusteDasEntidadesUsuarioEFornecedor : Migration
+    public partial class AjusteDasEntidadesUsuarioELojista : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
                 name: "NomeSocial",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 newName: "Complemento");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: false,
@@ -25,7 +25,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Cnpj",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(14)",
                 maxLength: 14,
                 nullable: false,
@@ -37,7 +37,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Cep",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(9)",
                 maxLength: 9,
                 nullable: false,
@@ -45,7 +45,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Cidade",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: false,
@@ -53,7 +53,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Rua",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: false,
@@ -61,14 +61,14 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "Numero",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<string>(
                 name: "Responsavel",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: false,
@@ -76,7 +76,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Uf",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(2)",
                 maxLength: 2,
                 nullable: false,
@@ -143,27 +143,27 @@ namespace PecaBoa.Infra.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Cep",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Cidade",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Rua",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Numero",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Responsavel",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Uf",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Cep",
@@ -191,12 +191,12 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.RenameColumn(
                 name: "Complemento",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 newName: "NomeSocial");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(80)",
                 maxLength: 80,
                 nullable: false,
@@ -206,7 +206,7 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Cnpj",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(18)",
                 maxLength: 18,
                 nullable: true,

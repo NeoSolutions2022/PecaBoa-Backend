@@ -1,4 +1,4 @@
-using PecaBoa.Application.Dtos.V1.Fornecedor;
+using PecaBoa.Application.Dtos.V1.Lojista;
 using PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoCaracteristica;
 
 namespace PecaBoa.Application.Dtos.V1.ProdutoServico;
@@ -16,9 +16,9 @@ public class ProdutoServicoDto
     public double Preco { get; set; }
     public double PrecoDesconto { get; set; }
     public bool Desativado { get; set; }
-    public int FornecedorId { get; set; }
+    public int LojistaId { get; set; }
     public string Categoria { get; set; } = null!;
     public string? Caracteristica { get; set; }
-    public FornecedorDto? Fornecedor { get; set; }
+    public LojistaDto? Lojista { get; set; }
     public List<ProdutoServicoCaracteristicaDto> ProdutoServicoCaracteristicas { get; set; } = new();
 }

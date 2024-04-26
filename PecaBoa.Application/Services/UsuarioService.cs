@@ -58,7 +58,7 @@ public class UsuarioService : BaseService, IUsuarioService
 
         //if (dto.Foto is {Length: > 0})
         //{
-        //    Usuario.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoFornecedor);
+        //    Usuario.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoLojista);
         //}
         
         usuario.Senha = _passwordHasher.HashPassword(usuario, usuario.Senha);

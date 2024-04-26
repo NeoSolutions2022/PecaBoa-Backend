@@ -43,7 +43,7 @@ public static class DependencyInjection
     {
         service
             .AddScoped<IUsuarioRepository,UsuarioRepository>()
-            .AddScoped<IFornecedorRepository, FornecedorRepository>()
+            .AddScoped<ILojistaRepository, LojistaRepository>()
             .AddScoped<IAdministradorRepository, AdministradorRepository>()
             .AddScoped<IProdutoServicoCaracteristicaRepository, ProdutoServicoCaracteristicaRepository>()
             .AddScoped<IProdutoServicoRepository, ProdutoServicoRepository>();

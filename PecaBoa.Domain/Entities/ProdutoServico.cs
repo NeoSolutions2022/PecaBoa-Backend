@@ -17,10 +17,10 @@ public class ProdutoServico : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
     public double Preco { get; set; }
     public double PrecoDesconto { get; set; }
     public bool Desativado { get; set; }
-    public int FornecedorId { get; set; }
+    public int LojistaId { get; set; }
     public string Categoria { get; set; } = null!;
     public string? Caracteristica { get; set; }
-    public Fornecedor Fornecedor { get; set; } = null!;
+    public Lojista Lojista { get; set; } = null!;
     public List<ProdutoServicoCaracteristica> ProdutoServicoCaracteristicas { get; set; } = new();
 
     public bool AnuncioPago { get; set; }

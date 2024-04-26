@@ -131,7 +131,7 @@ public class ProdutoServicoCaracteristicaService : BaseService, IProdutoServicoC
             Notificator.Handle("Já existe uma caracteristica com essa chave!");
         }
 
-        if (caracteristicaExistente != null && caracteristicaExistente.ProdutoServico.FornecedorId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
+        if (caracteristicaExistente != null && caracteristicaExistente.ProdutoServico.LojistaId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
         {
             Notificator.Handle("Você não tem permição para executar essa ação!");
         }

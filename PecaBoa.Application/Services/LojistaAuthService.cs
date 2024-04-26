@@ -4,7 +4,7 @@ using System.Text;
 using AutoMapper;
 using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Auth;
-using PecaBoa.Application.Dtos.V1.Fornecedor;
+using PecaBoa.Application.Dtos.V1.Lojista;
 using PecaBoa.Application.Email;
 using PecaBoa.Application.Notification;
 using PecaBoa.Core.Enums;
@@ -18,41 +18,41 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace PecaBoa.Application.Services;
 
-public class FornecedorAuthService : BaseService, IFornecedorAuthService
+public class LojistaAuthService : BaseService, ILojistaAuthService
 {
-    private readonly IFornecedorRepository _fornecedorRepository;
-    private readonly IPasswordHasher<Fornecedor> _fornecedorpasswordHasher;
+    private readonly ILojistaRepository _lojistaRepository;
+    private readonly IPasswordHasher<Lojista> _lojistapasswordHasher;
     private readonly IEmailService _emailService;
     private readonly AppSettings _appSettings;
 
-    public FornecedorAuthService(IMapper mapper, INotificator notificator, IFornecedorRepository fornecedorRepository,
-        IPasswordHasher<Fornecedor> fornecedorpasswordHasher, IEmailService emailService,
+    public LojistaAuthService(IMapper mapper, INotificator notificator, ILojistaRepository lojistaRepository,
+        IPasswordHasher<Lojista> lojistapasswordHasher, IEmailService emailService,
         IOptions<AppSettings> appSettings) : base(mapper, notificator)
     {
-        _fornecedorRepository = fornecedorRepository;
-        _fornecedorpasswordHasher = fornecedorpasswordHasher;
+        _lojistaRepository = lojistaRepository;
+        _lojistapasswordHasher = lojistapasswordHasher;
         _emailService = emailService;
         _appSettings = appSettings.Value;
     }
 
     public async Task<UsuarioAutenticadoDto?> Login(LoginDto loginDto)
     {
-        var fornecedor = await _fornecedorRepository.ObterPorEmail(loginDto.Email);
-        if (fornecedor == null)
+        var lojista = await _lojistaRepository.ObterPorEmail(loginDto.Email);
+        if (lojista == null)
         {
             Notificator.HandleNotFoundResource();
             return null;
         }
 
-        var result = _fornecedorpasswordHasher.VerifyHashedPassword(fornecedor, fornecedor.Senha, loginDto.Senha);
+        var result = _lojistapasswordHasher.VerifyHashedPassword(lojista, lojista.Senha, loginDto.Senha);
         if (result != PasswordVerificationResult.Failed)
         {
             return new UsuarioAutenticadoDto
             {
-                Id = fornecedor.Id,
-                Email = fornecedor.Email,
-                Nome = fornecedor.Nome,
-                Token = await CreateTokenFornecedor(fornecedor)
+                Id = lojista.Id,
+                Email = lojista.Email,
+                Nome = lojista.Nome,
+                Token = await CreateTokenLojista(lojista)
             };
         }
 
@@ -60,9 +60,9 @@ public class FornecedorAuthService : BaseService, IFornecedorAuthService
         return null;
     }
 
-    public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaFornecedorDto dto)
+    public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaLojistaDto dto)
     {
-        var usuario = await _fornecedorRepository.FistOrDefault(c =>
+        var usuario = await _lojistaRepository.FistOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
         if (usuario == null)
         {
@@ -79,48 +79,48 @@ public class FornecedorAuthService : BaseService, IFornecedorAuthService
         return false;
     }
 
-    public async Task RecuperarSenha(RecuperarSenhaFornecedorDto dto)
+    public async Task RecuperarSenha(RecuperarSenhaLojistaDto dto)
     {
-        var fornecedor = await _fornecedorRepository.FistOrDefault(f => f.Email == dto.Email);
-        if (fornecedor == null)
+        var lojista = await _lojistaRepository.FistOrDefault(f => f.Email == dto.Email);
+        if (lojista == null)
         {
             Notificator.HandleNotFoundResource();
             return;
         }
 
         var codigoExpiraEmHoras = 3;
-        fornecedor.CodigoResetarSenha = Guid.NewGuid();
-        fornecedor.CodigoResetarSenhaExpiraEm = DateTime.Now.AddHours(codigoExpiraEmHoras);
-        _fornecedorRepository.Alterar(fornecedor);
-        if (await _fornecedorRepository.UnitOfWork.Commit())
+        lojista.CodigoResetarSenha = Guid.NewGuid();
+        lojista.CodigoResetarSenhaExpiraEm = DateTime.Now.AddHours(codigoExpiraEmHoras);
+        _lojistaRepository.Alterar(lojista);
+        if (await _lojistaRepository.UnitOfWork.Commit())
         {
             _emailService.Enviar(
-                fornecedor.Email,
+                lojista.Email,
                 "Seu link para alterar a senha",
                 "Usuario/CodigoResetarSenha",
                 new
                 {
-                    fornecedor.Nome,
-                    fornecedor.Email,
-                    Codigo = fornecedor.CodigoResetarSenha,
+                    lojista.Nome,
+                    lojista.Email,
+                    Codigo = lojista.CodigoResetarSenha,
                     Url = _appSettings.UrlComum,
                     ExpiracaoEmHoras = codigoExpiraEmHoras
                 });
         }
     }
 
-    public async Task AlterarSenha(AlterarSenhaFornecedorDto dto)
+    public async Task AlterarSenha(AlterarSenhaLojistaDto dto)
     {
-        var fornecedor = await _fornecedorRepository.FistOrDefault(c =>
+        var lojista = await _lojistaRepository.FistOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
-        if (fornecedor == null)
+        if (lojista == null)
         {
             Notificator.Handle("Cóidigo inválido ou expirado!");
             return;
         }
 
-        if (!(fornecedor.CodigoResetarSenha == dto.CodigoResetarSenha &&
-              fornecedor.CodigoResetarSenhaExpiraEm >= DateTime.Now))
+        if (!(lojista.CodigoResetarSenha == dto.CodigoResetarSenha &&
+              lojista.CodigoResetarSenhaExpiraEm >= DateTime.Now))
         {
             Notificator.Handle("Código inválido ou expirado!");
             return;
@@ -132,18 +132,18 @@ public class FornecedorAuthService : BaseService, IFornecedorAuthService
             return;
         }
 
-        fornecedor.Senha = _fornecedorpasswordHasher.HashPassword(fornecedor, dto.Senha);
-        fornecedor.CodigoResetarSenha = null;
-        fornecedor.CodigoResetarSenhaExpiraEm = null;
+        lojista.Senha = _lojistapasswordHasher.HashPassword(lojista, dto.Senha);
+        lojista.CodigoResetarSenha = null;
+        lojista.CodigoResetarSenhaExpiraEm = null;
 
-        _fornecedorRepository.Alterar(fornecedor);
-        if (!await _fornecedorRepository.UnitOfWork.Commit())
+        _lojistaRepository.Alterar(lojista);
+        if (!await _lojistaRepository.UnitOfWork.Commit())
         {
             Notificator.Handle("Não foi possível alterar a senha");
         }
     }
 
-    public Task<string> CreateTokenFornecedor(Fornecedor fornecedor)
+    public Task<string> CreateTokenLojista(Lojista lojista)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(Settings.Settings.Secret);
@@ -151,13 +151,13 @@ public class FornecedorAuthService : BaseService, IFornecedorAuthService
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, fornecedor.Id.ToString()),
-                new Claim(ClaimTypes.Name, fornecedor.Nome),
-                new Claim(ClaimTypes.Email, fornecedor.Email),
-                new Claim("TipoUsuario", ETipoUsuario.Fornecedor.ToDescriptionString()),
-                new Claim("Administrador", ETipoUsuario.Fornecedor.ToDescriptionString()),
-                new Claim("Fornecedor", ETipoUsuario.Fornecedor.ToDescriptionString()),
-                new Claim("Usuario", ETipoUsuario.Fornecedor.ToDescriptionString()),
+                new Claim(ClaimTypes.NameIdentifier, lojista.Id.ToString()),
+                new Claim(ClaimTypes.Name, lojista.Nome),
+                new Claim(ClaimTypes.Email, lojista.Email),
+                new Claim("TipoUsuario", ETipoUsuario.Lojista.ToDescriptionString()),
+                new Claim("Administrador", ETipoUsuario.Lojista.ToDescriptionString()),
+                new Claim("Lojista", ETipoUsuario.Lojista.ToDescriptionString()),
+                new Claim("Usuario", ETipoUsuario.Lojista.ToDescriptionString()),
             }),
             Expires = DateTime.UtcNow.AddHours(2),
             SigningCredentials =

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace PecaBoa.Application.Dtos.V1.Fornecedor;
+namespace PecaBoa.Application.Dtos.V1.Lojista;
 
-public class CadastrarFornecedorDto
+public class CadastrarLojistaDto
 {
     public string Nome { get; set; } = null!;
     public string Responsavel { get; set; } = null!;

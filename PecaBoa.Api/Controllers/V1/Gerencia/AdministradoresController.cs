@@ -1,7 +1,7 @@
 ﻿using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Administrador;
 using PecaBoa.Application.Dtos.V1.Base;
-using PecaBoa.Application.Dtos.V1.Fornecedor;
+using PecaBoa.Application.Dtos.V1.Lojista;
 using PecaBoa.Application.Notification;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -20,18 +20,18 @@ public class AdministradoresController : MainController
 
     [HttpGet]
     [SwaggerOperation(Summary = "Listagem de Administradores", Tags = new[] { "Gerencia - Administrador" })]
-    [ProducesResponseType(typeof(PagedDto<FornecedorDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedDto<LojistaDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Buscar([FromQuery] BuscarAdministradorDto dto)
     {
-        var Usuario = await _administradorService.Buscar(dto);
-        return OkResponse(Usuario);
+        var usuario = await _administradorService.Buscar(dto);
+        return OkResponse(usuario);
     }
 
     [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Obter um Administrador por Id.", Tags = new[] { "Gerencia - Administrador" })]
-    [ProducesResponseType(typeof(FornecedorDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(LojistaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,7 +43,7 @@ public class AdministradoresController : MainController
 
     [HttpGet("email/{email}")]
     [SwaggerOperation(Summary = "Obter um Administrador por Email.", Tags = new[] { "Gerencia - Administrador" })]
-    [ProducesResponseType(typeof(FornecedorDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(LojistaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -66,7 +66,7 @@ public class AdministradoresController : MainController
 
     [HttpPost]
     [SwaggerOperation(Summary = "Adicionar um Administrador.", Tags = new[] { "Gerencia - Administrador" })]
-    [ProducesResponseType(typeof(FornecedorDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(LojistaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Adicionar(AdicionarAdministradorDto dto)
     {
@@ -76,7 +76,7 @@ public class AdministradoresController : MainController
 
     [HttpPut("{id}")]
     [SwaggerOperation(Summary = "Alterar um Administrador.", Tags = new[] { "Gerencia - Administrador" })]
-    [ProducesResponseType(typeof(FornecedorDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(LojistaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

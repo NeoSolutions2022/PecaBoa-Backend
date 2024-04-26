@@ -28,9 +28,9 @@ public static class HttpContextAccessorExtensions
         return string.IsNullOrWhiteSpace(tipo) ? null : Enum.Parse<ETipoUsuario>(tipo);
     }
 
-    public static ETipoUsuario? ObterTipoFornecedor(this IHttpContextAccessor? contextAccessor)
+    public static ETipoUsuario? ObterTipoLojista(this IHttpContextAccessor? contextAccessor)
     {
-        var tipo = contextAccessor?.HttpContext?.User?.ObterTipoFornecedor() ?? string.Empty;
+        var tipo = contextAccessor?.HttpContext?.User?.ObterTipoLojista() ?? string.Empty;
         return string.IsNullOrWhiteSpace(tipo) ? null : Enum.Parse<ETipoUsuario>(tipo);
     }
 

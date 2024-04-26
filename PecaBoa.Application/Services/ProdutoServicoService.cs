@@ -55,7 +55,7 @@ public class ProdutoServicoService : BaseService, IProdutoServicoService
             produtoServico.Foto5 = await _fileService.Upload(dto.Foto5, EUploadPath.FotoProdutoServico);
         }
 
-        produtoServico.FornecedorId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
+        produtoServico.LojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         produtoServico.CriadoEm = DateTime.Now;
         if (!await Validar(produtoServico))
         {
@@ -321,7 +321,7 @@ public class ProdutoServicoService : BaseService, IProdutoServicoService
             Notificator.Handle(validationResult.Errors);
         }
 
-        if (produtoServico.FornecedorId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
+        if (produtoServico.LojistaId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
         {
             Notificator.Handle("Você não tem permissão para executar essa ação!");
         }

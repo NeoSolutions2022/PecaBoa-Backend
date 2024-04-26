@@ -46,30 +46,30 @@ public class AutoMapperProfile : Profile
 
         #endregion
 
-        #region Fornecedor
+        #region Lojista
 
-        CreateMap<PecaBoa.Application.Dtos.V1.Fornecedor.FornecedorDto, Fornecedor>()
+        CreateMap<PecaBoa.Application.Dtos.V1.Lojista.LojistaDto, Lojista>()
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cnpj = dest.Cnpj.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
             .ReverseMap();
 
-        CreateMap<PecaBoa.Application.Dtos.V1.Fornecedor.AlterarFornecedorDto, Fornecedor>()
+        CreateMap<PecaBoa.Application.Dtos.V1.Lojista.AlterarLojistaDto, Lojista>()
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cnpj = dest.Cnpj.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
             .ReverseMap();
 
-        CreateMap<PecaBoa.Application.Dtos.V1.Fornecedor.CadastrarFornecedorDto, Fornecedor>()
+        CreateMap<PecaBoa.Application.Dtos.V1.Lojista.CadastrarLojistaDto, Lojista>()
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cnpj = dest.Cnpj.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
             .ReverseMap();
 
-        CreateMap<PagedDto<PecaBoa.Application.Dtos.V1.Fornecedor.FornecedorDto>, ResultadoPaginado<Fornecedor>>()
+        CreateMap<PagedDto<PecaBoa.Application.Dtos.V1.Lojista.LojistaDto>, ResultadoPaginado<Lojista>>()
             .ReverseMap();
 
         #endregion

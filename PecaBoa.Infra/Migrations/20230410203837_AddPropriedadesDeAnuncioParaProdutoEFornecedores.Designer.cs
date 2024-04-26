@@ -12,8 +12,8 @@ using PecaBoa.Infra.Context;
 namespace PecaBoa.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230410203837_AddPropriedadesDeAnuncioParaProdutoEFornecedores")]
-    partial class AddPropriedadesDeAnuncioParaProdutoEFornecedores
+    [Migration("20230410203837_AddPropriedadesDeAnuncioParaProdutoELojistaes")]
+    partial class AddPropriedadesDeAnuncioParaProdutoELojistaes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -170,7 +170,7 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("PecaBoa.Domain.Entities.Fornecedor", b =>
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,7 +297,7 @@ namespace PecaBoa.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fornecedores");
+                    b.ToTable("Lojistaes");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.ProdutoServico", b =>
@@ -351,7 +351,7 @@ namespace PecaBoa.Infra.Migrations
                         .HasMaxLength(1500)
                         .HasColumnType("nvarchar(1500)");
 
-                    b.Property<int>("FornecedorId")
+                    b.Property<int>("LojistaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Foto")
@@ -365,23 +365,23 @@ namespace PecaBoa.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FornecedorId");
+                    b.HasIndex("LojistaId");
 
                     b.ToTable("ProdutoServicos");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.ProdutoServico", b =>
                 {
-                    b.HasOne("PecaBoa.Domain.Entities.Fornecedor", "Fornecedor")
+                    b.HasOne("PecaBoa.Domain.Entities.Lojista", "Lojista")
                         .WithMany("ProdutoServicos")
-                        .HasForeignKey("FornecedorId")
+                        .HasForeignKey("LojistaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Fornecedor");
+                    b.Navigation("Lojista");
                 });
 
-            modelBuilder.Entity("PecaBoa.Domain.Entities.Fornecedor", b =>
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
                 {
                     b.Navigation("ProdutoServicos");
                 });

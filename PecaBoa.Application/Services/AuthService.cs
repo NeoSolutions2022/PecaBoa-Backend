@@ -157,7 +157,7 @@ public class AuthService : BaseService, IAuthService
                 new Claim(ClaimTypes.Email, administrador.Email),
                 new Claim("TipoUsuario", ETipoUsuario.Administrador.ToDescriptionString()),
                 new Claim("Administrador", ETipoUsuario.Administrador.ToDescriptionString()),
-                new Claim("Fornecedor", ETipoUsuario.Fornecedor.ToDescriptionString()),
+                new Claim("Lojista", ETipoUsuario.Lojista.ToDescriptionString()),
                 new Claim("Usuario", ETipoUsuario.Usuario.ToDescriptionString()),
             }),
             Expires = DateTime.UtcNow.AddHours(2),

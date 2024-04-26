@@ -38,7 +38,7 @@ public static class DependencyInjection
     {
         services
             .AddScoped<IUsuarioService, UsuarioService>()
-            .AddScoped<IFornecedorService, FornecedorService>()
+            .AddScoped<ILojistaService, LojistaService>()
             .AddScoped<IBackgroundClient, BackgroundClient>()
             .AddScoped<IEmailService, EmailService>()
             .AddScoped<IAdministradorService, AdministradorService>();
@@ -49,11 +49,11 @@ public static class DependencyInjection
             .AddScoped<IPagamentosService, PagamentosService>()
             .AddScoped<IProdutoServicoCaracteristicaService, ProdutoServicoCaracteristicaService>()
             .AddScoped<IFileService, FileService>()
-            .AddScoped<IFornecedorAuthService, FornecedorAuthService>()
+            .AddScoped<ILojistaAuthService, LojistaAuthService>()
             .AddScoped<IUsuarioAuthService, UsuarioAuthService>()
             .AddScoped<INotificator, Notificator>()
             .AddScoped<IPasswordHasher<Usuario>, Argon2PasswordHasher<Usuario>>()
-            .AddScoped<IPasswordHasher<Fornecedor>, Argon2PasswordHasher<Fornecedor>>()
+            .AddScoped<IPasswordHasher<Lojista>, Argon2PasswordHasher<Lojista>>()
             .AddScoped<IPasswordHasher<Administrador>, Argon2PasswordHasher<Administrador>>();
     }
     

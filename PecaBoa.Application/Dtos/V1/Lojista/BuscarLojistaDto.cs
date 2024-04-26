@@ -1,9 +1,9 @@
 ﻿using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Core.Extensions;
 
-namespace PecaBoa.Application.Dtos.V1.Fornecedor;
+namespace PecaBoa.Application.Dtos.V1.Lojista;
 
-public class BuscarFornecedorDto : BuscaPaginadaDto<Domain.Entities.Fornecedor>
+public class BuscarLojistaDto : BuscaPaginadaDto<Domain.Entities.Lojista>
 {
     public string? Nome { get; set; }
     public string? Responsavel { get; set; }
@@ -15,7 +15,7 @@ public class BuscarFornecedorDto : BuscaPaginadaDto<Domain.Entities.Fornecedor>
     public string? Categoria { get; set; }
     public bool? AnuncioPago { get; set; }
 
-    public override void AplicarFiltro(ref IQueryable<Domain.Entities.Fornecedor> query)
+    public override void AplicarFiltro(ref IQueryable<Domain.Entities.Lojista> query)
     {
         var expression = MontarExpressao();
 
@@ -63,7 +63,7 @@ public class BuscarFornecedorDto : BuscaPaginadaDto<Domain.Entities.Fornecedor>
         query = query.Where(expression);
     }
 
-    public override void AplicarOrdenacao(ref IQueryable<Domain.Entities.Fornecedor> query)
+    public override void AplicarOrdenacao(ref IQueryable<Domain.Entities.Lojista> query)
     {
         if (DirecaoOrdenacao.EqualsIgnoreCase("asc"))
         {

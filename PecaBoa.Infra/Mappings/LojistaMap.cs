@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace PecaBoa.Infra.Mappings;
 
-public class FornecedorMap : IEntityTypeConfiguration<Fornecedor>
+public class LojistaMap : IEntityTypeConfiguration<Lojista>
 {
-    public void Configure(EntityTypeBuilder<Fornecedor> builder)
+    public void Configure(EntityTypeBuilder<Lojista> builder)
     {
         builder
             .Property(c => c.Bairro)
@@ -99,8 +99,8 @@ public class FornecedorMap : IEntityTypeConfiguration<Fornecedor>
         
         builder
             .HasMany(c => c.ProdutoServicos)
-            .WithOne(c => c.Fornecedor)
-            .HasForeignKey(c => c.FornecedorId)
+            .WithOne(c => c.Lojista)
+            .HasForeignKey(c => c.LojistaId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

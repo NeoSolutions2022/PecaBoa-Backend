@@ -10,11 +10,11 @@ namespace PecaBoa.Api.Controllers.V1.Gerencia;
 [Route("v{version:apiVersion}/Gerencia/[controller]")]
 public class UsuariosController : MainController
 {
-    private readonly IUsuarioService _UsuarioService;
+    private readonly IUsuarioService _usuarioService;
     
-    public UsuariosController(INotificator notificator, IUsuarioService UsuarioService) : base(notificator)
+    public UsuariosController(INotificator notificator, IUsuarioService usuarioService) : base(notificator)
     {
-        _UsuarioService = UsuarioService;
+        _usuarioService = usuarioService;
     }
     
     [HttpGet]
@@ -25,8 +25,8 @@ public class UsuariosController : MainController
 
     public async Task<IActionResult> Buscar([FromQuery] BuscarUsuarioDto dto)
     {
-        var Usuario = await _UsuarioService.Buscar(dto);
-        return OkResponse(Usuario);
+        var usuario = await _usuarioService.Buscar(dto);
+        return OkResponse(usuario);
     }
     
     [HttpGet("{id}")]
@@ -37,7 +37,7 @@ public class UsuariosController : MainController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObterPorId(int id)
     {
-        var usuario = await _UsuarioService.ObterPorId(id);
+        var usuario = await _usuarioService.ObterPorId(id);
         return OkResponse(usuario);
     }
     
@@ -49,7 +49,7 @@ public class UsuariosController : MainController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObterPorEmail(string email)
     {
-        var usuario = await _UsuarioService.ObterPorEmail(email);
+        var usuario = await _usuarioService.ObterPorEmail(email);
         return OkResponse(usuario);
     }
     
@@ -61,7 +61,7 @@ public class UsuariosController : MainController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObterPorCpf(string cpf)
     {
-        var usuario = await _UsuarioService.ObterPorCpf(cpf);
+        var usuario = await _usuarioService.ObterPorCpf(cpf);
         return OkResponse(usuario);
     }
 
@@ -72,7 +72,7 @@ public class UsuariosController : MainController
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Desativar(int id)
     {
-        await _UsuarioService.Desativar(id);
+        await _usuarioService.Desativar(id);
         return NoContentResponse();
     }
     
@@ -83,7 +83,7 @@ public class UsuariosController : MainController
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Reativar(int id)
     {
-        await _UsuarioService.Reativar(id);
+        await _usuarioService.Reativar(id);
         return NoContentResponse();
     }
 
@@ -94,7 +94,7 @@ public class UsuariosController : MainController
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> Remover(int id)
     {
-        await _UsuarioService.Remover(id);
+        await _usuarioService.Remover(id);
         return NoContentResponse();
     }
 }

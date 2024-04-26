@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using PecaBoa.Application.Dtos.V1.ProdutoServico;
 
-namespace PecaBoa.Application.Dtos.V1.Fornecedor;
+namespace PecaBoa.Application.Dtos.V1.Lojista;
 
-public class AlterarFornecedorDto
+public class LojistaDto
 {
     public int Id { get; set; }
     public string Cep { get; set; } = null!;
@@ -18,12 +18,9 @@ public class AlterarFornecedorDto
     public string? Descricao { get; set; }
     public int Numero { get; set; }
     public string Responsavel { get; set; } = null!;
+    public string Categoria { get; set; } = null!;
     public string? Telefone { get; set; }
     public string Uf { get; set; } = null!;
-    public string Categoria { get; set; } = null!;
-}
-
-public class AlterarFotoFornecedorDto
-{
-    public IFormFile Foto { get; set; }
+    public string? Foto { get; set; }
+    public List<ProdutoServicoDto> ProdutoServicos { get; set; } = new();
 }

@@ -11,11 +11,11 @@ namespace PecaBoa.Infra.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Categoria",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Complemento",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "Complemento",
@@ -34,14 +34,14 @@ namespace PecaBoa.Infra.Migrations
         {
             migrationBuilder.AddColumn<string>(
                 name: "Categoria",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
                 name: "Complemento",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(60)",
                 maxLength: 60,
                 nullable: true);

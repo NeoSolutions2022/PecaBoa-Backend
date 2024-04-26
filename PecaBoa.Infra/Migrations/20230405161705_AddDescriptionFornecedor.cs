@@ -4,13 +4,13 @@
 
 namespace PecaBoa.Infra.Migrations
 {
-    public partial class AddDescriptionFornecedor : Migration
+    public partial class AddDescriptionLojista : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "Descricao",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "nvarchar(2000)",
                 maxLength: 2000,
                 nullable: true);
@@ -20,7 +20,7 @@ namespace PecaBoa.Infra.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Descricao",
-                table: "Fornecedores");
+                table: "Lojistaes");
         }
     }
 }

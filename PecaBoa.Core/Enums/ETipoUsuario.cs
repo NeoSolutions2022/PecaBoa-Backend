@@ -6,8 +6,8 @@ public enum ETipoUsuario
 {
     [Description("Administrador")]
     Administrador = 1,
-    [Description("Fornecedor")]
-    Fornecedor = 2,
+    [Description("Lojista")]
+    Lojista = 2,
     [Description("Usuario")]
     Usuario = 3
 }

@@ -148,20 +148,20 @@ public class AdministradorService : BaseService, IAdministradorService
 
     public async Task Remover(int id)
     {
-        var fornecedor = await _administradorRepository.FistOrDefault(c => c.Id == id);
-        if (fornecedor == null)
+        var lojista = await _administradorRepository.FistOrDefault(c => c.Id == id);
+        if (lojista == null)
         {
-            Notificator.Handle("Não existe um fornecedor com o id informado");
+            Notificator.Handle("Não existe um lojista com o id informado");
             return;
         }
 
-        _administradorRepository.Remover(fornecedor);
+        _administradorRepository.Remover(lojista);
         if (await _administradorRepository.UnitOfWork.Commit())
         {
             return;
         }
 
-        Notificator.Handle("Não foi possível remover o fornecedor");
+        Notificator.Handle("Não foi possível remover o lojista");
     }
 
     public async Task AlterarSenha(int id)

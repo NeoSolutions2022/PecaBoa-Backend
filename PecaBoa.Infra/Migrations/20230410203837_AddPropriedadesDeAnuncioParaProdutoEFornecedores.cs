@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PecaBoa.Infra.Migrations
 {
-    public partial class AddPropriedadesDeAnuncioParaProdutoEFornecedores : Migration
+    public partial class AddPropriedadesDeAnuncioParaProdutoELojistaes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,20 +30,20 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.AddColumn<bool>(
                 name: "AnuncioPago",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "DataExpiracaoAnuncio",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "datetime2",
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "DataPagamentoAnuncio",
-                table: "Fornecedores",
+                table: "Lojistaes",
                 type: "datetime2",
                 nullable: true);
         }
@@ -64,15 +64,15 @@ namespace PecaBoa.Infra.Migrations
 
             migrationBuilder.DropColumn(
                 name: "AnuncioPago",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "DataExpiracaoAnuncio",
-                table: "Fornecedores");
+                table: "Lojistaes");
 
             migrationBuilder.DropColumn(
                 name: "DataPagamentoAnuncio",
-                table: "Fornecedores");
+                table: "Lojistaes");
         }
     }
 }

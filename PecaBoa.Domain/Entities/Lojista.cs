@@ -5,7 +5,7 @@ using PecaBoa.Domain.Validation;
 
 namespace PecaBoa.Domain.Entities;
 
-public class Fornecedor : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
+public class Lojista : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
 {
     public string Cep { get; set; } = null!;
     public string Cidade { get; set; } = null!;
@@ -35,7 +35,7 @@ public class Fornecedor : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
 
     public override bool Validar(out ValidationResult validationResult)
     {
-        validationResult = new FornecedorValidator().Validate(this);
+        validationResult = new LojistaValidator().Validate(this);
         return validationResult.IsValid;
     }
 

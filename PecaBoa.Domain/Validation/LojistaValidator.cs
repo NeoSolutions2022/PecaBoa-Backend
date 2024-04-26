@@ -1,12 +1,11 @@
-﻿using System.Data;
-using FluentValidation;
+﻿using FluentValidation;
 using PecaBoa.Domain.Entities;
 
 namespace PecaBoa.Domain.Validation;
 
-public class FornecedorValidator : AbstractValidator<Fornecedor>
+public class LojistaValidator : AbstractValidator<Lojista>
 {
-    public FornecedorValidator()
+    public LojistaValidator()
     {
         RuleFor(u => u.Bairro)
             .MinimumLength(3)

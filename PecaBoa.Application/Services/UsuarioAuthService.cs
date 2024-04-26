@@ -37,22 +37,22 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
 
     public async Task<UsuarioAutenticadoDto?> Login(LoginDto loginDto)
     {
-        var Usuario = await _usuarioRepository.ObterPorEmail(loginDto.Email);
-        if (Usuario == null)
+        var usuario = await _usuarioRepository.ObterPorEmail(loginDto.Email);
+        if (usuario == null)
         {
             Notificator.HandleNotFoundResource();
             return null;
         }
 
-        var result = _passwordHasher.VerifyHashedPassword(Usuario, Usuario.Senha, loginDto.Senha);
+        var result = _passwordHasher.VerifyHashedPassword(usuario, usuario.Senha, loginDto.Senha);
         if (result != PasswordVerificationResult.Failed)
         {
             return new UsuarioAutenticadoDto
             {
-                Id = Usuario.Id,
-                Email = Usuario.Email,
-                Nome = Usuario.Nome,
-                Token = await CreateTokenUsuario(Usuario)
+                Id = usuario.Id,
+                Email = usuario.Email,
+                Nome = usuario.Nome,
+                Token = await CreateTokenUsuario(usuario)
             };
         }
 
@@ -62,15 +62,15 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
 
     public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaUsuarioDto dto)
     {
-        var Usuario = await _usuarioRepository.FistOrDefault(c =>
+        var usuario = await _usuarioRepository.FistOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
-        if (Usuario == null)
+        if (usuario == null)
         {
             Notificator.Handle("Código inválido ou expirado!");
             return false;
         }
 
-        if (Usuario.CodigoResetarSenha == dto.CodigoResetarSenha && Usuario.CodigoResetarSenhaExpiraEm >= DateTime.Now)
+        if (usuario.CodigoResetarSenha == dto.CodigoResetarSenha && usuario.CodigoResetarSenhaExpiraEm >= DateTime.Now)
         {
             return true;
         }
@@ -81,28 +81,28 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
 
     public async Task RecuperarSenha(RecuperarSenhaUsuarioDto dto)
     {
-        var Usuario = await _usuarioRepository.FistOrDefault(f => f.Email == dto.Email);
-        if (Usuario == null)
+        var usuario = await _usuarioRepository.FistOrDefault(f => f.Email == dto.Email);
+        if (usuario == null)
         {
             Notificator.HandleNotFoundResource();
             return;
         }
 
         var codigoExpiraEmHoras = 3;
-        Usuario.CodigoResetarSenha = Guid.NewGuid();
-        Usuario.CodigoResetarSenhaExpiraEm = DateTime.Now.AddHours(codigoExpiraEmHoras);
-        _usuarioRepository.Alterar(Usuario);
+        usuario.CodigoResetarSenha = Guid.NewGuid();
+        usuario.CodigoResetarSenhaExpiraEm = DateTime.Now.AddHours(codigoExpiraEmHoras);
+        _usuarioRepository.Alterar(usuario);
         if (await _usuarioRepository.UnitOfWork.Commit())
         {
             _emailService.Enviar(
-                Usuario.Email,
+                usuario.Email,
                 "Seu link para alterar a senha",
                 "Usuario/CodigoResetarSenha",
                 new
                 {
-                    Usuario.Nome,
-                    Usuario.Email,
-                    Codigo = Usuario.CodigoResetarSenha,
+                    usuario.Nome,
+                    usuario.Email,
+                    Codigo = usuario.CodigoResetarSenha,
                     Url = _appSettings.UrlComum,
                     ExpiracaoEmHoras = codigoExpiraEmHoras
                 });
@@ -111,16 +111,16 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
 
     public async Task AlterarSenha(AlterarSenhaUsuarioDto dto)
     {
-        var Usuario = await _usuarioRepository.FistOrDefault(c =>
+        var usuario = await _usuarioRepository.FistOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
-        if (Usuario == null)
+        if (usuario == null)
         {
             Notificator.Handle("Cóidigo inválido ou expirado!");
             return;
         }
 
-        if (!(Usuario.CodigoResetarSenha == dto.CodigoResetarSenha &&
-              Usuario.CodigoResetarSenhaExpiraEm >= DateTime.Now))
+        if (!(usuario.CodigoResetarSenha == dto.CodigoResetarSenha &&
+              usuario.CodigoResetarSenhaExpiraEm >= DateTime.Now))
         {
             Notificator.Handle("Código inválido ou expirado!");
             return;
@@ -132,11 +132,11 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
             return;
         }
 
-        Usuario.Senha = _passwordHasher.HashPassword(Usuario, dto.Senha);
-        Usuario.CodigoResetarSenha = null;
-        Usuario.CodigoResetarSenhaExpiraEm = null;
+        usuario.Senha = _passwordHasher.HashPassword(usuario, dto.Senha);
+        usuario.CodigoResetarSenha = null;
+        usuario.CodigoResetarSenhaExpiraEm = null;
 
-        _usuarioRepository.Alterar(Usuario);
+        _usuarioRepository.Alterar(usuario);
         if (!await _usuarioRepository.UnitOfWork.Commit())
         {
             Notificator.Handle("Não foi possível alterar a senha");
@@ -156,7 +156,7 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
                 new Claim(ClaimTypes.Email, usuario.Email),
                 new Claim("TipoUsuario", ETipoUsuario.Usuario.ToDescriptionString()),
                 new Claim("Administrador", ETipoUsuario.Usuario.ToDescriptionString()),
-                new Claim("Fornecedor", ETipoUsuario.Usuario.ToDescriptionString()),
+                new Claim("Lojista", ETipoUsuario.Usuario.ToDescriptionString()),
                 new Claim("Usuario", ETipoUsuario.Usuario.ToDescriptionString()),
             }),
             Expires = DateTime.UtcNow.AddHours(2),
