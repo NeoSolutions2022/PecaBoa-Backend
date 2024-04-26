@@ -39,11 +39,6 @@ public class UsuarioService : BaseService, IUsuarioService
 
     public async Task<UsuarioDto?> Cadastrar(CadastrarUsuarioDto dto)
     {
-        if (!ValidarAnexos(dto))
-        {
-            return null;
-        }
-        
         if (dto.Senha != dto.ConfirmacaoSenha)
         {
             Notificator.Handle("As senhas não conferem!");
@@ -55,11 +50,6 @@ public class UsuarioService : BaseService, IUsuarioService
         {
             return null;
         }
-
-        //if (dto.Foto is {Length: > 0})
-        //{
-        //    Usuario.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoLojista);
-        //}
         
         usuario.Senha = _passwordHasher.HashPassword(usuario, usuario.Senha);
         usuario.Uf = usuario.Uf.ToLower();
@@ -248,28 +238,5 @@ public class UsuarioService : BaseService, IUsuarioService
         }
         
         return !Notificator.HasNotification;
-    }
-    
-    private bool ValidarAnexos(CadastrarUsuarioDto dto)
-    {
-        if (dto.Foto?.Length > 10000000)
-        {
-            Notificator.Handle("Foto deve ter no máximo 10Mb");
-        }
-
-        //if (dto.Foto != null && dto.Foto.FileName.Split(".").Last() != "jfif" &&
-        //    dto.Foto.FileName.Split(".").Last() != "png" && dto.Foto.FileName.Split(".").Last() != "jpg" 
-        //    && dto.Foto.FileName.Split(".").Last() != "jpeg")
-        //{
-        //    Notificator.Handle("Foto deve do tipo png, jfif ou jpg");
-        //}
-
-        return !Notificator.HasNotification;
-    }
-    
-    private async Task<bool> ManterFoto(IFormFile foto, Usuario usuario)
-    {
-        usuario.Foto = await _fileService.Upload(foto, EUploadPath.FotoUsuario);
-        return true;
     }
 }

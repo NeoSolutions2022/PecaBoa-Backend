@@ -8,8 +8,6 @@ public class AlterarUsuarioDto
     public string Email { get; set; } = null!;
     public string Cpf { get; set; } = null!;
     public string? Telefone { get; set; }
-    public bool? Inadiplente { get; set; }
-    public DateTime DataPagamento { get; set; }
     public bool Desativado { get; set; }
     public string Cep { get; set; } = null!;
     public string Cidade { get; set; } = null!;
