@@ -28,6 +28,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+        <PackageReference Include="Npgsql" Version="8.0.2" />
         <PackageReference Include="ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher" Version="1.4.0" />
         <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />

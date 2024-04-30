@@ -28,7 +28,10 @@ public static class DependencyInjection
 
         service.AddDbContext<ApplicationDbContext>(optionsAction =>
         {
-            optionsAction.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            optionsAction.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), npgsqlOptionsAction =>
+            {
+                npgsqlOptionsAction.EnableRetryOnFailure();
+            });
             optionsAction.EnableDetailedErrors();
             optionsAction.EnableSensitiveDataLogging();
         });
