@@ -1,5 +1,5 @@
 ﻿using Hangfire;
-using Hangfire.SqlServer;
+using Hangfire.PostgreSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,13 +11,13 @@ public static class HangfireConfiguration
     {
         var connectionString = configuration.GetConnectionString("HangfireConnection");
 
-        var sqlStorage = new SqlServerStorage(connectionString, new SqlServerStorageOptions()
+        var postgreStorage = new PostgreSqlStorage(connectionString, new PostgreSqlStorageOptions
         {
-            CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-            SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+            //CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+            //SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
             QueuePollInterval = TimeSpan.Zero,
-            UseRecommendedIsolationLevel = true,
-            DisableGlobalLocks = true
+            //UseRecommendedIsolationLevel = true,
+            //DisableGlobalLocks = true
         });
         
         services.AddHangfire(config =>
@@ -27,10 +27,10 @@ public static class HangfireConfiguration
                 .UseRecommendedSerializerSettings();
 
             config
-                .UseStorage(sqlStorage);
+                .UseStorage(postgreStorage);
         });
 
-        JobStorage.Current = sqlStorage;
+        JobStorage.Current = postgreStorage;
         services.AddHangfireServer();
     }
 }
