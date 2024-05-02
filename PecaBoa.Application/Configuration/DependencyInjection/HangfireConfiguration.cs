@@ -15,7 +15,7 @@ public static class HangfireConfiguration
         {
             //CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
             //SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-            QueuePollInterval = TimeSpan.Zero,
+            QueuePollInterval = TimeSpan.FromSeconds(15),
             //UseRecommendedIsolationLevel = true,
             //DisableGlobalLocks = true
         });
