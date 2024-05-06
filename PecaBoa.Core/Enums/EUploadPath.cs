@@ -9,5 +9,5 @@ public enum EUploadPath
     [Description("foto-Usuario")]
     FotoUsuario,
     [Description("foto-Usuario")]
-    FotoProdutoServico
+    FotoPedido
 }

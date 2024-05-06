@@ -1,4 +1,4 @@
-﻿using PecaBoa.Application.Dtos.V1.ProdutoServico;
+﻿using PecaBoa.Application.Dtos.V1.Pedido;
 
 namespace PecaBoa.Application.Dtos.V1.Lojista;
 
@@ -21,5 +21,5 @@ public class LojistaDto
     public string Categoria { get; set; } = null!;
     public string? Telefone { get; set; }
     public string Uf { get; set; } = null!;
-    public List<ProdutoServicoDto> ProdutoServicos { get; set; } = new();
+    public List<PedidoDto> Pedidos { get; set; } = new();
 }

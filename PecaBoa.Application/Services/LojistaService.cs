@@ -252,9 +252,9 @@ public class LojistaService : BaseService, ILojistaService
             return;
         }
 
-        lojista.AnuncioPago = true;
-        lojista.DataPagamentoAnuncio = DateTime.Now;
-        lojista.DataExpiracaoAnuncio = lojista.DataPagamentoAnuncio.Value.AddMonths(1);
+        //lojista.AnuncioPago = true;
+        //lojista.DataPagamentoAnuncio = DateTime.Now;
+        //lojista.DataExpiracaoAnuncio = lojista.DataPagamentoAnuncio.Value.AddMonths(1);
         lojista.AtualizadoEm = DateTime.Now;
         _lojistaRepository.Alterar(lojista);
         if (await _lojistaRepository.UnitOfWork.Commit())
@@ -274,7 +274,7 @@ public class LojistaService : BaseService, ILojistaService
             return;
         }
 
-        lojista.AnuncioPago = false;
+        //lojista.AnuncioPago = false;
         lojista.AtualizadoEm = DateTime.Now;
         _lojistaRepository.Alterar(lojista);
         if (await _lojistaRepository.UnitOfWork.Commit())

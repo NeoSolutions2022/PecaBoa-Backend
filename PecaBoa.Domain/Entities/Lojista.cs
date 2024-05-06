@@ -5,7 +5,7 @@ using PecaBoa.Domain.Validation;
 
 namespace PecaBoa.Domain.Entities;
 
-public class Lojista : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
+public class Lojista : Entity, IAggregateRoot, ISoftDelete
 {
     public string Cep { get; set; } = null!;
     public string Cidade { get; set; } = null!;
@@ -26,10 +26,10 @@ public class Lojista : Entity, IAggregateRoot, ISoftDelete, IAnunciavel
     public string? Telefone { get; set; }
     public string Uf { get; set; } = null!;
     
-    public bool AnuncioPago { get; set; }
-    public DateTime? DataPagamentoAnuncio { get; set; }
-    public DateTime? DataExpiracaoAnuncio { get; set; }
-    public List<ProdutoServico> ProdutoServicos { get; set; } = new();
+    //public bool AnuncioPago { get; set; }
+    //public DateTime? DataPagamentoAnuncio { get; set; }
+    //public DateTime? DataExpiracaoAnuncio { get; set; }
+    public List<Pedido> Pedidos { get; set; } = new();
 
     public override bool Validar(out ValidationResult validationResult)
     {

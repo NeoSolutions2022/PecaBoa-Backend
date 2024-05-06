@@ -1,23 +1,23 @@
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Core.Extensions;
 
-namespace PecaBoa.Application.Dtos.V1.ProdutoServico;
+namespace PecaBoa.Application.Dtos.V1.Pedido;
 
-public class BuscarProdutoServicoDto : BuscaPaginadaDto<Domain.Entities.ProdutoServico>
+public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
 {
-    public string? Titulo { get; set; } = null!;
+    public string? Nome { get; set; } = null!;
     public string? Descricao { get; set; } = null!; 
     public string? Categoria { get; set; } = null!;
     public double? Preco { get; set; }
     public double? PrecoDesconto { get; set; }
 
-    public override void AplicarFiltro(ref IQueryable<Domain.Entities.ProdutoServico> query)
+    public override void AplicarFiltro(ref IQueryable<Domain.Entities.Pedido> query)
     {
         var expression = MontarExpressao();
 
-        if (!string.IsNullOrWhiteSpace(Titulo))
+        if (!string.IsNullOrWhiteSpace(Nome))
         {
-            query = query.Where(c => c.Titulo.Contains(Titulo));
+            query = query.Where(c => c.Nome.Contains(Nome));
         }
         
         if (!string.IsNullOrWhiteSpace(Descricao))
@@ -43,13 +43,13 @@ public class BuscarProdutoServicoDto : BuscaPaginadaDto<Domain.Entities.ProdutoS
         query = query.Where(expression);
     }
 
-    public override void AplicarOrdenacao(ref IQueryable<Domain.Entities.ProdutoServico> query)
+    public override void AplicarOrdenacao(ref IQueryable<Domain.Entities.Pedido> query)
     {
         if (DirecaoOrdenacao.EqualsIgnoreCase("asc"))
         {
             query = OrdenarPor.ToLower() switch
             {
-                "titulo" => query.OrderBy(c => c.Titulo),
+                "titulo" => query.OrderBy(c => c.Nome),
                 "descricao" => query.OrderBy(c => c.Descricao),
                 "categoria" => query.OrderBy(c => c.Categoria),
                 "preco" => query.OrderBy(c => c.Preco),
@@ -61,7 +61,7 @@ public class BuscarProdutoServicoDto : BuscaPaginadaDto<Domain.Entities.ProdutoS
         
         query = OrdenarPor.ToLower() switch
         {
-            "titulo" => query.OrderByDescending(c => c.Titulo),
+            "titulo" => query.OrderByDescending(c => c.Nome),
             "descricao" => query.OrderByDescending(c => c.Descricao),
             "categoria" => query.OrderByDescending(c => c.Categoria),
             "preco" => query.OrderByDescending(c => c.Preco),

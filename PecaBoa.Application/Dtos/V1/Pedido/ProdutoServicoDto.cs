@@ -1,9 +1,9 @@
 using PecaBoa.Application.Dtos.V1.Lojista;
-using PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoCaracteristica;
+using PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica;
 
-namespace PecaBoa.Application.Dtos.V1.ProdutoServico;
+namespace PecaBoa.Application.Dtos.V1.Pedido;
 
-public class ProdutoServicoDto
+public class PedidoDto
 {
     public int Id { get; set; }
     public string Foto { get; set; } = null!;
@@ -11,7 +11,7 @@ public class ProdutoServicoDto
     public string? Foto3 { get; set; }
     public string? Foto4 { get; set; }
     public string? Foto5 { get; set; }
-    public string Titulo { get; set; } = null!;
+    public string Nome { get; set; } = null!;
     public string Descricao { get; set; } = null!;
     public double Preco { get; set; }
     public double PrecoDesconto { get; set; }
@@ -20,5 +20,5 @@ public class ProdutoServicoDto
     public string Categoria { get; set; } = null!;
     public string? Caracteristica { get; set; }
     public LojistaDto? Lojista { get; set; }
-    public List<ProdutoServicoCaracteristicaDto> ProdutoServicoCaracteristicas { get; set; } = new();
+    public List<PedidoCaracteristicaDto> PedidoCaracteristicas { get; set; } = new();
 }

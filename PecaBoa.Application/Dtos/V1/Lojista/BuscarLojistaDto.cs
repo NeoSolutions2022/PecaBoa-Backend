@@ -55,10 +55,10 @@ public class BuscarLojistaDto : BuscaPaginadaDto<Domain.Entities.Lojista>
         }
 
 
-        if (AnuncioPago.HasValue)
-        {
-            query = query.Where(c => c.AnuncioPago == AnuncioPago);
-        }
+        //if (AnuncioPago.HasValue)
+        //{
+        //    query = query.Where(c => c.AnuncioPago == AnuncioPago);
+        //}
 
         query = query.Where(expression);
     }

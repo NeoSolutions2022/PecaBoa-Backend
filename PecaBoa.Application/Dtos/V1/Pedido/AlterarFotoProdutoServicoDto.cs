@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace PecaBoa.Application.Dtos.V1.ProdutoServico;
+namespace PecaBoa.Application.Dtos.V1.Pedido;
 
-public class AlterarFotoProdutoServicoDto
+public class AlterarFotoPedidoDto
 {
     public int Id { get; set; }
     public IFormFile Foto { get; set; } = null!;

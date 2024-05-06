@@ -6,37 +6,37 @@ using PecaBoa.Infra.Context;
 
 namespace PecaBoa.Infra.Repositories;
 
-public class ProdutoServicoCaracteristicaRepository : Repository<ProdutoServicoCaracteristica>,
-    IProdutoServicoCaracteristicaRepository
+public class PedidoCaracteristicaRepository : Repository<PedidoCaracteristica>,
+    IPedidoCaracteristicaRepository
 {
-    public ProdutoServicoCaracteristicaRepository(BaseApplicationDbContext context) : base(context)
+    public PedidoCaracteristicaRepository(BaseApplicationDbContext context) : base(context)
     {
     }
 
-    public void Adicionar(List<ProdutoServicoCaracteristica> produtoServicoCaracteristica)
+    public void Adicionar(List<PedidoCaracteristica> PedidoCaracteristica)
     {
-        Context.ProdutoServicoCaracteristicas.AddRange(produtoServicoCaracteristica);
+        Context.PedidoCaracteristicas.AddRange(PedidoCaracteristica);
     }
 
-    public void Alterar(ProdutoServicoCaracteristica produtoServicoCaracteristica)
+    public void Alterar(PedidoCaracteristica PedidoCaracteristica)
     {
-        Context.ProdutoServicoCaracteristicas.UpdateRange(produtoServicoCaracteristica);
+        Context.PedidoCaracteristicas.UpdateRange(PedidoCaracteristica);
     }
 
-    public async Task<ProdutoServicoCaracteristica?> ObterPorId(int id)
+    public async Task<PedidoCaracteristica?> ObterPorId(int id)
     {
-        return await Context.ProdutoServicoCaracteristicas
+        return await Context.PedidoCaracteristicas
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<List<ProdutoServicoCaracteristica>?> ObterTodos(int id)
+    public async Task<List<PedidoCaracteristica>?> ObterTodos(int id)
     {
-        return await Context.ProdutoServicoCaracteristicas.Where(c => c.ProdutoServico.Id == id)
+        return await Context.PedidoCaracteristicas.Where(c => c.Pedido.Id == id)
             .ToListAsync();
     }
 
-    public void Remover(ProdutoServicoCaracteristica produtoServicoCaracteristica)
+    public void Remover(PedidoCaracteristica PedidoCaracteristica)
     {
-        Context.ProdutoServicoCaracteristicas.RemoveRange(produtoServicoCaracteristica);
+        Context.PedidoCaracteristicas.RemoveRange(PedidoCaracteristica);
     }
 }

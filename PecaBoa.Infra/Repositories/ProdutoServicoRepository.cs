@@ -7,41 +7,41 @@ using PecaBoa.Infra.Context;
 
 namespace PecaBoa.Infra.Repositories;
 
-public class ProdutoServicoRepository : Repository<ProdutoServico>, IProdutoServicoRepository
+public class PedidoRepository : Repository<Pedido>, IPedidoRepository
 {
-    public ProdutoServicoRepository(BaseApplicationDbContext context) : base(context)
+    public PedidoRepository(BaseApplicationDbContext context) : base(context)
     {
     }
 
-    public void Adicionar(ProdutoServico produtoServico)
+    public void Adicionar(Pedido Pedido)
     {
-        Context.ProdutoServicos.Add(produtoServico);
+        Context.Pedidos.Add(Pedido);
     }
 
-    public void Alterar(ProdutoServico produtoServico)
+    public void Alterar(Pedido Pedido)
     {
-        Context.ProdutoServicos.Update(produtoServico);
+        Context.Pedidos.Update(Pedido);
     }
 
-    public async Task<ProdutoServico?> ObterPorId(int id)
+    public async Task<Pedido?> ObterPorId(int id)
     {
-        return await Context.ProdutoServicos
+        return await Context.Pedidos
             .Include(c => c.Lojista)
-            .Include(c => c.ProdutoServicoCaracteristicas)
+            .Include(c => c.PedidoCaracteristicas)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
-    public async Task<IResultadoPaginado<ProdutoServico>> Buscar(IBuscaPaginada<ProdutoServico> filtro)
+    public async Task<IResultadoPaginado<Pedido>> Buscar(IBuscaPaginada<Pedido> filtro)
     {
-        var query = Context.ProdutoServicos
+        var query = Context.Pedidos
             .Include(c => c.Lojista)
-            .Include(c => c.ProdutoServicoCaracteristicas)
+            .Include(c => c.PedidoCaracteristicas)
             .AsQueryable();
         return await base.Buscar(query, filtro);
     }
 
-    public void Remover(ProdutoServico produtoServico)
+    public void Remover(Pedido Pedido)
     {
-        Context.ProdutoServicoCaracteristicas.RemoveRange(produtoServico.ProdutoServicoCaracteristicas);
-        Context.ProdutoServicos.Remove(produtoServico);
+        Context.PedidoCaracteristicas.RemoveRange(Pedido.PedidoCaracteristicas);
+        Context.Pedidos.Remove(Pedido);
     }
 }

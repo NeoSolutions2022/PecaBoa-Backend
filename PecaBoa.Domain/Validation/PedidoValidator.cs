@@ -3,15 +3,15 @@ using PecaBoa.Domain.Entities;
 
 namespace PecaBoa.Domain.Validation;
 
-public class ProdutoServicoValidator : AbstractValidator<ProdutoServico>
+public class PedidoValidator : AbstractValidator<Pedido>
 {
-    public ProdutoServicoValidator()
+    public PedidoValidator()
     {
-        RuleFor(p => p.Titulo)
+        RuleFor(p => p.Nome)
             .NotEmpty()
-            .WithMessage("Titulo não pode ser vazio")
+            .WithMessage("Nome não pode ser vazio")
             .MaximumLength(180)
-            .WithMessage("Titulo deve ter no máximo 180 caracteres");
+            .WithMessage("Nome deve ter no máximo 180 caracteres");
 
         RuleFor(p => p.Descricao)
             .NotEmpty()

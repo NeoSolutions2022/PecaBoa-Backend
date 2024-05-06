@@ -1,5 +1,5 @@
 ﻿using PecaBoa.Application.Contracts;
-using PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoCaracteristica;
+using PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica;
 using PecaBoa.Application.Notification;
 using PecaBoa.Core.Authorization;
 using PecaBoa.Core.Enums;
@@ -9,60 +9,60 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace PecaBoa.Api.Controllers.V1.Lojista;
 
 [Route("v{version:apiVersion}/Lojista/[controller]")]
-public class ProdutoServicoCaracteristicasController : MainController
+public class PedidoCaracteristicasController : MainController
 {
-    private readonly IProdutoServicoCaracteristicaService _caracteristicaService;
-    public ProdutoServicoCaracteristicasController(INotificator notificator, IProdutoServicoCaracteristicaService caracteristicaService) : base(notificator)
+    private readonly IPedidoCaracteristicaService _caracteristicaService;
+    public PedidoCaracteristicasController(INotificator notificator, IPedidoCaracteristicaService caracteristicaService) : base(notificator)
     {
         _caracteristicaService = caracteristicaService;
     }
     
     [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Obter Caracteristica Produto/Serviço - Lojista.", Tags = new[] { "Lojista - Produto-Serviço" })]
-    [ProducesResponseType(typeof(ProdutoServicoCaracteristicaDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PedidoCaracteristicaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObterPorId(int id)
     {
-        var produtoServico = await _caracteristicaService.ObterPorId(id);
-        return OkResponse(produtoServico);
+        var Pedido = await _caracteristicaService.ObterPorId(id);
+        return OkResponse(Pedido);
     }
 
-    [HttpGet("produtoServicoId/{produtoId}")]
+    [HttpGet("PedidoId/{produtoId}")]
     [SwaggerOperation(Summary = "Buscar Caracteristica Produto/Serviço - Lojista.",
         Tags = new[] { "Lojista - Produto-Serviço" })]
-    [ProducesResponseType(typeof(List<ProdutoServicoCaracteristicaDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<PedidoCaracteristicaDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> ObterTodos(int produtoId)
     {
-        var produtoServico = await _caracteristicaService.ObterPorTodos(produtoId);
-        return OkResponse(produtoServico);
+        var Pedido = await _caracteristicaService.ObterPorTodos(produtoId);
+        return OkResponse(Pedido);
     }
 
     [HttpPost]
     [SwaggerOperation(Summary = "Cadastrar Caracteristica Produto/Serviço - Lojista.",
         Tags = new[] { "Lojista - Produto-Serviço" })]
     [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
-    [ProducesResponseType(typeof(ProdutoServicoCaracteristicaDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PedidoCaracteristicaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(UnauthorizedObjectResult), StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> Cadastrar([FromForm] List<AdicionarProdutoServicoCaracteristicaDto> dto)
+    public async Task<IActionResult> Cadastrar([FromForm] List<AdicionarPedidoCaracteristicaDto> dto)
     {
-        var produtoServico = await _caracteristicaService.Adicionar(dto);
-        return OkResponse(produtoServico);
+        var Pedido = await _caracteristicaService.Adicionar(dto);
+        return OkResponse(Pedido);
     }
 
     [HttpPut("{id}")]
     [SwaggerOperation(Summary = "Alterar Caracteristica Produto/Serviço - Lojista.",
         Tags = new[] { "Lojista - Produto-Serviço" })]
     [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
-    [ProducesResponseType(typeof(ProdutoServicoCaracteristicaDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PedidoCaracteristicaDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(UnauthorizedObjectResult), StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> Alterar(int id, AlterarProdutoServicoCaracteristicaDto dto)
+    public async Task<IActionResult> Alterar(int id, AlterarPedidoCaracteristicaDto dto)
     {
-        var produtoServico = await _caracteristicaService.Alterar(id, dto);
-        return OkResponse(produtoServico);
+        var Pedido = await _caracteristicaService.Alterar(id, dto);
+        return OkResponse(Pedido);
     }
 
     [HttpDelete]

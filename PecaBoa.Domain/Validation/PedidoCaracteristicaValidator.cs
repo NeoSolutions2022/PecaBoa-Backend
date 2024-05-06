@@ -3,9 +3,9 @@ using PecaBoa.Domain.Entities;
 
 namespace PecaBoa.Domain.Validation;
 
-public class ProdutoServicoCaracteristicaValidator : AbstractValidator<ProdutoServicoCaracteristica>
+public class PedidoCaracteristicaValidator : AbstractValidator<PedidoCaracteristica>
 {
-    public ProdutoServicoCaracteristicaValidator()
+    public PedidoCaracteristicaValidator()
     {
         RuleFor(c => c.Valor)
             .MaximumLength(255);

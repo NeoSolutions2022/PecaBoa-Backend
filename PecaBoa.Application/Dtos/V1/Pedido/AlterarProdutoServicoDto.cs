@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Http;
 
-namespace PecaBoa.Application.Dtos.V1.ProdutoServico;
+namespace PecaBoa.Application.Dtos.V1.Pedido;
 
-public class AlterarProdutoServicoDto
+public class AlterarPedidoDto
 {
     public int Id { get; set; }
-    public string Titulo { get; set; } = null!;
+    public string Nome { get; set; } = null!;
     public double Preco { get; set; }
     public double PrecoDesconto { get; set; }
     public string Descricao { get; set; } = null!;

@@ -84,8 +84,8 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .IsRequired()
             .HasMaxLength(2);
 
-        builder.Property(c => c.AnuncioPago)
-            .HasDefaultValue(false);
+        //builder.Property(c => c.AnuncioPago)
+        //    .HasDefaultValue(false);
 
         builder
             .Property(c => c.CodigoResetarSenha)
@@ -98,7 +98,7 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .IsRequired(false);
         
         builder
-            .HasMany(c => c.ProdutoServicos)
+            .HasMany(c => c.Pedidos)
             .WithOne(c => c.Lojista)
             .HasForeignKey(c => c.LojistaId)
             .OnDelete(DeleteBehavior.Restrict);

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace PecaBoa.Infra.Mappings;
 
-public class ProdutoServicoMap : IEntityTypeConfiguration<ProdutoServico>
+public class PedidoMap : IEntityTypeConfiguration<Pedido>
 {
-    public void Configure(EntityTypeBuilder<ProdutoServico> builder)
+    public void Configure(EntityTypeBuilder<Pedido> builder)
     {
-        builder.Property(c => c.Titulo)
+        builder.Property(c => c.Nome)
             .HasMaxLength(180)
             .IsRequired();
 
@@ -42,8 +42,8 @@ public class ProdutoServicoMap : IEntityTypeConfiguration<ProdutoServico>
         builder.Property(c => c.PrecoDesconto)
             .IsRequired();
         
-        builder.Property(c => c.AnuncioPago)
-            .HasDefaultValue(false);
+        //builder.Property(c => c.AnuncioPago)
+        //    .HasDefaultValue(false);
 
         builder
             .Property(c => c.Categoria)

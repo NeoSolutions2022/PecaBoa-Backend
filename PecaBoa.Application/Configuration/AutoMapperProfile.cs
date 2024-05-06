@@ -76,23 +76,23 @@ public class AutoMapperProfile : Profile
 
         #region Produto-Servico
 
-        CreateMap<ProdutoServico, PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoDto>()
+        CreateMap<Pedido, PecaBoa.Application.Dtos.V1.Pedido.PedidoDto>()
             .ReverseMap();
-        CreateMap<ProdutoServico, PecaBoa.Application.Dtos.V1.ProdutoServico.CadastrarProdutoServicoDto>()
+        CreateMap<Pedido, PecaBoa.Application.Dtos.V1.Pedido.CadastrarPedidoDto>()
             .ReverseMap();
-        CreateMap<ProdutoServico, PecaBoa.Application.Dtos.V1.ProdutoServico.AlterarProdutoServicoDto>()
+        CreateMap<Pedido, PecaBoa.Application.Dtos.V1.Pedido.AlterarPedidoDto>()
             .ReverseMap();
-        CreateMap<ResultadoPaginado<ProdutoServico>,
-                PagedDto<PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoDto>>()
+        CreateMap<ResultadoPaginado<Pedido>,
+                PagedDto<PecaBoa.Application.Dtos.V1.Pedido.PedidoDto>>()
             .ReverseMap();
 
         #endregion
 
-        #region ProdutoServicoCaracteristica
+        #region PedidoCaracteristica
 
-        CreateMap<ProdutoServicoCaracteristica, PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoCaracteristica.ProdutoServicoCaracteristicaDto>().ReverseMap();
-        CreateMap<ProdutoServicoCaracteristica, PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoCaracteristica.AdicionarProdutoServicoCaracteristicaDto>().ReverseMap();
-        CreateMap<ProdutoServicoCaracteristica, PecaBoa.Application.Dtos.V1.ProdutoServico.ProdutoServicoCaracteristica.AlterarProdutoServicoCaracteristicaDto>().ReverseMap();
+        CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.PedidoCaracteristicaDto>().ReverseMap();
+        CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.AdicionarPedidoCaracteristicaDto>().ReverseMap();
+        CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.AlterarPedidoCaracteristicaDto>().ReverseMap();
 
         #endregion
     }
