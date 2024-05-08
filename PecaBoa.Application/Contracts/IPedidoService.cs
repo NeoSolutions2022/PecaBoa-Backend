@@ -1,7 +1,5 @@
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Pedido;
-using PecaBoa.Core.Extensions;
-using Microsoft.AspNetCore.Http;
 
 namespace PecaBoa.Application.Contracts;
 

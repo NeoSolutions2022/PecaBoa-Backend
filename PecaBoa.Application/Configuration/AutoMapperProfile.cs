@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PecaBoa.Application.Dtos.V1.Base;
+using PecaBoa.Application.Dtos.V1.Orcamento;
 using PecaBoa.Core.Extensions;
 using PecaBoa.Domain.Entities;
 using PecaBoa.Domain.Paginacao;
@@ -74,7 +75,7 @@ public class AutoMapperProfile : Profile
 
         #endregion
 
-        #region Produto-Servico
+        #region Pedido
 
         CreateMap<Pedido, PecaBoa.Application.Dtos.V1.Pedido.PedidoDto>()
             .ReverseMap();
@@ -93,6 +94,18 @@ public class AutoMapperProfile : Profile
         CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.PedidoCaracteristicaDto>().ReverseMap();
         CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.AdicionarPedidoCaracteristicaDto>().ReverseMap();
         CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.AlterarPedidoCaracteristicaDto>().ReverseMap();
+
+        #endregion
+
+        #region Orcamento
+
+        CreateMap<Orcamento, OrcamentoDto>()
+            .ReverseMap();
+        CreateMap<Orcamento, CadastrarOrcamentoDto>()
+            .ReverseMap();
+        CreateMap<OrcamentoDto, AlterarOrcamentoDto>()
+            .ReverseMap();
+        CreateMap<ResultadoPaginado<Orcamento>, PagedDto<OrcamentoDto>>();
 
         #endregion
     }

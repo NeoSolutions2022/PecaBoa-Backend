@@ -45,11 +45,12 @@ public static class DependencyInjection
     public static void ConfigureRepositories(this IServiceCollection service)
     {
         service
-            .AddScoped<IUsuarioRepository,UsuarioRepository>()
+            .AddScoped<IUsuarioRepository, UsuarioRepository>()
             .AddScoped<ILojistaRepository, LojistaRepository>()
             .AddScoped<IAdministradorRepository, AdministradorRepository>()
             .AddScoped<IPedidoCaracteristicaRepository, PedidoCaracteristicaRepository>()
-            .AddScoped<IPedidoRepository, PedidoRepository>();
+            .AddScoped<IPedidoRepository, PedidoRepository>()
+            .AddScoped<IOrcamentoRepository, OrcamentoRepository>();
     }
 
     public static void UseMigrations(this IApplicationBuilder app, IServiceProvider service)

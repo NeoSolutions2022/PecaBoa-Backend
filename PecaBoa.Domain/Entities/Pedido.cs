@@ -22,6 +22,7 @@ public class Pedido : Entity, IAggregateRoot, ISoftDelete
     public string? Caracteristica { get; set; }
     public Lojista Lojista { get; set; } = null!;
     public List<PedidoCaracteristica> PedidoCaracteristicas { get; set; } = new();
+    public List<Orcamento> Orcamentos { get; set; } = new();
 
     //public bool AnuncioPago { get; set; }
     //public DateTime? DataPagamentoAnuncio { get; set; }

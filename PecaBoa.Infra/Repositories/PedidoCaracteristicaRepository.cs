@@ -13,14 +13,14 @@ public class PedidoCaracteristicaRepository : Repository<PedidoCaracteristica>,
     {
     }
 
-    public void Adicionar(List<PedidoCaracteristica> PedidoCaracteristica)
+    public void Adicionar(List<PedidoCaracteristica> pedidoCaracteristica)
     {
-        Context.PedidoCaracteristicas.AddRange(PedidoCaracteristica);
+        Context.PedidoCaracteristicas.AddRange(pedidoCaracteristica);
     }
 
-    public void Alterar(PedidoCaracteristica PedidoCaracteristica)
+    public void Alterar(PedidoCaracteristica pedidoCaracteristica)
     {
-        Context.PedidoCaracteristicas.UpdateRange(PedidoCaracteristica);
+        Context.PedidoCaracteristicas.UpdateRange(pedidoCaracteristica);
     }
 
     public async Task<PedidoCaracteristica?> ObterPorId(int id)
@@ -35,8 +35,8 @@ public class PedidoCaracteristicaRepository : Repository<PedidoCaracteristica>,
             .ToListAsync();
     }
 
-    public void Remover(PedidoCaracteristica PedidoCaracteristica)
+    public void Remover(PedidoCaracteristica pedidoCaracteristica)
     {
-        Context.PedidoCaracteristicas.RemoveRange(PedidoCaracteristica);
+        Context.PedidoCaracteristicas.RemoveRange(pedidoCaracteristica);
     }
 }

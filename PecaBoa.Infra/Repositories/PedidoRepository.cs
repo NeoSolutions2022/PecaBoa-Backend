@@ -13,14 +13,14 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     {
     }
 
-    public void Adicionar(Pedido Pedido)
+    public void Adicionar(Pedido pedido)
     {
-        Context.Pedidos.Add(Pedido);
+        Context.Pedidos.Add(pedido);
     }
 
-    public void Alterar(Pedido Pedido)
+    public void Alterar(Pedido pedido)
     {
-        Context.Pedidos.Update(Pedido);
+        Context.Pedidos.Update(pedido);
     }
 
     public async Task<Pedido?> ObterPorId(int id)
@@ -39,9 +39,9 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
         return await base.Buscar(query, filtro);
     }
 
-    public void Remover(Pedido Pedido)
+    public void Remover(Pedido pedido)
     {
-        Context.PedidoCaracteristicas.RemoveRange(Pedido.PedidoCaracteristicas);
-        Context.Pedidos.Remove(Pedido);
+        Context.PedidoCaracteristicas.RemoveRange(pedido.PedidoCaracteristicas);
+        Context.Pedidos.Remove(pedido);
     }
 }

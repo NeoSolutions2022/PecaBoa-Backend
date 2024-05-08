@@ -1,4 +1,5 @@
 using PecaBoa.Application.Dtos.V1.Lojista;
+using PecaBoa.Application.Dtos.V1.Orcamento;
 using PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica;
 
 namespace PecaBoa.Application.Dtos.V1.Pedido;
@@ -21,4 +22,5 @@ public class PedidoDto
     public string? Caracteristica { get; set; }
     public LojistaDto? Lojista { get; set; }
     public List<PedidoCaracteristicaDto> PedidoCaracteristicas { get; set; } = new();
+    public List<OrcamentoDto> Orcamentos { get; set; } = new();
 }
