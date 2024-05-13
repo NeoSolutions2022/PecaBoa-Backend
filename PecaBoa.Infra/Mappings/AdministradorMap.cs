@@ -34,7 +34,7 @@ public class AdministradorMap : IEntityTypeConfiguration<Administrador>
         
         builder
             .Property(c => c.CodigoResetarSenhaExpiraEm)
-            .HasColumnType("DATETIME")
+            .HasColumnType("date")
             .IsRequired(false);
     }
 }

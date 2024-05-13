@@ -94,7 +94,7 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
         
         builder
             .Property(c => c.CodigoResetarSenhaExpiraEm)
-            .HasColumnType("DATETIME")
+            .HasColumnType("date")
             .IsRequired(false);
         
         builder

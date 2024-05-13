@@ -82,7 +82,7 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
         
         builder
             .Property(c => c.CodigoResetarSenhaExpiraEm)
-            .HasColumnType("DATETIME")
+            .HasColumnType("date")
             .IsRequired(false);
     }
 }

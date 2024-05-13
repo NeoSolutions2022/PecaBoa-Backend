@@ -13,8 +13,8 @@ public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
             .IsRequired();
 
         builder.Property(c => c.DataDeEntrega)
-            .HasColumnType("DATETIME")
-            .IsRequired(false);
+            .HasColumnType("date")
+            .IsRequired();
 
         builder
             .HasOne(c => c.Pedido)
