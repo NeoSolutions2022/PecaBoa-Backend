@@ -96,11 +96,5 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .Property(c => c.CodigoResetarSenhaExpiraEm)
             .HasColumnType("date")
             .IsRequired(false);
-        
-        builder
-            .HasMany(c => c.Pedidos)
-            .WithOne(c => c.Lojista)
-            .HasForeignKey(c => c.LojistaId)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }

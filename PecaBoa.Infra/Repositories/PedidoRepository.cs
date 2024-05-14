@@ -26,14 +26,14 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     public async Task<Pedido?> ObterPorId(int id)
     {
         return await Context.Pedidos
-            .Include(c => c.Lojista)
+            .Include(c => c.Usuario)
             .Include(c => c.PedidoCaracteristicas)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
     public async Task<IResultadoPaginado<Pedido>> Buscar(IBuscaPaginada<Pedido> filtro)
     {
         var query = Context.Pedidos
-            .Include(c => c.Lojista)
+            .Include(c => c.Usuario)
             .Include(c => c.PedidoCaracteristicas)
             .AsQueryable();
         return await base.Buscar(query, filtro);

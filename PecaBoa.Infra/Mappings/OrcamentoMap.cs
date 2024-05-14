@@ -20,10 +20,5 @@ public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
             .HasOne(c => c.Pedido)
             .WithMany(c => c.Orcamentos)
             .HasForeignKey(c => c.PedidoId);
-
-        builder
-            .HasOne(c => c.Usuario)
-            .WithMany(c => c.Orcamentos)
-            .HasForeignKey(c => c.UsuarioId);
     }
 }

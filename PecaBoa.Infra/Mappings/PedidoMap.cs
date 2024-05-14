@@ -8,7 +8,7 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
 {
     public void Configure(EntityTypeBuilder<Pedido> builder)
     {
-        builder.Property(c => c.Nome)
+        builder.Property(c => c.NomePeca)
             .HasMaxLength(180)
             .IsRequired();
 
@@ -36,20 +36,27 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
             .IsRequired(false)
             .HasMaxLength(1500);
 
-        builder.Property(c => c.Preco)
-            .IsRequired();
-
-        builder.Property(c => c.PrecoDesconto)
-            .IsRequired();
-        
-        //builder.Property(c => c.AnuncioPago)
-        //    .HasDefaultValue(false);
-
         builder
             .Property(c => c.Categoria)
             .IsRequired();
 
         builder.Property(c => c.Caracteristica)
             .HasMaxLength(8000);
+        
+        builder.Property(c => c.Marca)
+            .HasMaxLength(180)
+            .IsRequired();
+        
+        builder.Property(c => c.Modelo)
+            .HasMaxLength(280)
+            .IsRequired();
+        
+        builder.Property(c => c.AnoDeFabricacao)
+            .HasColumnType("date")
+            .IsRequired(false);
+        
+        builder.Property(c => c.Cor)
+            .HasMaxLength(180)
+            .IsRequired();
     }
 }

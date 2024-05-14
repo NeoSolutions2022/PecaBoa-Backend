@@ -38,7 +38,7 @@ public class PedidoCaracteristicaService : BaseService, IPedidoCaracteristicaSer
             return Mapper.Map<List<PedidoCaracteristicaDto>>(pedidoCaracteristica);
         }
 
-        Notificator.Handle("Não foi possível salvar o produto ou serviço!");
+        Notificator.Handle("Não foi possível salvar o pedido!");
         return null;
     }
 
@@ -69,7 +69,7 @@ public class PedidoCaracteristicaService : BaseService, IPedidoCaracteristicaSer
             return Mapper.Map<PedidoCaracteristicaDto>(pedidoCaracteristica);
         }
 
-        Notificator.Handle("Não foi possível alterar o produto ou serviço!");
+        Notificator.Handle("Não foi possível alterar o pedido!");
         return null;
     }
 
@@ -113,7 +113,7 @@ public class PedidoCaracteristicaService : BaseService, IPedidoCaracteristicaSer
             return;
         }
 
-        Notificator.Handle("Não foi possível remover o produto ou serviço");
+        Notificator.Handle("Não foi possível remover o pedido");
     }
     
     private async Task<bool> Validar(PedidoCaracteristica produtoCaracteristica)
@@ -131,7 +131,7 @@ public class PedidoCaracteristicaService : BaseService, IPedidoCaracteristicaSer
             Notificator.Handle("Já existe uma caracteristica com essa chave!");
         }
 
-        if (caracteristicaExistente != null && caracteristicaExistente.Pedido.LojistaId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
+        if (caracteristicaExistente != null && caracteristicaExistente.Pedido.UsuarioId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
         {
             Notificator.Handle("Você não tem permição para executar essa ação!");
         }
