@@ -30,7 +30,7 @@ public class LojistaesController : MainController
         return OkResponse(lojista);
     }
     
-    [HttpGet("anuncios-Lojistaes")]
+    [HttpGet("anuncios-Lojistas")]
     [SwaggerOperation(Summary = "Listagem dos anúncios de Lojistaes", Tags = new[] { "Usuario - Lojista" })]
     [ProducesResponseType(typeof(PagedDto<LojistaDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

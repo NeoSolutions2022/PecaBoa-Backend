@@ -12,7 +12,7 @@ public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
             .HasMaxLength(1500)
             .IsRequired();
 
-        builder.Property(c => c.DataDeEntrega)
+        builder.Property(c => c.PrazoDeEntrega)
             .HasColumnType("date")
             .IsRequired();
 

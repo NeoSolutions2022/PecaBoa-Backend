@@ -84,9 +84,6 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .IsRequired()
             .HasMaxLength(2);
 
-        //builder.Property(c => c.AnuncioPago)
-        //    .HasDefaultValue(false);
-
         builder
             .Property(c => c.CodigoResetarSenha)
             .HasColumnType("CHAR(64)")
@@ -96,5 +93,11 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .Property(c => c.CodigoResetarSenhaExpiraEm)
             .HasColumnType("date")
             .IsRequired(false);
+
+        builder
+            .HasMany(c => c.Orcamentos)
+            .WithOne(c => c.Lojista)
+            .HasForeignKey(c => c.LojistaId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

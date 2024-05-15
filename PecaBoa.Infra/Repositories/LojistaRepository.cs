@@ -26,7 +26,7 @@ public class LojistaRepository : Repository<Lojista>, ILojistaRepository
     public async Task<Lojista?> ObterPorId(int id)
     {
         return await Context.Lojistas
-            .Include(c => c.Pedidos)
+            .Include(c => c.Orcamentos)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
@@ -53,7 +53,7 @@ public class LojistaRepository : Repository<Lojista>, ILojistaRepository
     public async Task<IResultadoPaginado<Lojista>> Buscar(IBuscaPaginada<Lojista> filtro)
     {
         var query = Context.Lojistas
-            .Include(c => c.Pedidos)
+            .Include(c => c.Orcamentos)
             .AsQueryable();
         return await base.Buscar(query, filtro);
     }

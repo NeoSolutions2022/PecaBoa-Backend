@@ -1,3 +1,4 @@
+using PecaBoa.Application.Dtos.V1.Lojista;
 using PecaBoa.Application.Dtos.V1.Pedido;
 using PecaBoa.Application.Dtos.V1.Usuario;
 
@@ -7,10 +8,12 @@ public class OrcamentoDto
 {
     public int Id { get; set; }
     public string? Observacoes { get; set; }
-    public DateOnly DataDeEntrega { get; set; }
+    public DateOnly PrazoDeEntrega { get; set; }
+    public decimal Preco { get; set; }
+    public string? CondicaoDaPeca { get; set; }
     public int PedidoId { get; set; }
-    public int UsuarioId { get; set; }
-    public UsuarioDto Usuario { get; set; } = null!;
+    public int LojistaId { get; set; }
+    public LojistaDto Lojista { get; set; } = null!;
     public PedidoDto Pedido { get; set; } = null!;
     public bool Desativado { get; set; }
 }
