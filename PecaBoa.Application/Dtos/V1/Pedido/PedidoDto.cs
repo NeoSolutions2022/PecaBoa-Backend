@@ -1,5 +1,4 @@
 using PecaBoa.Application.Dtos.V1.Orcamento;
-using PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica;
 using PecaBoa.Application.Dtos.V1.Usuario;
 
 namespace PecaBoa.Application.Dtos.V1.Pedido;
@@ -23,6 +22,5 @@ public class PedidoDto
     public string Categoria { get; set; } = null!;
     public string? Caracteristica { get; set; }
     public UsuarioDto? Usuario { get; set; }
-    public List<PedidoCaracteristicaDto> PedidoCaracteristicas { get; set; } = new();
     public List<OrcamentoDto> Orcamentos { get; set; } = new();
 }

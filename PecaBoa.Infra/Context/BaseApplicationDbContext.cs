@@ -22,7 +22,6 @@ public abstract class BaseApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<Usuario> Usuarios { get; set; } = null!;
     public DbSet<Lojista> Lojistas { get; set; } = null!;
     public DbSet<Pedido> Pedidos { get; set; } = null!;
-    public DbSet<PedidoCaracteristica> PedidoCaracteristicas { get; set; } = null!;
     public DbSet<Orcamento> Orcamentos { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

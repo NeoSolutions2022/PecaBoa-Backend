@@ -27,21 +27,18 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     {
         return await Context.Pedidos
             .Include(c => c.Usuario)
-            .Include(c => c.PedidoCaracteristicas)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
     public async Task<IResultadoPaginado<Pedido>> Buscar(IBuscaPaginada<Pedido> filtro)
     {
         var query = Context.Pedidos
             .Include(c => c.Usuario)
-            .Include(c => c.PedidoCaracteristicas)
             .AsQueryable();
         return await base.Buscar(query, filtro);
     }
 
     public void Remover(Pedido pedido)
     {
-        Context.PedidoCaracteristicas.RemoveRange(pedido.PedidoCaracteristicas);
         Context.Pedidos.Remove(pedido);
     }
 }

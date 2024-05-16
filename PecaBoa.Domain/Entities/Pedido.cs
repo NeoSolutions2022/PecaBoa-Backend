@@ -23,7 +23,6 @@ public class Pedido : Entity, IAggregateRoot, ISoftDelete
     public string Categoria { get; set; } = null!;
     public string? Caracteristica { get; set; }
     public Usuario Usuario { get; set; } = null!;
-    public List<PedidoCaracteristica> PedidoCaracteristicas { get; set; } = new();
     public List<Orcamento> Orcamentos { get; set; } = new();
 
     public override bool Validar(out ValidationResult validationResult)

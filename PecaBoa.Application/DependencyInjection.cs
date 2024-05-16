@@ -48,7 +48,6 @@ public static class DependencyInjection
             .AddScoped<IPedidoService, PedidoService>()
             .AddScoped<IOrcamentoService, OrcamentoService>()
             .AddScoped<IPagamentosService, PagamentosService>()
-            .AddScoped<IPedidoCaracteristicaService, PedidoCaracteristicaService>()
             .AddScoped<IFileService, FileService>()
             .AddScoped<ILojistaAuthService, LojistaAuthService>()
             .AddScoped<IUsuarioAuthService, UsuarioAuthService>()

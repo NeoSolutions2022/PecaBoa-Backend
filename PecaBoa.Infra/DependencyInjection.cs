@@ -48,7 +48,6 @@ public static class DependencyInjection
             .AddScoped<IUsuarioRepository, UsuarioRepository>()
             .AddScoped<ILojistaRepository, LojistaRepository>()
             .AddScoped<IAdministradorRepository, AdministradorRepository>()
-            .AddScoped<IPedidoCaracteristicaRepository, PedidoCaracteristicaRepository>()
             .AddScoped<IPedidoRepository, PedidoRepository>()
             .AddScoped<IOrcamentoRepository, OrcamentoRepository>();
     }
