@@ -15,6 +15,26 @@ public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
         builder.Property(c => c.PrazoDeEntrega)
             .HasColumnType("date")
             .IsRequired();
+        
+        builder.Property(c => c.Foto)
+            .IsRequired(false)
+            .HasMaxLength(1500);
+
+        builder.Property(c => c.Foto2)
+            .IsRequired(false)
+            .HasMaxLength(1500);
+
+        builder.Property(c => c.Foto3)
+            .IsRequired(false)
+            .HasMaxLength(1500);
+
+        builder.Property(c => c.Foto4)
+            .IsRequired(false)
+            .HasMaxLength(1500);
+
+        builder.Property(c => c.Foto5)
+            .IsRequired(false)
+            .HasMaxLength(1500);
 
         builder
             .HasOne(c => c.Pedido)
