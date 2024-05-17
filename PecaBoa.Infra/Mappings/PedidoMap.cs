@@ -50,7 +50,7 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
         builder.Property(c => c.Modelo)
             .HasMaxLength(280)
             .IsRequired();
-        
+
         builder.Property(c => c.AnoDeFabricacao)
             .HasColumnType("date")
             .IsRequired(false);

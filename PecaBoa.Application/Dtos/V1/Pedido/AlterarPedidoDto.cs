@@ -9,7 +9,7 @@ public class AlterarPedidoDto
     public string Descricao { get; set; } = null!;
     public string Marca { get; set; } = null!;
     public string Modelo { get; set; } = null!;
-    public DateOnly? AnoDeFabricacao { get; set; } = null!;
+    public DateOnly AnoDeFabricacao { get; set; }
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public string Categoria { get; set; } = null!;

@@ -16,7 +16,7 @@ public class Pedido : Entity, IAggregateRoot, ISoftDelete
     public string Descricao { get; set; } = null!;
     public string Marca { get; set; } = null!;
     public string Modelo { get; set; } = null!;
-    public DateOnly AnoDeFabricacao { get; set; }
+    public DateOnly? AnoDeFabricacao { get; set; } = null!;
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public int UsuarioId { get; set; }
