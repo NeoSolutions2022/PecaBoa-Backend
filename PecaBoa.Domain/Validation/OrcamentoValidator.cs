@@ -11,7 +11,17 @@ public class OrcamentoValidator : AbstractValidator<Orcamento>
             .NotNull()
             .NotEmpty();
 
-        RuleFor(p => p.DataDeEntrega)
+        RuleFor(c => c.Preco)
+            .NotNull()
+            .WithMessage("Preco não pode ser nulo")
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("Preço deve ser maior que 0");
+
+        RuleFor(p => p.Foto)
+            .MaximumLength(1500)
+            .WithMessage("Foto deve ter no máximo 1500 caracteres");
+        
+        RuleFor(p => p.PrazoDeEntrega)
             .NotNull()
             .NotEmpty();
     }

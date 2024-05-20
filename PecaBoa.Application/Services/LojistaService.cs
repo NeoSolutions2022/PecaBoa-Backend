@@ -80,7 +80,7 @@ public class LojistaService : BaseService, ILojistaService
 
         lojista.Senha = _passwordHasher.HashPassword(lojista, lojista.Senha);
         lojista.Uf = lojista.Uf.ToLower();
-        lojista.CriadoEm = DateTime.Now;
+        lojista.CriadoEm = DateTime.SpecifyKind(lojista.CriadoEm, DateTimeKind.Utc);
         _lojistaRepository.Adicionar(lojista);
         if (await _lojistaRepository.UnitOfWork.Commit())
         {
@@ -113,7 +113,7 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         lojista.Uf = lojista.Uf.ToLower();
-        lojista.AtualizadoEm = DateTime.Now;
+        lojista.AtualizadoEm = DateTime.SpecifyKind(lojista.AtualizadoEm, DateTimeKind.Utc);
         _lojistaRepository.Alterar(lojista);
         if (await _lojistaRepository.UnitOfWork.Commit())
         {
@@ -213,7 +213,7 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         lojista.Desativado = true;
-        lojista.AtualizadoEm = DateTime.Now;
+        lojista.AtualizadoEm = DateTime.SpecifyKind(lojista.AtualizadoEm, DateTimeKind.Utc);
         _lojistaRepository.Alterar(lojista);
         if (await _lojistaRepository.UnitOfWork.Commit())
         {
@@ -233,7 +233,7 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         lojista.Desativado = false;
-        lojista.AtualizadoEm = DateTime.Now;
+        lojista.AtualizadoEm = DateTime.SpecifyKind(lojista.AtualizadoEm, DateTimeKind.Utc);
         _lojistaRepository.Alterar(lojista);
         if (await _lojistaRepository.UnitOfWork.Commit())
         {

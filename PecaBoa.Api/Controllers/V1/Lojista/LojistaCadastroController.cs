@@ -8,10 +8,10 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace PecaBoa.Api.Controllers.V1.Lojista;
 
 [Route("v{version:apiVersion}/Lojista/[controller]")]
-public class LojistaesCadastroController : BaseController
+public class LojistaCadastroController : BaseController
 {
     private readonly ILojistaService _lojistaService;
-    public LojistaesCadastroController(INotificator notificator, ILojistaService lojistaService) : base(notificator)
+    public LojistaCadastroController(INotificator notificator, ILojistaService lojistaService) : base(notificator)
     {
         _lojistaService = lojistaService;
     }
