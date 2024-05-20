@@ -27,7 +27,7 @@ public class OrcamentoRepository : Repository<Orcamento>, IOrcamentoRepository
     {
         return await Context.Orcamentos
             .Include(c => c.Pedido)
-            .Include(c => c.Usuario)
+            .Include(c => c.Lojista)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
@@ -35,7 +35,7 @@ public class OrcamentoRepository : Repository<Orcamento>, IOrcamentoRepository
     {
         var query = Context.Orcamentos
             .Include(c => c.Pedido)
-            .Include(c => c.Usuario)
+            .Include(c => c.Lojista)
             .AsQueryable();
 
         return await base.Buscar(query, filtro);

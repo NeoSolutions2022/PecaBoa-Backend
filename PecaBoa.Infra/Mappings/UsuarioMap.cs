@@ -84,5 +84,11 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
             .Property(c => c.CodigoResetarSenhaExpiraEm)
             .HasColumnType("date")
             .IsRequired(false);
+        
+        builder
+            .HasMany(c => c.Pedidos)
+            .WithOne(c => c.Usuario)
+            .HasForeignKey(c => c.UsuarioId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
