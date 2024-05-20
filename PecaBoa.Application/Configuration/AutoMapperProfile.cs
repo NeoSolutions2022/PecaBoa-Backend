@@ -89,14 +89,6 @@ public class AutoMapperProfile : Profile
 
         #endregion
 
-        #region PedidoCaracteristica
-
-        CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.PedidoCaracteristicaDto>().ReverseMap();
-        CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.AdicionarPedidoCaracteristicaDto>().ReverseMap();
-        CreateMap<PedidoCaracteristica, PecaBoa.Application.Dtos.V1.Pedido.PedidoCaracteristica.AlterarPedidoCaracteristicaDto>().ReverseMap();
-
-        #endregion
-
         #region Orcamento
 
         CreateMap<Orcamento, OrcamentoDto>()

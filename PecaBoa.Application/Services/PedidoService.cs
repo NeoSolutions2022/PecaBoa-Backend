@@ -55,7 +55,7 @@ public class PedidoService : BaseService, IPedidoService
             pedido.Foto5 = await _fileService.Upload(dto.Foto5, EUploadPath.FotoPedido);
         }
 
-        pedido.LojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
+        pedido.UsuarioId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         pedido.CriadoEm = DateTime.Now;
         if (!await Validar(pedido))
         {
@@ -69,7 +69,7 @@ public class PedidoService : BaseService, IPedidoService
             return Mapper.Map<PedidoDto>(pedido);
         }
 
-        Notificator.Handle("Não foi possível salvar o produto ou serviço!");
+        Notificator.Handle("Não foi possível salvar o pedido!");
         return null;
     }
 
@@ -147,7 +147,7 @@ public class PedidoService : BaseService, IPedidoService
             return Mapper.Map<PedidoDto>(pedido);
         }
 
-        Notificator.Handle("Não foi possível alterar o produto ou serviço!");
+        Notificator.Handle("Não foi possível alterar o pedido!");
         return null;
     }
 
@@ -254,7 +254,7 @@ public class PedidoService : BaseService, IPedidoService
             return;
         }
 
-        Notificator.Handle("Não foi possível desativar o produto ou serviço");
+        Notificator.Handle("Não foi possível desativar o pedido!");
     }
 
     public async Task Reativar(int id)
@@ -274,7 +274,7 @@ public class PedidoService : BaseService, IPedidoService
             return;
         }
 
-        Notificator.Handle("Não foi possível reativar o produto ou serviço");
+        Notificator.Handle("Não foi possível reativar o pedido!");
     }
 
     public async Task Remover(int id)
@@ -293,7 +293,7 @@ public class PedidoService : BaseService, IPedidoService
             return;
         }
 
-        Notificator.Handle("Não foi possível remover o produto ou serviço");
+        Notificator.Handle("Não foi possível remover o pedido!");
     }
 
     public async Task<PagedDto<PedidoDto>> Buscar(BuscarPedidoDto dto)
@@ -321,14 +321,14 @@ public class PedidoService : BaseService, IPedidoService
             Notificator.Handle(validationResult.Errors);
         }
 
-        if (pedido.LojistaId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
+        if (pedido.UsuarioId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
         {
             Notificator.Handle("Você não tem permissão para executar essa ação!");
         }
 
         var administradorExistente =
             await _pedidoRepository.FistOrDefault(
-                c => c.Nome == pedido.Nome && c.Id != pedido.Id);
+                c => c.NomePeca == pedido.NomePeca && c.Id != pedido.Id);
         if (administradorExistente != null)
         {
             Notificator.Handle("Já existe um administrador com esse email!");

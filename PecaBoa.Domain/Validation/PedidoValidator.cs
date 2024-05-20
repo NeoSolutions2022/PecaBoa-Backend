@@ -7,11 +7,11 @@ public class PedidoValidator : AbstractValidator<Pedido>
 {
     public PedidoValidator()
     {
-        RuleFor(p => p.Nome)
+        RuleFor(p => p.NomePeca)
             .NotEmpty()
-            .WithMessage("Nome não pode ser vazio")
+            .WithMessage("Nome Peca não pode ser vazio")
             .MaximumLength(180)
-            .WithMessage("Nome deve ter no máximo 180 caracteres");
+            .WithMessage("Nome Peca ter no máximo 180 caracteres");
 
         RuleFor(p => p.Descricao)
             .NotEmpty()
@@ -23,22 +23,28 @@ public class PedidoValidator : AbstractValidator<Pedido>
             .MaximumLength(1500)
             .WithMessage("Foto deve ter no máximo 1500 caracteres");
 
-        RuleFor(c => c.Preco)
-            .NotNull()
-            .WithMessage("Preco não pode ser nulo")
-            .GreaterThanOrEqualTo(0)
-            .WithMessage("Preço deve ser maior que 0");
-        
-        RuleFor(c => c.PrecoDesconto)
-            .NotNull()
-            .WithMessage("PrecoDesconto não pode ser nulo")
-            .GreaterThanOrEqualTo(0)
-            .WithMessage("PrecoDesconto deve ser maior que 0");
-
         RuleFor(c => c.Categoria)
             .NotNull()
             .WithMessage("Categoria não pode ser nula")
             .NotEmpty()
             .WithMessage("Categoria deve conter ao menos um item");
+
+        RuleFor(c => c.Marca)
+            .NotNull()
+            .WithMessage("Marca não pode ser vazio")
+            .MaximumLength(180)
+            .WithMessage("Marca deve ter no máximo 180 caracteres");
+
+        RuleFor(c => c.Modelo)
+            .NotNull()
+            .WithMessage("Modelo não pode ser vazio")
+            .MaximumLength(280)
+            .WithMessage("Modelo deve ter no máximo 280 caracteres");
+
+        RuleFor(c => c.Cor)
+            .NotNull()
+            .WithMessage("Cor não pode ser vazio")
+            .MaximumLength(180)
+            .WithMessage("Cor deve ter no máximo 180 caracteres");
     }
 }

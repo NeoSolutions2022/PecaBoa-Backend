@@ -29,7 +29,7 @@ public class Lojista : Entity, IAggregateRoot, ISoftDelete
     //public bool AnuncioPago { get; set; }
     //public DateTime? DataPagamentoAnuncio { get; set; }
     //public DateTime? DataExpiracaoAnuncio { get; set; }
-    public List<Pedido> Pedidos { get; set; } = new();
+    public List<Orcamento> Orcamentos { get; set; } = new();
 
     public override bool Validar(out ValidationResult validationResult)
     {

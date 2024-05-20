@@ -5,9 +5,9 @@ namespace PecaBoa.Application.Dtos.V1.Orcamento;
 
 public class BuscarOrcamentoDto : BuscaPaginadaDto<Domain.Entities.Orcamento>
 {
-    public DateOnly? DataDeEntrega { get; set; }
+    public DateOnly? PrazoDeEntrega { get; set; }
     public int? PedidoId { get; set; }
-    public int? UsuarioId { get; set; }
+    public int? LojistaId { get; set; }
     public bool? Desativado { get; set; }
 
     public override void AplicarFiltro(ref IQueryable<Domain.Entities.Orcamento> query)
@@ -16,9 +16,9 @@ public class BuscarOrcamentoDto : BuscaPaginadaDto<Domain.Entities.Orcamento>
         
         base.AplicarFiltro(ref query);
 
-        if (DataDeEntrega.HasValue)
+        if (PrazoDeEntrega.HasValue)
         {
-            query = query.Where(c => c.DataDeEntrega == DataDeEntrega);
+            query = query.Where(c => c.PrazoDeEntrega == PrazoDeEntrega);
         }
 
         if (PedidoId.HasValue)
@@ -26,9 +26,9 @@ public class BuscarOrcamentoDto : BuscaPaginadaDto<Domain.Entities.Orcamento>
             query = query.Where(c => c.PedidoId == PedidoId);
         }
 
-        if (UsuarioId.HasValue)
+        if (LojistaId.HasValue)
         {
-            query = query.Where(c => c.UsuarioId == UsuarioId);
+            query = query.Where(c => c.LojistaId == LojistaId);
         }
         
         if (Desativado.HasValue)
@@ -45,9 +45,9 @@ public class BuscarOrcamentoDto : BuscaPaginadaDto<Domain.Entities.Orcamento>
         {
             query = OrdenarPor.ToLower() switch
             {
-                "DataDeEntrega" => query.OrderBy(c => c.DataDeEntrega),
+                "PrazoDeEntrega" => query.OrderBy(c => c.PrazoDeEntrega),
                 "PedidoId" => query.OrderBy(c => c.PedidoId),
-                "UsuarioId" => query.OrderBy(c => c.UsuarioId),
+                "LojistaId" => query.OrderBy(c => c.LojistaId),
                 "Desativado" => query.OrderBy(c => c.Desativado),
                 "id" or _ => query.OrderBy(c => c.Id)
             };
@@ -56,9 +56,9 @@ public class BuscarOrcamentoDto : BuscaPaginadaDto<Domain.Entities.Orcamento>
 
         query = OrdenarPor.ToLower() switch
         {
-            "DataDeEntrega" => query.OrderByDescending(c => c.DataDeEntrega),
+            "DataDeEntrega" => query.OrderByDescending(c => c.PrazoDeEntrega),
             "PedidoId" => query.OrderByDescending(c => c.PedidoId),
-            "UsuarioId" => query.OrderByDescending(c => c.UsuarioId),
+            "UsuarioId" => query.OrderByDescending(c => c.LojistaId),
             "Desativado" => query.OrderByDescending(c => c.Desativado),
             "id" or _ => query.OrderBy(c => c.Id)
         };

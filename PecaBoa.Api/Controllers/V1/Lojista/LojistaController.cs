@@ -10,11 +10,11 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace PecaBoa.Api.Controllers.V1.Lojista;
 
 [Route("v{version:apiVersion}/Lojista/[controller]")]
-public class LojistaesController : MainController
+public class LojistaController : MainController
 {
     private readonly ILojistaService _lojistaService;
 
-    public LojistaesController(INotificator notificator, ILojistaService lojistaService) : base(notificator)
+    public LojistaController(INotificator notificator, ILojistaService lojistaService) : base(notificator)
     {
         _lojistaService = lojistaService;
     }
@@ -30,7 +30,7 @@ public class LojistaesController : MainController
         return OkResponse(lojista);
     }
     
-    [HttpGet("anuncios-Lojistaes")]
+    [HttpGet("anuncios-Lojistas")]
     [SwaggerOperation(Summary = "Listagem dos anúncios de Lojistaes", Tags = new[] { "Usuario - Lojista" })]
     [ProducesResponseType(typeof(PagedDto<LojistaDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
