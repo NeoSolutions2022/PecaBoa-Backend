@@ -5,5 +5,5 @@ namespace PecaBoa.Application.Contracts;
 
 public interface IFileService
 {
-    Task<string> Upload(IFormFile arquivo, EUploadPath uploadPath);
+    Task<string> Upload(IFormFile arquivo);
 }

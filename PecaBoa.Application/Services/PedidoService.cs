@@ -32,31 +32,31 @@ public class PedidoService : BaseService, IPedidoService
 
         if (dto.Foto is { Length : > 0 })
         {
-            pedido.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoPedido);
+            pedido.Foto = await _fileService.Upload(dto.Foto);
         }
 
         if (dto.Foto2 is { Length : > 0 })
         {
-            pedido.Foto2 = await _fileService.Upload(dto.Foto2, EUploadPath.FotoPedido);
+            pedido.Foto2 = await _fileService.Upload(dto.Foto2);
         }
 
         if (dto.Foto3 is { Length : > 0 })
         {
-            pedido.Foto3 = await _fileService.Upload(dto.Foto3, EUploadPath.FotoPedido);
+            pedido.Foto3 = await _fileService.Upload(dto.Foto3);
         }
 
         if (dto.Foto4 is { Length : > 0 })
         {
-            pedido.Foto4 = await _fileService.Upload(dto.Foto4, EUploadPath.FotoPedido);
+            pedido.Foto4 = await _fileService.Upload(dto.Foto4);
         }
 
         if (dto.Foto5 is { Length : > 0 })
         {
-            pedido.Foto5 = await _fileService.Upload(dto.Foto5, EUploadPath.FotoPedido);
+            pedido.Foto5 = await _fileService.Upload(dto.Foto5);
         }
 
         pedido.UsuarioId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
-        pedido.CriadoEm = DateTime.Now;
+        pedido.CriadoEm = DateTime.SpecifyKind(pedido.CriadoEm, DateTimeKind.Utc);;
         if (!await Validar(pedido))
         {
             return null;
@@ -92,7 +92,7 @@ public class PedidoService : BaseService, IPedidoService
 
         if (dto.Foto is { Length : > 0 })
         {
-            pedido.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoPedido);
+            pedido.Foto = await _fileService.Upload(dto.Foto);
         }
         else
         {
@@ -101,7 +101,7 @@ public class PedidoService : BaseService, IPedidoService
 
         if (dto.Foto2 is { Length : > 0 })
         {
-            pedido.Foto2 = await _fileService.Upload(dto.Foto2, EUploadPath.FotoPedido);
+            pedido.Foto2 = await _fileService.Upload(dto.Foto2);
         }
         else
         {
@@ -110,7 +110,7 @@ public class PedidoService : BaseService, IPedidoService
 
         if (dto.Foto3 is { Length : > 0 })
         {
-            pedido.Foto3 = await _fileService.Upload(dto.Foto3, EUploadPath.FotoPedido);
+            pedido.Foto3 = await _fileService.Upload(dto.Foto3);
         }
         else
         {
@@ -119,7 +119,7 @@ public class PedidoService : BaseService, IPedidoService
 
         if (dto.Foto4 is { Length : > 0 })
         {
-            pedido.Foto4 = await _fileService.Upload(dto.Foto4, EUploadPath.FotoPedido);
+            pedido.Foto4 = await _fileService.Upload(dto.Foto4);
         }
         else
         {
@@ -128,7 +128,7 @@ public class PedidoService : BaseService, IPedidoService
 
         if (dto.Foto5 is { Length : > 0 })
         {
-            pedido.Foto5 = await _fileService.Upload(dto.Foto5, EUploadPath.FotoPedido);
+            pedido.Foto5 = await _fileService.Upload(dto.Foto5);
         }
         else
         {
@@ -140,7 +140,7 @@ public class PedidoService : BaseService, IPedidoService
             return null;
         }
 
-        pedido.AtualizadoEm = DateTime.Now;
+        pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);;
         _pedidoRepository.Alterar(pedido);
         if (await _pedidoRepository.UnitOfWork.Commit())
         {
@@ -162,27 +162,27 @@ public class PedidoService : BaseService, IPedidoService
 
         if (dto.Foto is { Length : > 0 })
         {
-            pedido.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoPedido);
+            pedido.Foto = await _fileService.Upload(dto.Foto);
         }
 
         if (dto.Foto2 is { Length : > 0 })
         {
-            pedido.Foto2 = await _fileService.Upload(dto.Foto2, EUploadPath.FotoPedido);
+            pedido.Foto2 = await _fileService.Upload(dto.Foto2);
         }
 
         if (dto.Foto3 is { Length : > 0 })
         {
-            pedido.Foto3 = await _fileService.Upload(dto.Foto3, EUploadPath.FotoPedido);
+            pedido.Foto3 = await _fileService.Upload(dto.Foto3);
         }
 
         if (dto.Foto4 is { Length : > 0 })
         {
-            pedido.Foto4 = await _fileService.Upload(dto.Foto4, EUploadPath.FotoPedido);
+            pedido.Foto4 = await _fileService.Upload(dto.Foto4);
         }
 
         if (dto.Foto5 is { Length : > 0 })
         {
-            pedido.Foto5 = await _fileService.Upload(dto.Foto5, EUploadPath.FotoPedido);
+            pedido.Foto5 = await _fileService.Upload(dto.Foto5);
         }
 
         _pedidoRepository.Alterar(pedido);
@@ -247,7 +247,7 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.Desativado = true;
-        pedido.AtualizadoEm = DateTime.Now;
+        pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);
         _pedidoRepository.Alterar(pedido);
         if (await _pedidoRepository.UnitOfWork.Commit())
         {
@@ -267,7 +267,7 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.Desativado = false;
-        pedido.AtualizadoEm = DateTime.Now;
+        pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);
         _pedidoRepository.Alterar(pedido);
         if (await _pedidoRepository.UnitOfWork.Commit())
         {

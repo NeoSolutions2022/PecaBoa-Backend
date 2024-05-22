@@ -24,7 +24,7 @@ public class OrcamentoService : BaseService, IOrcamentoService
     {
         var orcamento = Mapper.Map<Orcamento>(dto);
         
-        orcamento.CriadoEm = DateTime.Now;
+        orcamento.CriadoEm = DateTime.SpecifyKind(orcamento.CriadoEm, DateTimeKind.Utc);
         _orcamentoRepository.Adicionar(orcamento);
         
         if (await _orcamentoRepository.UnitOfWork.Commit())
@@ -53,7 +53,7 @@ public class OrcamentoService : BaseService, IOrcamentoService
 
         Mapper.Map(dto, orcamento);
         
-        orcamento.AtualizadoEm = DateTime.Now;
+        orcamento.AtualizadoEm = DateTime.SpecifyKind(orcamento.AtualizadoEm, DateTimeKind.Utc);
         _orcamentoRepository.Alterar(orcamento);
         
         if (await _orcamentoRepository.UnitOfWork.Commit())
@@ -89,7 +89,7 @@ public class OrcamentoService : BaseService, IOrcamentoService
         }
 
         orcamento.Desativado = true;
-        orcamento.AtualizadoEm = DateTime.Now;
+        orcamento.AtualizadoEm = DateTime.SpecifyKind(orcamento.AtualizadoEm, DateTimeKind.Utc);
         _orcamentoRepository.Alterar(orcamento);
         
         if (await _orcamentoRepository.UnitOfWork.Commit())
@@ -111,7 +111,7 @@ public class OrcamentoService : BaseService, IOrcamentoService
         }
 
         orcamento.Desativado = false;
-        orcamento.AtualizadoEm = DateTime.Now;
+        orcamento.AtualizadoEm = DateTime.SpecifyKind(orcamento.AtualizadoEm, DateTimeKind.Utc);
         _orcamentoRepository.Alterar(orcamento);
         
         if (await _orcamentoRepository.UnitOfWork.Commit())
@@ -144,27 +144,27 @@ public class OrcamentoService : BaseService, IOrcamentoService
 
         if (dto.Foto is { Length : > 0 })
         {
-            orcamento.Foto = await _fileService.Upload(dto.Foto, EUploadPath.FotoOrcamento);
+            orcamento.Foto = await _fileService.Upload(dto.Foto);
         }
 
         if (dto.Foto2 is { Length : > 0 })
         {
-            orcamento.Foto2 = await _fileService.Upload(dto.Foto2, EUploadPath.FotoOrcamento);
+            orcamento.Foto2 = await _fileService.Upload(dto.Foto2);
         }
 
         if (dto.Foto3 is { Length : > 0 })
         {
-            orcamento.Foto3 = await _fileService.Upload(dto.Foto3, EUploadPath.FotoOrcamento);
+            orcamento.Foto3 = await _fileService.Upload(dto.Foto3);
         }
 
         if (dto.Foto4 is { Length : > 0 })
         {
-            orcamento.Foto4 = await _fileService.Upload(dto.Foto4, EUploadPath.FotoOrcamento);
+            orcamento.Foto4 = await _fileService.Upload(dto.Foto4);
         }
 
         if (dto.Foto5 is { Length : > 0 })
         {
-            orcamento.Foto5 = await _fileService.Upload(dto.Foto5, EUploadPath.FotoOrcamento);
+            orcamento.Foto5 = await _fileService.Upload(dto.Foto5);
         }
 
         _orcamentoRepository.Alterar(orcamento);

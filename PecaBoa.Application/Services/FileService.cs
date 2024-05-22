@@ -4,21 +4,25 @@ using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Notification;
 using PecaBoa.Core.Enums;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace PecaBoa.Application.Services;
 
 public class FileService : BaseService, IFileService
 {
-    public FileService(IMapper mapper, INotificator notificator) : base(mapper, notificator)
+    private readonly IConfiguration _config;
+    public FileService(IMapper mapper, INotificator notificator, IConfiguration config) : base(mapper, notificator)
     {
+        _config = config;
     }
 
-    public async Task<string> Upload(IFormFile arquivo, EUploadPath uploadPath)
+    public async Task<string> Upload(IFormFile arquivo)
     {
-        var connectionString = "";
+        var connectionString = _config.GetValue<string>("UploadConnectionString");
         var fileName = GenerateNewFileName(arquivo.FileName);
-
-        BlobContainerClient container = new BlobContainerClient(connectionString, "bob");
+        var containerName = _config.GetValue<string>("UploadContainerName");
+        
+        BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
         BlobClient blob = container.GetBlobClient(fileName);
         await blob.UploadAsync(arquivo.OpenReadStream());
 
