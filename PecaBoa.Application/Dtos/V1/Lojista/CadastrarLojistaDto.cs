@@ -6,6 +6,7 @@ namespace PecaBoa.Application.Dtos.V1.Lojista;
 public class CadastrarLojistaDto
 {
     public string Nome { get; set; } = null!;
+    public string NomeFantasia { get; set; } = null!;
     public string Responsavel { get; set; } = null!;
     public string? Descricao { get; set; }
     public string Cep { get; set; } = null!;
