@@ -37,11 +37,9 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
             .HasMaxLength(1500);
 
         builder
-            .Property(c => c.Categoria)
+            .Property(c => c.TipoDePeca)
+            .HasMaxLength(250)
             .IsRequired();
-
-        builder.Property(c => c.Caracteristica)
-            .HasMaxLength(8000);
         
         builder.Property(c => c.Marca)
             .HasMaxLength(180)

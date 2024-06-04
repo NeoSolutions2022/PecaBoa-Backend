@@ -20,8 +20,7 @@ public class Pedido : Entity, IAggregateRoot, ISoftDelete
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public int UsuarioId { get; set; }
-    public string Categoria { get; set; } = null!;
-    public string? Caracteristica { get; set; }
+    public string TipoDePeca { get; set; } = null!;
     public Usuario Usuario { get; set; } = null!;
     public List<Orcamento> Orcamentos { get; set; } = new();
 

@@ -16,6 +16,5 @@ public class CadastrarPedidoDto
     public DateOnly AnoDeFabricacao { get; set; }
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
-    public string Categoria { get; set; } = null!;
-    public string? Caracteristica { get; set; }
+    public string TipoDePeca { get; set; } = null!;
 }
