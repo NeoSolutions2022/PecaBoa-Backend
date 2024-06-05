@@ -7,7 +7,7 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
 {
     public string? NomePeca { get; set; } = null!;
     public string? Descricao { get; set; } = null!; 
-    public string? Categoria { get; set; } = null!;
+    public string? TipoDePeca { get; set; } = null!;
     public string? Marca { get; set; } = null!;
     public string? Modelo { get; set; } = null!;
     public DateOnly? AnoDeFabricacao { get; set; } = null!;
@@ -26,9 +26,9 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
             query = query.Where(c => c.Descricao.Contains(Descricao));
         }
 
-        if (!string.IsNullOrWhiteSpace(Categoria))
+        if (!string.IsNullOrWhiteSpace(TipoDePeca))
         {
-            query = query.Where(c => c.Categoria.Contains(Categoria));
+            query = query.Where(c => c.TipoDePeca.Contains(TipoDePeca));
         }
         
         if (!string.IsNullOrWhiteSpace(Marca))
@@ -62,7 +62,7 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
             {
                 "titulo" => query.OrderBy(c => c.NomePeca),
                 "descricao" => query.OrderBy(c => c.Descricao),
-                "categoria" => query.OrderBy(c => c.Categoria),
+                "TipoDePeca" => query.OrderBy(c => c.TipoDePeca),
                 "Marca" => query.OrderBy(c => c.Marca),
                 "Modelo" => query.OrderBy(c => c.Modelo),
                 "AnoDeFabricacao" => query.OrderBy(c => c.AnoDeFabricacao),
@@ -76,7 +76,7 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
         {
             "titulo" => query.OrderByDescending(c => c.NomePeca),
             "descricao" => query.OrderByDescending(c => c.Descricao),
-            "categoria" => query.OrderByDescending(c => c.Categoria),
+            "TipoDePeca" => query.OrderByDescending(c => c.TipoDePeca),
             "Marca" => query.OrderByDescending(c => c.Marca),
             "Modelo" => query.OrderByDescending(c => c.Modelo),
             "AnoDeFabricacao" => query.OrderByDescending(c => c.AnoDeFabricacao),
