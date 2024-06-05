@@ -19,8 +19,7 @@ public class PedidoDto
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public int UsuarioId { get; set; }
-    public string Categoria { get; set; } = null!;
-    public string? Caracteristica { get; set; }
+    public string TipoDePeca { get; set; } = null!;
     public UsuarioDto? Usuario { get; set; }
     public List<OrcamentoDto> Orcamentos { get; set; } = new();
 }

@@ -23,11 +23,11 @@ public class PedidoValidator : AbstractValidator<Pedido>
             .MaximumLength(1500)
             .WithMessage("Foto deve ter no máximo 1500 caracteres");
 
-        RuleFor(c => c.Categoria)
+        RuleFor(c => c.TipoDePeca)
             .NotNull()
-            .WithMessage("Categoria não pode ser nula")
+            .WithMessage("Tipo De Peça não pode ser nulo")
             .NotEmpty()
-            .WithMessage("Categoria deve conter ao menos um item");
+            .WithMessage("Tipo de Peça deve conter ao menos um item");
 
         RuleFor(c => c.Marca)
             .NotNull()
