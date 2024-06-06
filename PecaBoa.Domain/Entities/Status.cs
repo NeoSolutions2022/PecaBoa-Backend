@@ -6,6 +6,6 @@ public class Status : Entity, IAggregateRoot
 {
     public string Nome { get; set; } = null!;
 
-    public List<Pedido> Pedidos { get; set; }
-    public List<Orcamento> Orcamentos { get; set; }
+    public List<Pedido> Pedidos { get; set; } = new();
+    public List<Orcamento> Orcamentos { get; set; } = new();
 }

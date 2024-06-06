@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PecaBoa.Application.Dtos.V1.Administrador.Status;
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Orcamento;
 using PecaBoa.Core.Extensions;
@@ -72,6 +73,8 @@ public class AutoMapperProfile : Profile
 
         CreateMap<PagedDto<PecaBoa.Application.Dtos.V1.Lojista.LojistaDto>, ResultadoPaginado<Lojista>>()
             .ReverseMap();
+
+        CreateMap<StatusDto, Status>().ReverseMap();
 
         #endregion
 
