@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PecaBoa.Domain.Entities;
 using PecaBoa.Infra.Context;
 using PecaBoa.Infra.Repositories;
 
@@ -51,7 +52,8 @@ public static class DependencyInjection
             .AddScoped<IPedidoRepository, PedidoRepository>()
             .AddScoped<IOrcamentoRepository, OrcamentoRepository>()
             .AddScoped<IStatusRepository, StatusRepository>()
-            .AddScoped<ITipoDePecaRepository, TipoDePecaRepository>();
+            .AddScoped<ITipoDePecaRepository, TipoDePecaRepository>()
+            .AddScoped<ICondicaoPecaRepository, CondicaoPecaRepository>();
     }
 
     public static void UseMigrations(this IApplicationBuilder app, IServiceProvider service)
