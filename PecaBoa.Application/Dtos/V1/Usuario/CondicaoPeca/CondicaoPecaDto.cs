@@ -1,4 +1,4 @@
-namespace PecaBoa.Application.Dtos.V1.Administrador.CondicaoPeca;
+namespace PecaBoa.Application.Dtos.V1.Usuario.CondicaoPeca;
 
 public class CondicaoPecaDto
 {

@@ -1,4 +1,4 @@
-using PecaBoa.Application.Dtos.V1.Administrador.CondicaoPeca;
+using PecaBoa.Application.Dtos.V1.Usuario.CondicaoPeca;
 
 namespace PecaBoa.Application.Contracts;
 

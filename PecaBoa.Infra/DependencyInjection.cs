@@ -53,7 +53,8 @@ public static class DependencyInjection
             .AddScoped<IOrcamentoRepository, OrcamentoRepository>()
             .AddScoped<IStatusRepository, StatusRepository>()
             .AddScoped<ITipoDePecaRepository, TipoDePecaRepository>()
-            .AddScoped<ICondicaoPecaRepository, CondicaoPecaRepository>();
+            .AddScoped<ICondicaoPecaRepository, CondicaoPecaRepository>()
+            .AddScoped<ICategoriaVeiculoRepository, CategoriaVeiculoRepository>();
     }
 
     public static void UseMigrations(this IApplicationBuilder app, IServiceProvider service)

@@ -1,4 +1,4 @@
-namespace PecaBoa.Application.Dtos.V1.Administrador.TipoDePeca;
+namespace PecaBoa.Application.Dtos.V1.Usuario.TipoDePeca;
 
 public class TipoDePecaDto
 {

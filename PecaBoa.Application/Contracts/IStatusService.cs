@@ -1,4 +1,4 @@
-using PecaBoa.Application.Dtos.V1.Administrador.Status;
+using PecaBoa.Application.Dtos.V1.Usuario.Status;
 
 namespace PecaBoa.Application.Contracts;
 

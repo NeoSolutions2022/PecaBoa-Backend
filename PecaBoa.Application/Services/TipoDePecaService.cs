@@ -1,6 +1,6 @@
 using AutoMapper;
 using PecaBoa.Application.Contracts;
-using PecaBoa.Application.Dtos.V1.Administrador.TipoDePeca;
+using PecaBoa.Application.Dtos.V1.Usuario.TipoDePeca;
 using PecaBoa.Domain.Contracts.Repositories;
 
 namespace PecaBoa.Application.Services;
