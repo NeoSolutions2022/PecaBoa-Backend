@@ -3,6 +3,7 @@ using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Orcamento;
 using PecaBoa.Application.Dtos.V1.Usuario.CategoriaVeiculo;
 using PecaBoa.Application.Dtos.V1.Usuario.CondicaoPeca;
+using PecaBoa.Application.Dtos.V1.Usuario.Marca;
 using PecaBoa.Application.Dtos.V1.Usuario.Status;
 using PecaBoa.Application.Dtos.V1.Usuario.TipoDePeca;
 using PecaBoa.Core.Extensions;
@@ -83,6 +84,8 @@ public class AutoMapperProfile : Profile
 
         CreateMap<CategoriaVeiculoDto, CategoriaVeiculo>();
 
+        CreateMap<MarcaDto, Marca>();
+        
         #endregion
 
         #region Pedido

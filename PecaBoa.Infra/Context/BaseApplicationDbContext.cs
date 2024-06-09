@@ -27,6 +27,7 @@ public abstract class BaseApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<TipoDePeca> TipoDePecas { get; set; } = null!;
     public DbSet<CondicaoPeca> CondicaoPecas { get; set; } = null!;
     public DbSet<CategoriaVeiculo> CategoriaVeiculos { get; set; } = null!;
+    public DbSet<Marca> Marcas { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
