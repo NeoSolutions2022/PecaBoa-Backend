@@ -17,7 +17,7 @@ public class MarcaController : MainController
         _marcaService = marcaService;
     }
     
-    [HttpPost]
+    [HttpGet]
     [AllowAnonymous]
     [SwaggerOperation(Summary = "Listar Marcas.", Tags = new [] { "Usuario - Marcas" })]
     [ProducesResponseType(typeof(MarcaDto),StatusCodes.Status200OK)]

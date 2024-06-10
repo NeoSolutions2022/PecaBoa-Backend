@@ -17,7 +17,7 @@ public class CategoriaVeiculoController : MainController
         _categoriaVeiculoService = categoriaVeiculoService;
     }
     
-    [HttpPost]
+    [HttpGet]
     [AllowAnonymous]
     [SwaggerOperation(Summary = "Listar Categoria veiculo.", Tags = new [] { "Usuario - Categoria Veiculo" })]
     [ProducesResponseType(typeof(CategoriaVeiculoDto),StatusCodes.Status200OK)]

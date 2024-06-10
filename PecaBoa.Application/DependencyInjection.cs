@@ -50,6 +50,7 @@ public static class DependencyInjection
             .AddScoped<IStatusService, StatusService>()
             .AddScoped<ITipoDePecaService, TipoDePecaService>()
             .AddScoped<IMarcaService, MarcaService>()
+            .AddScoped<IModeloService, ModeloService>()
             .AddScoped<ICondicaoPecaService, CondicaoPecaService>()
             .AddScoped<ICategoriaVeiculoService, CategoriaVeiculoService>()
             .AddScoped<IPagamentosService, PagamentosService>()

@@ -4,6 +4,7 @@ using PecaBoa.Application.Dtos.V1.Orcamento;
 using PecaBoa.Application.Dtos.V1.Usuario.CategoriaVeiculo;
 using PecaBoa.Application.Dtos.V1.Usuario.CondicaoPeca;
 using PecaBoa.Application.Dtos.V1.Usuario.Marca;
+using PecaBoa.Application.Dtos.V1.Usuario.Modelo;
 using PecaBoa.Application.Dtos.V1.Usuario.Status;
 using PecaBoa.Application.Dtos.V1.Usuario.TipoDePeca;
 using PecaBoa.Core.Extensions;
@@ -80,11 +81,13 @@ public class AutoMapperProfile : Profile
 
         CreateMap<StatusDto, Status>().ReverseMap();
 
-        CreateMap<CondicaoPecaDto, CondicaoPeca>();
+        CreateMap<CondicaoPecaDto, CondicaoPeca>().ReverseMap();
 
-        CreateMap<CategoriaVeiculoDto, CategoriaVeiculo>();
+        CreateMap<CategoriaVeiculoDto, CategoriaVeiculo>().ReverseMap();
 
-        CreateMap<MarcaDto, Marca>();
+        CreateMap<MarcaDto, Marca>().ReverseMap();
+
+        CreateMap<ModeloDto, Modelo>().ReverseMap();
         
         #endregion
 
