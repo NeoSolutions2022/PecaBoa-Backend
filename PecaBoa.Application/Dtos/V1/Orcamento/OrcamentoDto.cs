@@ -1,6 +1,7 @@
 using PecaBoa.Application.Dtos.V1.Lojista;
 using PecaBoa.Application.Dtos.V1.Pedido;
-using PecaBoa.Application.Dtos.V1.Usuario;
+using PecaBoa.Application.Dtos.V1.Usuario.CondicaoPeca;
+using PecaBoa.Application.Dtos.V1.Usuario.Status;
 
 namespace PecaBoa.Application.Dtos.V1.Orcamento;
 
@@ -15,10 +16,14 @@ public class OrcamentoDto
     public string? Observacoes { get; set; }
     public DateOnly PrazoDeEntrega { get; set; }
     public decimal Preco { get; set; }
-    public string? CondicaoDaPeca { get; set; }
+    public int CondicaoPecaId { get; set; }
+    public int StatusId { get; set; }
     public int PedidoId { get; set; }
     public int LojistaId { get; set; }
+    public bool Desativado { get; set; }
+
+    public CondicaoPecaDto CondicaoPeca { get; set; } = null!;
+    public StatusDto Status { get; set; } = null!;
     public LojistaDto Lojista { get; set; } = null!;
     public PedidoDto Pedido { get; set; } = null!;
-    public bool Desativado { get; set; }
 }

@@ -16,6 +16,9 @@ public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
             .HasColumnType("date")
             .IsRequired();
         
+        builder.Property(c => c.StatusId)
+            .IsRequired();
+        
         builder.Property(c => c.Foto)
             .IsRequired(false)
             .HasMaxLength(1500);
@@ -40,5 +43,15 @@ public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
             .HasOne(c => c.Pedido)
             .WithMany(c => c.Orcamentos)
             .HasForeignKey(c => c.PedidoId);
+
+        builder
+            .HasOne(c => c.Status)
+            .WithMany(c => c.Orcamentos)
+            .HasForeignKey(c => c.StatusId);
+
+        builder
+            .HasOne(c => c.CondicaoPeca)
+            .WithMany(c => c.Orcamentos)
+            .HasForeignKey(c => c.CondicaoPecaId);
     }
 }

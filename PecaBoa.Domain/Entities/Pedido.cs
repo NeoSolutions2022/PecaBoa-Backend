@@ -23,6 +23,7 @@ public class Pedido : Entity, IAggregateRoot, ISoftDelete
     public int UsuarioId { get; set; }
     public int TipoDePecaId { get; set; }
     public int StatusId { get; set; }
+    
     public Usuario Usuario { get; set; } = null!;
     public Marca Marca { get; set; } = null!;
     public Modelo Modelo { get; set; } = null!;

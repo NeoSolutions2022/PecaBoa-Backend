@@ -144,6 +144,8 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);;
+        pedido.Desativado = false;
+        pedido.StatusId = (int)EStatus.AnuncioAtivo;
         _pedidoRepository.Alterar(pedido);
         if (await _pedidoRepository.UnitOfWork.Commit())
         {
