@@ -1,5 +1,6 @@
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Core.Extensions;
+using PecaBoa.Domain.Entities.Enum;
 
 namespace PecaBoa.Application.Dtos.V1.Pedido;
 
@@ -7,7 +8,9 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
 {
     public string? NomePeca { get; set; } = null!;
     public string? Descricao { get; set; } = null!; 
-    public string? TipoDePeca { get; set; } = null!;
+    public EStatus? StatusId { get; set; }
+    public ETipoPeca? TipoDePecaId { get; set; }
+    public ECategoriaVeiculo? CategoriaVeiculoId { get; set; }
     public string? Marca { get; set; } = null!;
     public string? Modelo { get; set; } = null!;
     public DateOnly? AnoDeFabricacao { get; set; } = null!;
@@ -26,19 +29,28 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
             query = query.Where(c => c.Descricao.Contains(Descricao));
         }
 
-        if (!string.IsNullOrWhiteSpace(TipoDePeca))
+        if (StatusId is > 0)
         {
-            query = query.Where(c => c.TipoDePeca.Contains(TipoDePeca));
+            query = query.Where(c => c.StatusId == (int)StatusId);
         }
-        
+
+        if (TipoDePecaId is > 0)
+        {
+            query = query.Where(c => c.TipoDePecaId == (int)TipoDePecaId);
+        }
+
+        if (CategoriaVeiculoId is > 0)
+        {
+            query = query.Where(c => c.CategoriaVeiculoId == (int)CategoriaVeiculoId);
+        }
         if (!string.IsNullOrWhiteSpace(Marca))
         {
-            query = query.Where(c => c.Marca.Contains(Marca));
+            query = query.Where(c => c.Marca.Nome.Contains(Marca));
         }
         
         if (!string.IsNullOrWhiteSpace(Modelo))
         {
-            query = query.Where(c => c.Modelo.Contains(Modelo));
+            query = query.Where(c => c.Modelo.Nome.Contains(Modelo));
         }
 
         if (AnoDeFabricacao.HasValue)
@@ -60,11 +72,12 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
         {
             query = OrdenarPor.ToLower() switch
             {
-                "titulo" => query.OrderBy(c => c.NomePeca),
-                "descricao" => query.OrderBy(c => c.Descricao),
-                "TipoDePeca" => query.OrderBy(c => c.TipoDePeca),
-                "Marca" => query.OrderBy(c => c.Marca),
-                "Modelo" => query.OrderBy(c => c.Modelo),
+                "NomePeca" => query.OrderBy(c => c.NomePeca),
+                "Descricao" => query.OrderBy(c => c.Descricao),
+                "Status" => query.OrderBy(c => c.StatusId),
+                "TipoDePeca" => query.OrderBy(c => c.TipoDePecaId),
+                "Marca" => query.OrderBy(c => c.Marca.Nome),
+                "Modelo" => query.OrderBy(c => c.Modelo.Nome),
                 "AnoDeFabricacao" => query.OrderBy(c => c.AnoDeFabricacao),
                 "Cor" => query.OrderBy(c => c.Cor),
                 "id" or _ => query.OrderBy(c => c.Id)
@@ -74,11 +87,12 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
         
         query = OrdenarPor.ToLower() switch
         {
-            "titulo" => query.OrderByDescending(c => c.NomePeca),
-            "descricao" => query.OrderByDescending(c => c.Descricao),
-            "TipoDePeca" => query.OrderByDescending(c => c.TipoDePeca),
-            "Marca" => query.OrderByDescending(c => c.Marca),
-            "Modelo" => query.OrderByDescending(c => c.Modelo),
+            "NomePeca" => query.OrderByDescending(c => c.NomePeca),
+            "Descricao" => query.OrderByDescending(c => c.Descricao),
+            "Status" => query.OrderByDescending(c => c.StatusId),
+            "TipoDePeca" => query.OrderByDescending(c => c.TipoDePecaId),
+            "Marca" => query.OrderByDescending(c => c.Marca.Nome),
+            "Modelo" => query.OrderByDescending(c => c.Modelo.Nome),
             "AnoDeFabricacao" => query.OrderByDescending(c => c.AnoDeFabricacao),
             "Cor" => query.OrderByDescending(c => c.Cor),
             "id" or _ => query.OrderByDescending(c => c.Id)

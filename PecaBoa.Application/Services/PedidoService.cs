@@ -8,6 +8,7 @@ using PecaBoa.Core.Extensions;
 using PecaBoa.Domain.Contracts.Repositories;
 using PecaBoa.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using PecaBoa.Domain.Entities.Enum;
 
 namespace PecaBoa.Application.Services;
 
@@ -56,6 +57,8 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.UsuarioId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
+        pedido.Desativado = false;
+        pedido.StatusId = (int)EStatus.AnuncioAtivo;
         pedido.CriadoEm = DateTime.SpecifyKind(pedido.CriadoEm, DateTimeKind.Utc);;
         if (!await Validar(pedido))
         {
@@ -247,6 +250,7 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.Desativado = true;
+        pedido.StatusId = (int)EStatus.Cancelado;
         pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);
         _pedidoRepository.Alterar(pedido);
         if (await _pedidoRepository.UnitOfWork.Commit())
@@ -324,14 +328,6 @@ public class PedidoService : BaseService, IPedidoService
         if (pedido.UsuarioId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
         {
             Notificator.Handle("Você não tem permissão para executar essa ação!");
-        }
-
-        var administradorExistente =
-            await _pedidoRepository.FistOrDefault(
-                c => c.NomePeca == pedido.NomePeca && c.Id != pedido.Id);
-        if (administradorExistente != null)
-        {
-            Notificator.Handle("Já existe um administrador com esse email!");
         }
 
         return !Notificator.HasNotification;

@@ -8,4 +8,5 @@ public class Modelo : Entity, IAggregateRoot
     public int MarcaId { get; set; }
 
     public Marca Marca { get; set; } = null!;
+    public List<Pedido> Pedidos { get; set; } = new();
 }
