@@ -37,6 +37,14 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
         return await base.Buscar(query, filtro);
     }
 
+    public async Task<List<Pedido>> BuscarPedidoUsuario(int id)
+    {
+        return await Context.Pedidos
+            .Where(c => c.UsuarioId == id)
+            .Include(c => c.Usuario)
+            .ToListAsync();
+    }
+
     public void Remover(Pedido pedido)
     {
         Context.Pedidos.Remove(pedido);
