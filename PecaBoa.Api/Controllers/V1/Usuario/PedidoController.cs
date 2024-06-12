@@ -43,6 +43,18 @@ public class PedidoController : Lojista.MainController
         var pedido = await _pedidoService.Buscar(dto);
         return OkResponse(pedido);
     }
+    
+    [HttpGet("pedidos-do-usuario")]
+    [SwaggerOperation(Summary = "Listar Pedidos do usuario - Usuario.",
+        Tags = new[] { "Usuario - Pedido" })]
+    [ProducesResponseType(typeof(List<PedidoDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> ListarPedidosUsuario()
+    {
+        var pedido = await _pedidoService.BuscarPedidosUsuario();
+        return OkResponse(pedido);
+    }
 
     [HttpPost]
     [SwaggerOperation(Summary = "Cadastrar Pedido - Usuario.",

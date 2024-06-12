@@ -7,12 +7,12 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PecaBoa.Api.Controllers.V1.Usuario;
 
-[Microsoft.AspNetCore.Components.Route("v{version:apiVersion}/Usuario/[controller]")]
+[Route("v{version:apiVersion}/Usuario/[controller]")]
 public class ModeloController : MainController
 {
     private readonly IModeloService _modeloService;
     
-    protected ModeloController(INotificator notificator, IModeloService modeloService) : base(notificator)
+    public ModeloController(INotificator notificator, IModeloService modeloService) : base(notificator)
     {
         _modeloService = modeloService;
     }

@@ -12,7 +12,7 @@ public class CategoriaVeiculoController : MainController
 {
     private readonly ICategoriaVeiculoService _categoriaVeiculoService;
     
-    protected CategoriaVeiculoController(INotificator notificator, ICategoriaVeiculoService categoriaVeiculoService) : base(notificator)
+    public CategoriaVeiculoController(INotificator notificator, ICategoriaVeiculoService categoriaVeiculoService) : base(notificator)
     {
         _categoriaVeiculoService = categoriaVeiculoService;
     }

@@ -12,7 +12,7 @@ public class MarcaController : MainController
 {
     private readonly IMarcaService _marcaService;
     
-    protected MarcaController(INotificator notificator, IMarcaService marcaService) : base(notificator)
+    public MarcaController(INotificator notificator, IMarcaService marcaService) : base(notificator)
     {
         _marcaService = marcaService;
     }
