@@ -78,11 +78,6 @@ public class GrupoAcessoService : BaseService, IGrupoAcessoService
         return await CommitChanges() ? Mapper.Map<GrupoAcessoDto>(grupoAcesso) : null;
     }
 
-    public Task<List<GrupoDeAcessoFiltroDto>> Filtrar(List<FiltragemGrupoDeAcessoDto> dto, List<GrupoAcesso>? agremiacoes = null, int tamanho = 0, int aux = 0)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task Reativar(int id)
     {
         var grupoAcesso = await ObterGrupoAcesso(id);
@@ -113,16 +108,6 @@ public class GrupoAcessoService : BaseService, IGrupoAcessoService
         grupoAcesso.Desativado = true;
         _grupoAcessoRepository.Editar(grupoAcesso);
         await CommitChanges();
-    }
-
-    public Task<List<GrupoDeAcessoFiltroDto>> Pesquisar(string valor)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task LimparFiltro()
-    {
-        throw new NotImplementedException();
     }
 
 
@@ -168,19 +153,4 @@ public class GrupoAcessoService : BaseService, IGrupoAcessoService
         return false;
     }
 
-    private async Task<List<GrupoAcesso>> PossuiGrupoDeAcesso(string nomeParametro,
-        List<GrupoAcesso>? gruposAcesso = null)
-    {
-        if (gruposAcesso == null)
-        {
-            gruposAcesso = await _grupoAcessoRepository.ObterTodos();
-        }
-
-        switch (nomeParametro)
-        {
-            case "Nome": return gruposAcesso.OrderBy(c => c.Nome).ToList();
-            case "Descricao": return gruposAcesso.OrderBy(c => c.Descricao).ToList();
-            default: return gruposAcesso.OrderBy(c => c.Id).ToList();
-        }
-    }
 }

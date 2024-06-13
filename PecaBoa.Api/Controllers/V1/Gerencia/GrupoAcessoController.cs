@@ -93,38 +93,5 @@ public class GruposAcessoController : MainController
         await _grupoAcessoService.Reativar(id);
         return NoContentResponse();
     }
-    
-    [HttpGet("pesquisar-{valor}")]
-    [SwaggerOperation(Summary = "Pesquisar grupo de acesso.", Tags = new[] { "Configurações - Grupos de acesso" })]
-    [ProducesResponseType(typeof(List<GrupoAcessoDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Buscar(string valor)
-    {
-        var grupoAcesso = await _grupoAcessoService.Pesquisar(valor);
-        return OkResponse(grupoAcesso);
-    }
-    
-    [HttpPost("filtrar/grupo-acesso")]
-    [SwaggerOperation(Summary = "Filtrar grupo de acesso.", Tags = new[] { "Configurações - Grupos de acesso" })]
-    [ProducesResponseType(typeof(List<GrupoAcessoDto>), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Filtragem([FromBody] List<FiltragemGrupoDeAcessoDto> dtos)
-    {
-        var agremiacaoLista = await _grupoAcessoService.Filtrar(dtos);
-        return OkResponse(agremiacaoLista);
-    }
 
-    [HttpPost("limpar-grupo-acesso")]
-    [SwaggerOperation(Summary = "Limpar grupo de acesso.", Tags = new[] { "Configurações - Grupos de acesso" })]
-    [ProducesResponseType(typeof(List<GrupoAcessoDto>), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> Filtragem()
-    {
-        await _grupoAcessoService.LimparFiltro();
-        return NoContentResponse();
-    }
-    
 }

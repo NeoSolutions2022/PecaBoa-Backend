@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using PecaBoa.Application.Dtos.V1.Base;
+using PecaBoa.Application.Dtos.V1.GruposDeAcesso;
 using PecaBoa.Application.Dtos.V1.Orcamento;
+using PecaBoa.Application.Dtos.V1.Permissoes;
+using PecaBoa.Application.Dtos.V1.Usuario;
 using PecaBoa.Application.Dtos.V1.Usuario.CategoriaVeiculo;
 using PecaBoa.Application.Dtos.V1.Usuario.CondicaoPeca;
 using PecaBoa.Application.Dtos.V1.Usuario.Marca;
@@ -120,6 +123,24 @@ public class AutoMapperProfile : Profile
 
         #endregion
         
+        #region GrupoAcesso
+
+        CreateMap<GrupoAcesso, GrupoAcessoDto>().ReverseMap();
+        CreateMap<GrupoAcesso, CadastrarGrupoAcessoDto>().ReverseMap();
+        CreateMap<GrupoAcesso, AlterarGrupoAcessoDto>().ReverseMap();
+        CreateMap<ResultadoPaginado<GrupoAcesso>, PagedDto<GrupoAcessoDto>>().ReverseMap();
         
+        CreateMap<GrupoAcessoPermissao, GrupoAcessoPermissaoDto>().ReverseMap();
+        CreateMap<GrupoAcessoPermissao, ManterGrupoAcessoPermissaoDto>().ReverseMap();
+        CreateMap<PagedDto<PermissaoDto>, ResultadoPaginado<Permissao>>()
+            .ReverseMap();
+        CreateMap<PermissaoDto, Permissao>()
+            .ReverseMap();
+        CreateMap<CadastrarPermissaoDto, Permissao>()
+            .ReverseMap();
+        CreateMap<AlterarPermissaoDto, Permissao>()
+            .ReverseMap();
+
+        #endregion
     }
 }
