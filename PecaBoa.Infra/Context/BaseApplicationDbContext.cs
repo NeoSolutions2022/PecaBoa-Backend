@@ -29,6 +29,8 @@ public abstract class BaseApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<CategoriaVeiculo> CategoriaVeiculos { get; set; } = null!;
     public DbSet<Marca> Marcas { get; set; } = null!;
     public DbSet<Modelo> Modelos { get; set; } = null!;
+    public DbSet<GrupoAcesso> GruposAcesso { get; set; } = null!;
+    public DbSet<Permissao> Permissoes { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

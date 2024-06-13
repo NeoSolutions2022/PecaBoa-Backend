@@ -148,7 +148,7 @@ public class AdministradorService : BaseService, IAdministradorService
 
     public async Task Remover(int id)
     {
-        var lojista = await _administradorRepository.FistOrDefault(c => c.Id == id);
+        var lojista = await _administradorRepository.FirstOrDefault(c => c.Id == id);
         if (lojista == null)
         {
             Notificator.Handle("Não existe um lojista com o id informado");
@@ -166,7 +166,7 @@ public class AdministradorService : BaseService, IAdministradorService
 
     public async Task AlterarSenha(int id)
     {
-        var administrador = await _administradorRepository.FistOrDefault(f => f.Id == id);
+        var administrador = await _administradorRepository.FirstOrDefault(f => f.Id == id);
         if (administrador == null)
         {
             Notificator.HandleNotFoundResource();
@@ -202,7 +202,7 @@ public class AdministradorService : BaseService, IAdministradorService
         }
 
         var administradorExistente =
-            await _administradorRepository.FistOrDefault(
+            await _administradorRepository.FirstOrDefault(
                 c => c.Email == administrador.Email && c.Id != administrador.Id);
         if (administradorExistente != null)
         {

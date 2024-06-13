@@ -56,6 +56,8 @@ public static class DependencyInjection
             .AddScoped<ICondicaoPecaRepository, CondicaoPecaRepository>()
             .AddScoped<ICategoriaVeiculoRepository, CategoriaVeiculoRepository>()
             .AddScoped<IMarcaRepository, MarcaRepository>()
+            .AddScoped<IGrupoAcessoRepository, GrupoAcessoRepository>()
+            .AddScoped<IPermissaoRepository, PermissaoRepository>()
             .AddScoped<IModeloRepository, ModeloRepository>();
     }
 
