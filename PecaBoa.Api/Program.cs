@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.SignalR;
 using PecaBoa.Api.Configuration;
+using PecaBoa.Api.Hubs;
 using PecaBoa.Application;
 using PecaBoa.Infra;
 using Serilog;
@@ -59,6 +61,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -72,6 +75,12 @@ if (app.Environment.IsDevelopment())
 app.UseCors(myAllowSpecificOrigins);
 
 app.UseMigrations(app.Services);
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chathub");
+});
 
 app.UseHttpsRedirection();
 

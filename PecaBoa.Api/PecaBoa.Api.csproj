@@ -16,6 +16,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -47,6 +48,10 @@
 
     <ItemGroup>
       <None Include="bin\Debug\net6.0\Email\Templates\Usuario\CodigoResetarSenha.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="wwwroot\index.html" />
     </ItemGroup>
 
 </Project>
