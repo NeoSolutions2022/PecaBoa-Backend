@@ -22,12 +22,5 @@ public class GrupoAcessoMapping : IEntityTypeConfiguration<GrupoAcesso>
             .Property(e => e.Administrador)
             .IsRequired()
             .HasDefaultValue(false);
-        
-        builder
-            .HasOne(c => c.Usuario)
-            .WithMany(c => c.GrupoAcessos)
-            .HasForeignKey(c => c.Id)
-            .HasPrincipalKey(c => c.Id)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }
