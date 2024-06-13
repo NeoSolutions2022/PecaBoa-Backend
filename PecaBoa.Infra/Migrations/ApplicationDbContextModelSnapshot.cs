@@ -133,6 +133,89 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("CondicaoPecas");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcesso", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Administrador")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Desativado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GruposAcesso");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcessoPermissao", b =>
+                {
+                    b.Property<int>("GrupoAcessoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PermissaoId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("character varying(4)");
+
+                    b.HasKey("GrupoAcessoId", "PermissaoId");
+
+                    b.HasIndex("PermissaoId");
+
+                    b.ToTable("GrupoAcessoPermissao");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
                 {
                     b.Property<int>("Id")
@@ -512,6 +595,57 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Pedidos");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Permissao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Desativado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissoes");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Status", b =>
                 {
                     b.Property<int>("Id")
@@ -685,6 +819,36 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcesso", b =>
+                {
+                    b.HasOne("PecaBoa.Domain.Entities.Usuario", "Usuario")
+                        .WithMany("GrupoAcessos")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcessoPermissao", b =>
+                {
+                    b.HasOne("PecaBoa.Domain.Entities.GrupoAcesso", "GrupoAcesso")
+                        .WithMany("Permissoes")
+                        .HasForeignKey("GrupoAcessoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PecaBoa.Domain.Entities.Permissao", "Permissao")
+                        .WithMany("Grupos")
+                        .HasForeignKey("PermissaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GrupoAcesso");
+
+                    b.Navigation("Permissao");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Modelo", b =>
                 {
                     b.HasOne("PecaBoa.Domain.Entities.Marca", "Marca")
@@ -792,6 +956,11 @@ namespace PecaBoa.Infra.Migrations
                     b.Navigation("Orcamentos");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcesso", b =>
+                {
+                    b.Navigation("Permissoes");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
                 {
                     b.Navigation("Orcamentos");
@@ -814,6 +983,11 @@ namespace PecaBoa.Infra.Migrations
                     b.Navigation("Orcamentos");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Permissao", b =>
+                {
+                    b.Navigation("Grupos");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Status", b =>
                 {
                     b.Navigation("Orcamentos");
@@ -828,6 +1002,8 @@ namespace PecaBoa.Infra.Migrations
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Usuario", b =>
                 {
+                    b.Navigation("GrupoAcessos");
+
                     b.Navigation("Pedidos");
                 });
 #pragma warning restore 612, 618

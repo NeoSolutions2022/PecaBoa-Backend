@@ -136,7 +136,7 @@ public class UsuarioService : BaseService, IUsuarioService
 
     public async Task AlterarSenha(int id)
     {
-        var usuario = await _usuarioRepository.FistOrDefault(f => f.Id == id);
+        var usuario = await _usuarioRepository.FirstOrDefault(f => f.Id == id);
         if (usuario == null)
         {
             Notificator.HandleNotFoundResource();
@@ -206,7 +206,7 @@ public class UsuarioService : BaseService, IUsuarioService
 
     public async Task Remover(int id)
     {
-        var usuario = await _usuarioRepository.FistOrDefault(c => c.Id == id);
+        var usuario = await _usuarioRepository.FirstOrDefault(c => c.Id == id);
         if (usuario == null)
         {
             Notificator.Handle("Não existe um Usuario com o id informado");
@@ -230,7 +230,7 @@ public class UsuarioService : BaseService, IUsuarioService
             Notificator.Handle(validationResult.Errors);
         }
         
-        var usuarioExistente = await _usuarioRepository.FistOrDefault(c =>
+        var usuarioExistente = await _usuarioRepository.FirstOrDefault(c =>
             c.Cpf == usuario.Cpf || c.Email == usuario.Email && c.Id != usuario.Id);
         if (usuarioExistente != null)
         {
