@@ -6,6 +6,7 @@ using PecaBoa.Application.Notification;
 using PecaBoa.Core.Enums;
 using PecaBoa.Domain.Contracts.Repositories;
 using PecaBoa.Domain.Entities;
+using PecaBoa.Domain.Entities.Enum;
 
 namespace PecaBoa.Application.Services;
 
@@ -25,6 +26,8 @@ public class OrcamentoService : BaseService, IOrcamentoService
         var orcamento = Mapper.Map<Orcamento>(dto);
         
         orcamento.CriadoEm = DateTime.SpecifyKind(orcamento.CriadoEm, DateTimeKind.Utc);
+        orcamento.Desativado = false;
+        orcamento.StatusId = (int)EStatus.AnuncioAtivo;
         _orcamentoRepository.Adicionar(orcamento);
         
         if (await _orcamentoRepository.UnitOfWork.Commit())
@@ -54,6 +57,8 @@ public class OrcamentoService : BaseService, IOrcamentoService
         Mapper.Map(dto, orcamento);
         
         orcamento.AtualizadoEm = DateTime.SpecifyKind(orcamento.AtualizadoEm, DateTimeKind.Utc);
+        orcamento.Desativado = false;
+        orcamento.StatusId = (int)EStatus.AnuncioAtivo;
         _orcamentoRepository.Alterar(orcamento);
         
         if (await _orcamentoRepository.UnitOfWork.Commit())

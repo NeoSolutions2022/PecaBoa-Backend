@@ -12,6 +12,7 @@ public interface IPedidoService
     Task Reativar(int id);
     Task Remover(int id);
     Task<PagedDto<PedidoDto>> Buscar(BuscarPedidoDto dto);
+    Task<List<PedidoDto>> BuscarPedidosUsuario();
     Task AlterarFoto(AlterarFotoPedidoDto dto);
     Task RemoverFoto(RemoverFotosPedidoDto dto);
 }

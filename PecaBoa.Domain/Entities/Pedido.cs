@@ -14,14 +14,22 @@ public class Pedido : Entity, IAggregateRoot, ISoftDelete
     public string? Foto5 { get; set; }
     public string NomePeca { get; set; } = null!;
     public string Descricao { get; set; } = null!;
-    public string Marca { get; set; } = null!;
-    public string Modelo { get; set; } = null!;
+    public int MarcaId { get; set; }
+    public int ModeloId { get; set; }
+    public int CategoriaVeiculoId { get; set; }
     public DateOnly? AnoDeFabricacao { get; set; } = null!;
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public int UsuarioId { get; set; }
-    public string TipoDePeca { get; set; } = null!;
+    public int TipoDePecaId { get; set; }
+    public int StatusId { get; set; }
+    
     public Usuario Usuario { get; set; } = null!;
+    public Marca Marca { get; set; } = null!;
+    public Modelo Modelo { get; set; } = null!;
+    public CategoriaVeiculo CategoriaVeiculo { get; set; } = null!;
+    public TipoDePeca TipoDePeca { get; set; } = null!;
+    public Status Status { get; set; } = null!;
     public List<Orcamento> Orcamentos { get; set; } = new();
 
     public override bool Validar(out ValidationResult validationResult)

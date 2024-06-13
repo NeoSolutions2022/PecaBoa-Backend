@@ -61,6 +61,78 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Administradores");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.CategoriaVeiculo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoriaVeiculos");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.CondicaoPeca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CondicaoPecas");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
                 {
                     b.Property<int>("Id")
@@ -172,6 +244,83 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Lojistas");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Marca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Marcas");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Modelo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MarcaId");
+
+                    b.ToTable("Modelos");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Orcamento", b =>
                 {
                     b.Property<int>("Id")
@@ -189,8 +338,8 @@ namespace PecaBoa.Infra.Migrations
                     b.Property<bool>("AtualizadoPorAdmin")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("CondicaoDaPeca")
-                        .HasColumnType("text");
+                    b.Property<int>("CondicaoPecaId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("timestamp with time zone");
@@ -243,11 +392,18 @@ namespace PecaBoa.Infra.Migrations
                     b.Property<decimal>("Preco")
                         .HasColumnType("numeric");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CondicaoPecaId");
 
                     b.HasIndex("LojistaId");
 
                     b.HasIndex("PedidoId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Orcamentos");
                 });
@@ -271,6 +427,9 @@ namespace PecaBoa.Infra.Migrations
 
                     b.Property<bool>("AtualizadoPorAdmin")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("CategoriaVeiculoId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Cor")
                         .IsRequired()
@@ -316,34 +475,113 @@ namespace PecaBoa.Infra.Migrations
                         .HasMaxLength(1500)
                         .HasColumnType("character varying(1500)");
 
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasMaxLength(180)
-                        .HasColumnType("character varying(180)");
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Modelo")
-                        .IsRequired()
-                        .HasMaxLength(280)
-                        .HasColumnType("character varying(280)");
+                    b.Property<int>("ModeloId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("NomePeca")
                         .IsRequired()
                         .HasMaxLength(180)
                         .HasColumnType("character varying(180)");
 
-                    b.Property<string>("TipoDePeca")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                    b.Property<int>("StatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TipoDePecaId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoriaVeiculoId");
+
+                    b.HasIndex("MarcaId");
+
+                    b.HasIndex("ModeloId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("TipoDePecaId");
+
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Pedidos");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.TipoDePeca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AtualizadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("AtualizadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("AtualizadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CriadoPor")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("CriadoPorAdmin")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoDePecas");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Usuario", b =>
@@ -447,8 +685,25 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Modelo", b =>
+                {
+                    b.HasOne("PecaBoa.Domain.Entities.Marca", "Marca")
+                        .WithMany("Modelos")
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Marca");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Orcamento", b =>
                 {
+                    b.HasOne("PecaBoa.Domain.Entities.CondicaoPeca", "CondicaoPeca")
+                        .WithMany("Orcamentos")
+                        .HasForeignKey("CondicaoPecaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PecaBoa.Domain.Entities.Lojista", "Lojista")
                         .WithMany("Orcamentos")
                         .HasForeignKey("LojistaId")
@@ -461,20 +716,80 @@ namespace PecaBoa.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PecaBoa.Domain.Entities.Status", "Status")
+                        .WithMany("Orcamentos")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CondicaoPeca");
+
                     b.Navigation("Lojista");
 
                     b.Navigation("Pedido");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Pedido", b =>
                 {
+                    b.HasOne("PecaBoa.Domain.Entities.CategoriaVeiculo", "CategoriaVeiculo")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("CategoriaVeiculoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PecaBoa.Domain.Entities.Marca", "Marca")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PecaBoa.Domain.Entities.Modelo", "Modelo")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("ModeloId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PecaBoa.Domain.Entities.Status", "Status")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PecaBoa.Domain.Entities.TipoDePeca", "TipoDePeca")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("TipoDePecaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("PecaBoa.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Pedidos")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("CategoriaVeiculo");
+
+                    b.Navigation("Marca");
+
+                    b.Navigation("Modelo");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("TipoDePeca");
+
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.CategoriaVeiculo", b =>
+                {
+                    b.Navigation("Pedidos");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.CondicaoPeca", b =>
+                {
+                    b.Navigation("Orcamentos");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
@@ -482,9 +797,33 @@ namespace PecaBoa.Infra.Migrations
                     b.Navigation("Orcamentos");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Marca", b =>
+                {
+                    b.Navigation("Modelos");
+
+                    b.Navigation("Pedidos");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Modelo", b =>
+                {
+                    b.Navigation("Pedidos");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.Pedido", b =>
                 {
                     b.Navigation("Orcamentos");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.Status", b =>
+                {
+                    b.Navigation("Orcamentos");
+
+                    b.Navigation("Pedidos");
+                });
+
+            modelBuilder.Entity("PecaBoa.Domain.Entities.TipoDePeca", b =>
+                {
+                    b.Navigation("Pedidos");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Usuario", b =>

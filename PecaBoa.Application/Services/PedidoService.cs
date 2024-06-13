@@ -3,27 +3,32 @@ using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Pedido;
 using PecaBoa.Application.Notification;
-using PecaBoa.Core.Enums;
 using PecaBoa.Core.Extensions;
 using PecaBoa.Domain.Contracts.Repositories;
 using PecaBoa.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using PecaBoa.Core.Authorization;
+using PecaBoa.Domain.Entities.Enum;
 
 namespace PecaBoa.Application.Services;
 
 public class PedidoService : BaseService, IPedidoService
 {
+    private readonly IAuthenticatedUser _authenticatedUser;
+    private readonly IUsuarioRepository _usuarioRepository;
     private readonly IPedidoRepository _pedidoRepository;
     private readonly IFileService _fileService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public PedidoService(IMapper mapper, INotificator notificator,
         IPedidoRepository pedidoRepository, IFileService fileService,
-        IHttpContextAccessor httpContextAccessor) : base(mapper, notificator)
+        IHttpContextAccessor httpContextAccessor, IAuthenticatedUser authenticatedUser, IUsuarioRepository usuarioRepository) : base(mapper, notificator)
     {
         _pedidoRepository = pedidoRepository;
         _fileService = fileService;
         _httpContextAccessor = httpContextAccessor;
+        _authenticatedUser = authenticatedUser;
+        _usuarioRepository = usuarioRepository;
     }
 
     public async Task<PedidoDto?> Adicionar(CadastrarPedidoDto dto)
@@ -56,6 +61,8 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.UsuarioId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
+        pedido.Desativado = false;
+        pedido.StatusId = (int)EStatus.AnuncioAtivo;
         pedido.CriadoEm = DateTime.SpecifyKind(pedido.CriadoEm, DateTimeKind.Utc);;
         if (!await Validar(pedido))
         {
@@ -141,6 +148,8 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);;
+        pedido.Desativado = false;
+        pedido.StatusId = (int)EStatus.AnuncioAtivo;
         _pedidoRepository.Alterar(pedido);
         if (await _pedidoRepository.UnitOfWork.Commit())
         {
@@ -149,6 +158,25 @@ public class PedidoService : BaseService, IPedidoService
 
         Notificator.Handle("Não foi possível alterar o pedido!");
         return null;
+    }
+
+    public async Task<List<PedidoDto>> BuscarPedidosUsuario()
+    {
+        var usuario = await _usuarioRepository.ObterPorId(_authenticatedUser.Id);
+        if (usuario == null)
+        {
+            Notificator.Handle("Nenhum usuario encontrado com o id informado.");
+            return null;
+        }
+
+        var pedidos = await _pedidoRepository.BuscarPedidoUsuario(_authenticatedUser.Id);
+        if (usuario == null)
+        {
+            Notificator.Handle("Nenhum pedido encontrado");
+            return null;
+        }
+
+        return Mapper.Map<List<PedidoDto>>(pedidos);
     }
 
     public async Task AlterarFoto(AlterarFotoPedidoDto dto)
@@ -247,6 +275,7 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         pedido.Desativado = true;
+        pedido.StatusId = (int)EStatus.Cancelado;
         pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);
         _pedidoRepository.Alterar(pedido);
         if (await _pedidoRepository.UnitOfWork.Commit())
@@ -324,14 +353,6 @@ public class PedidoService : BaseService, IPedidoService
         if (pedido.UsuarioId != Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()))
         {
             Notificator.Handle("Você não tem permissão para executar essa ação!");
-        }
-
-        var administradorExistente =
-            await _pedidoRepository.FistOrDefault(
-                c => c.NomePeca == pedido.NomePeca && c.Id != pedido.Id);
-        if (administradorExistente != null)
-        {
-            Notificator.Handle("Já existe um administrador com esse email!");
         }
 
         return !Notificator.HasNotification;

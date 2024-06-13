@@ -36,19 +36,6 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
             .IsRequired(false)
             .HasMaxLength(1500);
 
-        builder
-            .Property(c => c.TipoDePeca)
-            .HasMaxLength(250)
-            .IsRequired();
-        
-        builder.Property(c => c.Marca)
-            .HasMaxLength(180)
-            .IsRequired();
-        
-        builder.Property(c => c.Modelo)
-            .HasMaxLength(280)
-            .IsRequired();
-
         builder.Property(c => c.AnoDeFabricacao)
             .HasColumnType("date")
             .IsRequired(false);
@@ -56,5 +43,39 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
         builder.Property(c => c.Cor)
             .HasMaxLength(180)
             .IsRequired();
+
+        builder.Property(c => c.StatusId)
+            .IsRequired();
+
+        builder
+            .HasOne(c => c.Status)
+            .WithMany(c => c.Pedidos)
+            .HasForeignKey(c => c.StatusId)
+            .HasPrincipalKey(c => c.Id)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasOne(c => c.Marca)
+            .WithMany(c => c.Pedidos)
+            .HasForeignKey(c => c.MarcaId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder
+            .HasOne(c => c.TipoDePeca)
+            .WithMany(c => c.Pedidos)
+            .HasForeignKey(c => c.TipoDePecaId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder
+            .HasOne(c => c.Modelo)
+            .WithMany(c => c.Pedidos)
+            .HasForeignKey(c => c.ModeloId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasOne(c => c.CategoriaVeiculo)
+            .WithMany(c => c.Pedidos)
+            .HasForeignKey(c => c.CategoriaVeiculoId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

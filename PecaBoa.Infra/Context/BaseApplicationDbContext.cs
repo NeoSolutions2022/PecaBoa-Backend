@@ -23,6 +23,12 @@ public abstract class BaseApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<Lojista> Lojistas { get; set; } = null!;
     public DbSet<Pedido> Pedidos { get; set; } = null!;
     public DbSet<Orcamento> Orcamentos { get; set; } = null!;
+    public DbSet<Status> Status { get; set; } = null!;
+    public DbSet<TipoDePeca> TipoDePecas { get; set; } = null!;
+    public DbSet<CondicaoPeca> CondicaoPecas { get; set; } = null!;
+    public DbSet<CategoriaVeiculo> CategoriaVeiculos { get; set; } = null!;
+    public DbSet<Marca> Marcas { get; set; } = null!;
+    public DbSet<Modelo> Modelos { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
