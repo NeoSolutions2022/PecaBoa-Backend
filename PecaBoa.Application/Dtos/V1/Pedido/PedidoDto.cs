@@ -25,6 +25,7 @@ public class PedidoDto
     public int TipoDePecaId { get; set; }
     public int CategoriaVeiculoId { get; set; }
     public DateOnly AnoDeFabricacao { get; set; }
+    public DateTime CriadoEm { get; set; }
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public int UsuarioId { get; set; }
