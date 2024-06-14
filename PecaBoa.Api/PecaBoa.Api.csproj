@@ -53,5 +53,9 @@
     <ItemGroup>
       <Content Include="wwwroot\index.html" />
     </ItemGroup>
-
+    
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    </PropertyGroup>
 </Project>

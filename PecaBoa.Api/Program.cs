@@ -72,9 +72,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
 app.UseCors(myAllowSpecificOrigins);
 
 app.UseMigrations(app.Services);
+
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
@@ -86,7 +90,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
-app.UseAuthorization();
 
 // app.UseStaticFileConfiguration(app.Configuration);
 
