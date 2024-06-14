@@ -41,6 +41,7 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     {
         return await Context.Pedidos
             .Where(c => c.UsuarioId == id)
+            .Include(c => c.Orcamentos)
             .Include(c => c.Usuario)
             .ToListAsync();
     }
