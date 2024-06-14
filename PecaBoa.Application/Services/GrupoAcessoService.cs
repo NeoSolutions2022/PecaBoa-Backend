@@ -48,6 +48,14 @@ public class GrupoAcessoService : BaseService, IGrupoAcessoService
             return null;
         }
 
+        grupoAcesso.CriadoEm = DateTime.SpecifyKind(grupoAcesso.CriadoEm, DateTimeKind.Utc);
+        grupoAcesso.AtualizadoEm = DateTime.SpecifyKind(grupoAcesso.AtualizadoEm, DateTimeKind.Utc);
+        
+        foreach (var permissao in grupoAcesso.Permissoes)
+        {
+            permissao.CriadoEm = DateTime.SpecifyKind(permissao.CriadoEm, DateTimeKind.Utc);
+            permissao.AtualizadoEm = DateTime.SpecifyKind(permissao.AtualizadoEm, DateTimeKind.Utc);
+        }
         _grupoAcessoRepository.Cadastrar(grupoAcesso);
 
         return await CommitChanges() ? Mapper.Map<GrupoAcessoDto>(grupoAcesso) : null;
