@@ -30,6 +30,7 @@ public class PedidoDto
     public int TipoDePecaId { get; set; }
     public int CategoriaVeiculoId { get; set; }
     public DateOnly AnoDeFabricacao { get; set; }
+    public DateTime CriadoEm { get; set; }
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public int UsuarioId { get; set; }
@@ -41,4 +42,8 @@ public class PedidoDto
     public TipoDePecaDto TipoDePeca { get; set; } = null!;
     public CategoriaVeiculoDto CategoriaVeiculo { get; set; } = null!;
     public List<OrcamentoDto> Orcamentos { get; set; } = new();
+    public int OrcamentosCount 
+    {
+        get { return Orcamentos.Count; }
+    }
 }

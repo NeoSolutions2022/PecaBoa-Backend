@@ -63,7 +63,9 @@ public class PedidoService : BaseService, IPedidoService
         pedido.UsuarioId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         pedido.Desativado = false;
         pedido.StatusId = (int)EStatus.AnuncioAtivo;
-        pedido.CriadoEm = DateTime.SpecifyKind(pedido.CriadoEm, DateTimeKind.Utc);;
+        pedido.CriadoEm = DateTime.UtcNow;
+        pedido.AtualizadoEm = DateTime.UtcNow;
+        
         if (!await Validar(pedido))
         {
             return null;
@@ -147,7 +149,7 @@ public class PedidoService : BaseService, IPedidoService
             return null;
         }
 
-        pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);;
+        pedido.AtualizadoEm = DateTime.UtcNow;
         pedido.Desativado = false;
         pedido.StatusId = (int)EStatus.AnuncioAtivo;
         _pedidoRepository.Alterar(pedido);
@@ -170,11 +172,6 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         var pedidos = await _pedidoRepository.BuscarPedidoUsuario(_authenticatedUser.Id);
-        if (usuario == null)
-        {
-            Notificator.Handle("Nenhum pedido encontrado");
-            return null;
-        }
 
         return Mapper.Map<List<PedidoDto>>(pedidos);
     }

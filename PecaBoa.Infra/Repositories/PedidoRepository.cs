@@ -33,6 +33,7 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     {
         var query = Context.Pedidos
             .Include(c => c.Usuario)
+            .Include(c => c.Orcamentos)
             .AsQueryable();
         return await base.Buscar(query, filtro);
     }
@@ -41,6 +42,7 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     {
         return await Context.Pedidos
             .Where(c => c.UsuarioId == id)
+            .Include(c => c.Orcamentos)
             .Include(c => c.Usuario)
             .ToListAsync();
     }
