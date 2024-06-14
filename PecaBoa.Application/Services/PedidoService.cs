@@ -415,7 +415,6 @@ public class PedidoService : BaseService, IPedidoService
         }
         catch (Exception ex)
         {
-            Notificator.Handle($"Erro ao baixar a foto: {ex.Message}");
             return new byte[0];
         }
     }
