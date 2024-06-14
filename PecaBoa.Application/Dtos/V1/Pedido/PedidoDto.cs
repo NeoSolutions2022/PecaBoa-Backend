@@ -37,4 +37,8 @@ public class PedidoDto
     public TipoDePecaDto TipoDePeca { get; set; } = null!;
     public CategoriaVeiculoDto CategoriaVeiculo { get; set; } = null!;
     public List<OrcamentoDto> Orcamentos { get; set; } = new();
+    public int OrcamentosCount 
+    {
+        get { return Orcamentos.Count; }
+    }
 }
