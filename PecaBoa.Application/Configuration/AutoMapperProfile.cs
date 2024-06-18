@@ -46,6 +46,8 @@ public class AutoMapperProfile : Profile
             .ReverseMap();
 
         CreateMap<PecaBoa.Application.Dtos.V1.Usuario.CadastrarUsuarioDto, Usuario>()
+            .ForMember(dest => dest.GrupoAcessos, opt 
+                => opt.MapFrom(src => src.GrupoAcessos))
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
@@ -53,6 +55,12 @@ public class AutoMapperProfile : Profile
 
         CreateMap<PagedDto<PecaBoa.Application.Dtos.V1.Usuario.UsuarioDto>, ResultadoPaginado<Usuario>>()
             .ReverseMap();
+
+        CreateMap<GrupoAcessoUsuarioDto, GrupoAcessoUsuario>()
+            .ForMember(dest => dest.UsuarioId, opt
+                => opt.MapFrom(src => src.GrupoAcessoId))
+            .ReverseMap();
+            
 
         #endregion
 
