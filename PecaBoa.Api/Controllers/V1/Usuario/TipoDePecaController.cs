@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PecaBoa.Api.Controllers.V1.Usuario;
 
-public class TipoDePecaController : MainController
+public class TipoDePecaController : BaseController
 {
     private readonly ITipoDePecaService _tipoDePecaService;
     
