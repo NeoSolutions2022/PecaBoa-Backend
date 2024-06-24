@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace PecaBoa.Api.Controllers.V1.Usuario;
 
 [Route("v{version:apiVersion}/Usuario/[controller]")]
-public class CategoriaVeiculoController : MainController
+public class CategoriaVeiculoController : BaseController
 {
     private readonly ICategoriaVeiculoService _categoriaVeiculoService;
     

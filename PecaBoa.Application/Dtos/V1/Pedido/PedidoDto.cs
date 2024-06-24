@@ -17,6 +17,11 @@ public class PedidoDto
     public string? Foto3 { get; set; }
     public string? Foto4 { get; set; }
     public string? Foto5 { get; set; }
+    public byte[]? FotoByte { get; set; }
+    public byte[]? Foto2Byte { get; set; }
+    public byte[]? Foto3Byte { get; set; }
+    public byte[]? Foto4Byte { get; set; }
+    public byte[]? Foto5Byte { get; set; }
     public string NomePeca { get; set; } = null!;
     public string Descricao { get; set; } = null!;
     public int MarcaId { get; set; }
@@ -25,6 +30,7 @@ public class PedidoDto
     public int TipoDePecaId { get; set; }
     public int CategoriaVeiculoId { get; set; }
     public DateOnly AnoDeFabricacao { get; set; }
+    public DateTime CriadoEm { get; set; }
     public string Cor { get; set; } = null!;
     public bool Desativado { get; set; }
     public int UsuarioId { get; set; }
@@ -36,4 +42,8 @@ public class PedidoDto
     public TipoDePecaDto TipoDePeca { get; set; } = null!;
     public CategoriaVeiculoDto CategoriaVeiculo { get; set; } = null!;
     public List<OrcamentoDto> Orcamentos { get; set; } = new();
+    public int OrcamentosCount 
+    {
+        get { return Orcamentos.Count; }
+    }
 }

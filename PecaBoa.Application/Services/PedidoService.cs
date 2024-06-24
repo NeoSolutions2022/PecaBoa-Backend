@@ -63,7 +63,9 @@ public class PedidoService : BaseService, IPedidoService
         pedido.UsuarioId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         pedido.Desativado = false;
         pedido.StatusId = (int)EStatus.AnuncioAtivo;
-        pedido.CriadoEm = DateTime.SpecifyKind(pedido.CriadoEm, DateTimeKind.Utc);;
+        pedido.CriadoEm = DateTime.UtcNow;
+        pedido.AtualizadoEm = DateTime.UtcNow;
+        
         if (!await Validar(pedido))
         {
             return null;
@@ -147,7 +149,7 @@ public class PedidoService : BaseService, IPedidoService
             return null;
         }
 
-        pedido.AtualizadoEm = DateTime.SpecifyKind(pedido.AtualizadoEm, DateTimeKind.Utc);;
+        pedido.AtualizadoEm = DateTime.UtcNow;
         pedido.Desativado = false;
         pedido.StatusId = (int)EStatus.AnuncioAtivo;
         _pedidoRepository.Alterar(pedido);
@@ -170,11 +172,6 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         var pedidos = await _pedidoRepository.BuscarPedidoUsuario(_authenticatedUser.Id);
-        if (usuario == null)
-        {
-            Notificator.Handle("Nenhum pedido encontrado");
-            return null;
-        }
 
         return Mapper.Map<List<PedidoDto>>(pedidos);
     }
@@ -328,19 +325,69 @@ public class PedidoService : BaseService, IPedidoService
     public async Task<PagedDto<PedidoDto>> Buscar(BuscarPedidoDto dto)
     {
         var administrador = await _pedidoRepository.Buscar(dto);
-        return Mapper.Map<PagedDto<PedidoDto>>(administrador);
+        var pedidosMapeados = Mapper.Map<PagedDto<PedidoDto>>(administrador);
+        
+        var httpClient = new HttpClient();
+        foreach (var pedidoDto in pedidosMapeados.Itens)
+        {
+            if (!string.IsNullOrEmpty(pedidoDto.Foto))
+            {
+                pedidoDto.FotoByte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto);
+            }
+            if (!string.IsNullOrEmpty(pedidoDto.Foto2))
+            {
+                pedidoDto.Foto2Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto2);
+            }
+            if (!string.IsNullOrEmpty(pedidoDto.Foto3))
+            {
+                pedidoDto.Foto3Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto3);
+            }
+            if (!string.IsNullOrEmpty(pedidoDto.Foto4))
+            {
+                pedidoDto.Foto4Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto4);
+            }
+            if (!string.IsNullOrEmpty(pedidoDto.Foto5))
+            {
+                pedidoDto.Foto5Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto5);
+            }
+        }
+
+        return pedidosMapeados;
     }
 
     public async Task<PedidoDto?> ObterPorId(int id)
     {
         var pedido = await _pedidoRepository.ObterPorId(id);
-        if (pedido != null)
+        if (pedido is null)
         {
-            return Mapper.Map<PedidoDto>(pedido);
+            Notificator.HandleNotFoundResource();
+            return null;
         }
-
-        Notificator.HandleNotFoundResource();
-        return null;
+        
+        var httpClient = new HttpClient();
+        var pedidoDto = Mapper.Map<PedidoDto>(pedido);
+        if (!string.IsNullOrEmpty(pedidoDto.Foto))
+        {
+            pedidoDto.FotoByte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto);
+        }
+        if (!string.IsNullOrEmpty(pedidoDto.Foto2))
+        {
+            pedidoDto.Foto2Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto2);
+        }
+        if (!string.IsNullOrEmpty(pedidoDto.Foto3))
+        {
+            pedidoDto.Foto3Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto3);
+        }
+        if (!string.IsNullOrEmpty(pedidoDto.Foto4))
+        {
+            pedidoDto.Foto4Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto4);
+        }
+        if (!string.IsNullOrEmpty(pedidoDto.Foto5))
+        {
+            pedidoDto.Foto5Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto5);
+        }
+        
+        return pedidoDto;
     }
 
     private async Task<bool> Validar(Pedido pedido)
@@ -356,5 +403,19 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         return !Notificator.HasNotification;
+    }
+    
+    private async Task<byte[]> DownloadPhotoAsync(HttpClient httpClient, string photoUrl)
+    {
+        try
+        {
+            var response = await httpClient.GetAsync(photoUrl);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsByteArrayAsync();
+        }
+        catch (Exception ex)
+        {
+            return new byte[0];
+        }
     }
 }

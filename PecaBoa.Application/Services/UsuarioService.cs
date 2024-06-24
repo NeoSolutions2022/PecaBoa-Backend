@@ -53,7 +53,7 @@ public class UsuarioService : BaseService, IUsuarioService
         
         usuario.Senha = _passwordHasher.HashPassword(usuario, usuario.Senha);
         usuario.Uf = usuario.Uf.ToLower();
-        usuario.CriadoEm = DateTime.SpecifyKind(usuario.CriadoEm, DateTimeKind.Utc);
+        usuario.CriadoEm = DateTime.UtcNow;
         _usuarioRepository.Adicionar(usuario);
         if (await _usuarioRepository.UnitOfWork.Commit())
         {
@@ -87,7 +87,7 @@ public class UsuarioService : BaseService, IUsuarioService
         
         usuario.Senha = _passwordHasher.HashPassword(usuario, usuario.Senha);
         usuario.Uf = usuario.Uf.ToLower();
-        usuario.AtualizadoEm = DateTime.SpecifyKind(usuario.AtualizadoEm, DateTimeKind.Utc);
+        usuario.AtualizadoEm = DateTime.UtcNow;
         _usuarioRepository.Alterar(usuario);
         if (await _usuarioRepository.UnitOfWork.Commit())
         {
