@@ -25,7 +25,7 @@ public class GrupoAcessoRepository : Repository<GrupoAcesso>, IGrupoAcessoReposi
         return await Context.GruposAcesso
             .Include(ga => ga.Permissoes)
             .ThenInclude(gap => gap.Permissao)
-            .Where(c => ids.Equals(c.Id)).ToListAsync();
+            .Where(c => ids.Contains(c.Id)).ToListAsync();
     }
 
     public async Task<List<GrupoAcesso>> ObterTodos()

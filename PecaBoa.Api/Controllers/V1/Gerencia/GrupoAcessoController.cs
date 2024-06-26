@@ -11,9 +11,11 @@ namespace PecaBoa.Api.Controllers.V1.Gerencia;
 public class GruposAcessoController : MainController
 {
     private readonly IGrupoAcessoService _grupoAcessoService;
-    public GruposAcessoController(INotificator notificator, IGrupoAcessoService grupoAcessoService) : base(notificator)
+    private readonly IUsuarioService _usuarioService;
+    public GruposAcessoController(INotificator notificator, IGrupoAcessoService grupoAcessoService, IUsuarioService usuarioService) : base(notificator)
     {
         _grupoAcessoService = grupoAcessoService;
+        _usuarioService = usuarioService;
     }
     
     [HttpGet("{id}")]
@@ -91,6 +93,19 @@ public class GruposAcessoController : MainController
     public async Task<IActionResult> Reativar(int id)
     {
         await _grupoAcessoService.Reativar(id);
+        return NoContentResponse();
+    }
+    
+    [HttpPatch()]
+    // [ClaimsAuthorize(PermissoesBackend.ConfiguracoesGruposAcesso, EPermissaoTipo.Write)]
+    [SwaggerOperation(Summary = "Adicionar usuario ao Grupo de Acesso.", Tags = new [] { "Configurações - Grupos de acesso" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AdicionarUsuarioAoGrupoAcesso(AdicionarUsuarioGrupoAcessoDto usuarioGrupoAcessoDto)
+    {
+        await _usuarioService.AdicionarUsuarioGrupoAcesso(usuarioGrupoAcessoDto);
         return NoContentResponse();
     }
 
