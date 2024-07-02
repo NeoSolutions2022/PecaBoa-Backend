@@ -1,9 +1,11 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Orcamento;
 using PecaBoa.Application.Notification;
 using PecaBoa.Core.Enums;
+using PecaBoa.Core.Extensions;
 using PecaBoa.Domain.Contracts.Repositories;
 using PecaBoa.Domain.Entities;
 using PecaBoa.Domain.Entities.Enum;
@@ -14,20 +16,25 @@ public class OrcamentoService : BaseService, IOrcamentoService
 {
     private readonly IOrcamentoRepository _orcamentoRepository;
     private readonly IFileService _fileService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     
-    public OrcamentoService(IMapper mapper, INotificator notificator, IOrcamentoRepository orcamentoRepository, IFileService fileService) : base(mapper, notificator)
+    public OrcamentoService(IMapper mapper, INotificator notificator, IOrcamentoRepository orcamentoRepository, IFileService fileService, IHttpContextAccessor httpContextAccessor) : base(mapper, notificator)
     {
         _orcamentoRepository = orcamentoRepository;
         _fileService = fileService;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<OrcamentoDto?> Adicionar(CadastrarOrcamentoDto dto)
     {
         var orcamento = Mapper.Map<Orcamento>(dto);
         
-        orcamento.CriadoEm = DateTime.SpecifyKind(orcamento.CriadoEm, DateTimeKind.Utc);
+        orcamento.LojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         orcamento.Desativado = false;
         orcamento.StatusId = (int)EStatus.AnuncioAtivo;
+        orcamento.CriadoEm = DateTime.UtcNow;
+        orcamento.AtualizadoEm = DateTime.UtcNow;
+        
         _orcamentoRepository.Adicionar(orcamento);
         
         if (await _orcamentoRepository.UnitOfWork.Commit())
@@ -56,7 +63,8 @@ public class OrcamentoService : BaseService, IOrcamentoService
 
         Mapper.Map(dto, orcamento);
         
-        orcamento.AtualizadoEm = DateTime.SpecifyKind(orcamento.AtualizadoEm, DateTimeKind.Utc);
+        orcamento.LojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
+        orcamento.AtualizadoEm = DateTime.UtcNow;
         orcamento.Desativado = false;
         orcamento.StatusId = (int)EStatus.AnuncioAtivo;
         _orcamentoRepository.Alterar(orcamento);

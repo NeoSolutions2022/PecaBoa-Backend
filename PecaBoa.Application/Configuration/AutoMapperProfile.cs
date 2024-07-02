@@ -128,6 +128,8 @@ public class AutoMapperProfile : Profile
         CreateMap<OrcamentoDto, AlterarOrcamentoDto>()
             .ReverseMap();
         CreateMap<ResultadoPaginado<Orcamento>, PagedDto<OrcamentoDto>>();
+        CreateMap<AlterarOrcamentoDto, Orcamento>()
+            .ReverseMap();
 
         #endregion
         

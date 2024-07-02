@@ -14,5 +14,4 @@ public class CadastrarOrcamentoDto
     public decimal Preco { get; set; }
     public int CondicaoPecaId { get; set; }
     public int PedidoId { get; set; }
-    public int LojistaId { get; set; }
 }

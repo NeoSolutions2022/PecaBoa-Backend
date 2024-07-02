@@ -10,8 +10,6 @@ public class AlterarOrcamentoDto
     public decimal Preco { get; set; }
     public int CondicaoPecaId { get; set; }
     public int PedidoId { get; set; }
-    public int LojistaId { get; set; }
-    public bool Desativado { get; set; }
     public IFormFile? Foto { get; set; }
     public IFormFile? Foto2 { get; set; }
     public IFormFile? Foto3 { get; set; }
