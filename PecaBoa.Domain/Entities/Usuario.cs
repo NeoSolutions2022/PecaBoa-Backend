@@ -23,6 +23,7 @@ public class Usuario : Entity, ISoftDelete, IAggregateRoot
     public Guid? CodigoResetarSenha { get; set; }
     public DateTime? CodigoResetarSenhaExpiraEm { get; set; }
     public List<Pedido> Pedidos { get; set; } = new();
+    public List<GrupoAcessoUsuario> GrupoAcessos { get; set; } = new();
 
     public override bool Validar(out ValidationResult validationResult)
     {

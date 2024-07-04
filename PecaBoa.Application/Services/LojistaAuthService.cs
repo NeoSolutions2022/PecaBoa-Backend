@@ -62,7 +62,7 @@ public class LojistaAuthService : BaseService, ILojistaAuthService
 
     public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaLojistaDto dto)
     {
-        var usuario = await _lojistaRepository.FistOrDefault(c =>
+        var usuario = await _lojistaRepository.FirstOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
         if (usuario == null)
         {
@@ -81,7 +81,7 @@ public class LojistaAuthService : BaseService, ILojistaAuthService
 
     public async Task RecuperarSenha(RecuperarSenhaLojistaDto dto)
     {
-        var lojista = await _lojistaRepository.FistOrDefault(f => f.Email == dto.Email);
+        var lojista = await _lojistaRepository.FirstOrDefault(f => f.Email == dto.Email);
         if (lojista == null)
         {
             Notificator.HandleNotFoundResource();
@@ -111,7 +111,7 @@ public class LojistaAuthService : BaseService, ILojistaAuthService
 
     public async Task AlterarSenha(AlterarSenhaLojistaDto dto)
     {
-        var lojista = await _lojistaRepository.FistOrDefault(c =>
+        var lojista = await _lojistaRepository.FirstOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
         if (lojista == null)
         {

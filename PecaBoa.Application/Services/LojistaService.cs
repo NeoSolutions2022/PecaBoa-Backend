@@ -175,7 +175,7 @@ public class LojistaService : BaseService, ILojistaService
 
     public async Task AlterarSenha(int id)
     {
-        var lojista = await _lojistaRepository.FistOrDefault(f => f.Id == id);
+        var lojista = await _lojistaRepository.FirstOrDefault(f => f.Id == id);
         if (lojista == null)
         {
             Notificator.HandleNotFoundResource();
@@ -306,7 +306,7 @@ public class LojistaService : BaseService, ILojistaService
 
     public async Task Remover(int id)
     {
-        var lojista = await _lojistaRepository.FistOrDefault(c => c.Id == id);
+        var lojista = await _lojistaRepository.FirstOrDefault(c => c.Id == id);
         if (lojista == null)
         {
             Notificator.Handle("Não existe um lojista com o id informado");
@@ -329,7 +329,7 @@ public class LojistaService : BaseService, ILojistaService
             Notificator.Handle(validationResult.Errors);
         }
 
-        var lojistaExistente = await _lojistaRepository.FistOrDefault(c =>
+        var lojistaExistente = await _lojistaRepository.FirstOrDefault(c =>
             (c.Email == lojista.Email || c.Cnpj == lojista.Cnpj) && c.Id != lojista.Id);
 
         if (lojistaExistente != null)

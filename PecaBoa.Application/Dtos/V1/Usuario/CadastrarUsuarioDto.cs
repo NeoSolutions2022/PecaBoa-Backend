@@ -21,4 +21,10 @@ public class CadastrarUsuarioDto
     public int Numero { get; set; }
     public string? Complemento { get; set; }
     public bool Desativado { get; set; }
+    public List<GrupoAcessoUsuarioDto> GrupoAcessos { get; set; } = new();
+}
+
+public class GrupoAcessoUsuarioDto
+{
+    public int GrupoAcessoId { get; set; }
 }

@@ -16,4 +16,5 @@ public class UsuarioDto
     public string Bairro { get; set; } = null!;
     public int Numero { get; set; }
     public string? Complemento { get; set; }
+    public List<GrupoAcessoUsuarioDto> GrupoAcessos { get; set; } = new();
 }

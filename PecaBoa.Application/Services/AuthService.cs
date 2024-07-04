@@ -63,7 +63,7 @@ public class AuthService : BaseService, IAuthService
 
     public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaAdministradorDto administradorDto)
     {
-        var administrador = await _administradorRepository.FistOrDefault(c =>
+        var administrador = await _administradorRepository.FirstOrDefault(c =>
             c.Email == administradorDto.Email && c.CodigoResetarSenha == administradorDto.CodigoResetarSenha);
         if (administrador == null)
         {
@@ -82,7 +82,7 @@ public class AuthService : BaseService, IAuthService
 
     public async Task RecuperarSenha(RecuperarSenhaAdministradorDto dto)
     {
-        var administrador = await _administradorRepository.FistOrDefault(f => f.Email == dto.Email);
+        var administrador = await _administradorRepository.FirstOrDefault(f => f.Email == dto.Email);
         if (administrador == null)
         {
             Notificator.HandleNotFoundResource();
@@ -112,7 +112,7 @@ public class AuthService : BaseService, IAuthService
 
     public async Task AlterarSenha(AlterarSenhaAdministradorDto dto)
     {
-        var administrador = await _administradorRepository.FistOrDefault(c =>
+        var administrador = await _administradorRepository.FirstOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
         if (administrador == null)
         {
@@ -159,6 +159,7 @@ public class AuthService : BaseService, IAuthService
                 new Claim("Administrador", ETipoUsuario.Administrador.ToDescriptionString()),
                 new Claim("Lojista", ETipoUsuario.Lojista.ToDescriptionString()),
                 new Claim("Usuario", ETipoUsuario.Usuario.ToDescriptionString()),
+                
             }),
             Expires = DateTime.UtcNow.AddHours(2),
             SigningCredentials =

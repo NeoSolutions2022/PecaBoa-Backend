@@ -15,6 +15,8 @@ using PecaBoa.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using PecaBoa.Core.Authorization;
 
 namespace PecaBoa.Application.Services;
 
@@ -23,15 +25,17 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
     private readonly IUsuarioRepository _usuarioRepository;
     private readonly IPasswordHasher<Usuario> _passwordHasher;
     private readonly IEmailService _emailService;
+    private readonly IGrupoAcessoRepository _grupoAcessoRepository;
     private readonly AppSettings _appSettings;
 
     public UsuarioAuthService(IMapper mapper, INotificator notificator, IUsuarioRepository usuarioRepository,
-        IPasswordHasher<Usuario> passwordHasher, IEmailService emailService, IOptions<AppSettings> appSettings) : base(
+        IPasswordHasher<Usuario> passwordHasher, IEmailService emailService, IOptions<AppSettings> appSettings, IGrupoAcessoRepository grupoAcessoRepository) : base(
         mapper, notificator)
     {
         _usuarioRepository = usuarioRepository;
         _passwordHasher = passwordHasher;
         _emailService = emailService;
+        _grupoAcessoRepository = grupoAcessoRepository;
         _appSettings = appSettings.Value;
     }
 
@@ -62,7 +66,7 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
 
     public async Task<bool> VerificarCodigo(VerificarCodigoResetarSenhaUsuarioDto dto)
     {
-        var usuario = await _usuarioRepository.FistOrDefault(c =>
+        var usuario = await _usuarioRepository.FirstOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
         if (usuario == null)
         {
@@ -81,7 +85,7 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
 
     public async Task RecuperarSenha(RecuperarSenhaUsuarioDto dto)
     {
-        var usuario = await _usuarioRepository.FistOrDefault(f => f.Email == dto.Email);
+        var usuario = await _usuarioRepository.FirstOrDefault(f => f.Email == dto.Email);
         if (usuario == null)
         {
             Notificator.HandleNotFoundResource();
@@ -111,7 +115,7 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
 
     public async Task AlterarSenha(AlterarSenhaUsuarioDto dto)
     {
-        var usuario = await _usuarioRepository.FistOrDefault(c =>
+        var usuario = await _usuarioRepository.FirstOrDefault(c =>
             c.Email == dto.Email && c.CodigoResetarSenha == dto.CodigoResetarSenha);
         if (usuario == null)
         {
@@ -143,27 +147,70 @@ public class UsuarioAuthService : BaseService, IUsuarioAuthService
         }
     }
 
-    public Task<string> CreateTokenUsuario(Usuario usuario)
+    public async Task<string> CreateTokenUsuario(Usuario usuario)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(Settings.Settings.Secret);
+        var claimsIdentity = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+            new Claim(ClaimTypes.Name, usuario.Nome),
+            new Claim(ClaimTypes.Email, usuario.Email),
+            new Claim("TipoUsuario", ETipoUsuario.Usuario.ToDescriptionString()),
+            new Claim("Administrador", ETipoUsuario.Usuario.ToDescriptionString()),
+            new Claim("Lojista", ETipoUsuario.Usuario.ToDescriptionString()),
+            new Claim("Usuario", ETipoUsuario.Usuario.ToDescriptionString()),
+            new Claim("GrupoAcesso", "GrupoAcesso")
+        });
+
+        await AdicionarPermissoes(usuario, claimsIdentity);
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                new Claim(ClaimTypes.Name, usuario.Nome),
-                new Claim(ClaimTypes.Email, usuario.Email),
-                new Claim("TipoUsuario", ETipoUsuario.Usuario.ToDescriptionString()),
-                new Claim("Administrador", ETipoUsuario.Usuario.ToDescriptionString()),
-                new Claim("Lojista", ETipoUsuario.Usuario.ToDescriptionString()),
-                new Claim("Usuario", ETipoUsuario.Usuario.ToDescriptionString()),
-            }),
+            Subject = claimsIdentity,
             Expires = DateTime.UtcNow.AddHours(2),
-            SigningCredentials =
-                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
+
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        return Task.FromResult(tokenHandler.WriteToken(token));
+        return await Task.FromResult(tokenHandler.WriteToken(token));
+    }
+    
+    private async Task AdicionarPermissoes(Usuario usuario, ClaimsIdentity claimsIdentity)
+    {
+        if (!usuario.GrupoAcessos.Any())
+        {
+            return;
+        }
+
+        var gruposIds = usuario
+            .GrupoAcessos
+            .Select(g => g.Id)
+            .ToList();
+
+        var grupos = await _grupoAcessoRepository.ObterTodos();
+        var gruposFiltrados = grupos.Where(c => gruposIds.Contains(c.Id));
+
+        var permissoes = MapPermissoes(gruposFiltrados.SelectMany(c => c.Permissoes)).Select(p => p.ToString());
+        claimsIdentity.AddClaim(new Claim("permissoes", JsonConvert.SerializeObject(permissoes), JsonClaimValueTypes.JsonArray)); 
+    }
+
+    private static IEnumerable<PermissaoClaim> MapPermissoes(IEnumerable<GrupoAcessoPermissao> permissoes)
+    {
+        return permissoes
+            .GroupBy(c => c.PermissaoId)
+            .Select(grupo =>
+            {
+                var tipos = grupo
+                    .SelectMany(gap => gap.Tipo.ToCharArray().Select(c => c.ToString()))
+                    .Distinct();
+                
+                return new PermissaoClaim
+                {
+                    Nome = grupo.First().Permissao.Nome,
+                    Tipo = string.Join("", tipos)
+                };
+            })
+            .ToList();
     }
 }
