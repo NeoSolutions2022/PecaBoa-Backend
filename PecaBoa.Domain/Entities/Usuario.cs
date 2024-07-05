@@ -19,10 +19,13 @@ public class Usuario : Entity, ISoftDelete, IAggregateRoot
     public string Rua { get; set; } = null!;
     public int Numero { get; set; }
     public string? Complemento { get; set; }
+    public int? RepresentanteId { get; set; }
     public bool Desativado { get; set; }
     public Guid? CodigoResetarSenha { get; set; }
     public DateTime? CodigoResetarSenhaExpiraEm { get; set; }
-    public List<Pedido> Pedidos { get; set; } = new();
+    public virtual List<Pedido> Pedidos { get; set; } = new();
+    public List<Usuario> Usuarios { get; set; } = new();
+    public List<Lojista> Lojistas { get; set; } = new(); 
 
     public override bool Validar(out ValidationResult validationResult)
     {

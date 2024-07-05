@@ -25,11 +25,13 @@ public class Lojista : Entity, IAggregateRoot, ISoftDelete
     public string Senha { get; set; } = null!;
     public string? Telefone { get; set; }
     public string Uf { get; set; } = null!;
+    public int? RepresentanteId { get; set; }
     
     //public bool AnuncioPago { get; set; }
     //public DateTime? DataPagamentoAnuncio { get; set; }
     //public DateTime? DataExpiracaoAnuncio { get; set; }
-    public List<Orcamento> Orcamentos { get; set; } = new();
+    public virtual List<Orcamento> Orcamentos { get; set; } = new();
+    public virtual Usuario Usuario { get; set; }
 
     public override bool Validar(out ValidationResult validationResult)
     {

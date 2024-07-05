@@ -90,5 +90,15 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
             .WithOne(c => c.Usuario)
             .HasForeignKey(c => c.UsuarioId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasMany(c => c.Usuarios)
+            .WithOne()
+            .HasForeignKey(c => c.RepresentanteId);
+
+        builder
+            .HasMany(c => c.Lojistas)
+            .WithOne(c => c.Usuario)
+            .HasForeignKey(c => c.RepresentanteId);
     }
 }
