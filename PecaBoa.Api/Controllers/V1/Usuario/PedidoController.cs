@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Base;
@@ -32,6 +33,7 @@ public class PedidoController : Lojista.MainController
         return OkResponse(pedido);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     [SwaggerOperation(Summary = "Buscar Pedido - Usuario.",
         Tags = new[] { "Usuario - Pedido" })]

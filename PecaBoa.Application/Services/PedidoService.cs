@@ -16,19 +16,21 @@ public class PedidoService : BaseService, IPedidoService
 {
     private readonly IAuthenticatedUser _authenticatedUser;
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly ILojistaRepository _lojistaRepository;
     private readonly IPedidoRepository _pedidoRepository;
     private readonly IFileService _fileService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public PedidoService(IMapper mapper, INotificator notificator,
         IPedidoRepository pedidoRepository, IFileService fileService,
-        IHttpContextAccessor httpContextAccessor, IAuthenticatedUser authenticatedUser, IUsuarioRepository usuarioRepository) : base(mapper, notificator)
+        IHttpContextAccessor httpContextAccessor, IAuthenticatedUser authenticatedUser, IUsuarioRepository usuarioRepository, ILojistaRepository lojistaRepository) : base(mapper, notificator)
     {
         _pedidoRepository = pedidoRepository;
         _fileService = fileService;
         _httpContextAccessor = httpContextAccessor;
         _authenticatedUser = authenticatedUser;
         _usuarioRepository = usuarioRepository;
+        _lojistaRepository = lojistaRepository;
     }
 
     public async Task<PedidoDto?> Adicionar(CadastrarPedidoDto dto)
@@ -324,8 +326,22 @@ public class PedidoService : BaseService, IPedidoService
 
     public async Task<PagedDto<PedidoDto>> Buscar(BuscarPedidoDto dto)
     {
-        var administrador = await _pedidoRepository.Buscar(dto);
-        var pedidosMapeados = Mapper.Map<PagedDto<PedidoDto>>(administrador);
+        var lojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
+        var lojista = await _lojistaRepository.ObterPorId(lojistaId);
+
+        if (lojista == null)
+        {
+            Notificator.Handle("Não foi encontrado nenhum lojista com esse id");
+            return new PagedDto<PedidoDto>();
+        }
+
+        if (string.IsNullOrEmpty(dto.Uf) && string.IsNullOrEmpty(dto.Cidade))
+        {
+            dto.Cidade = lojista.Cidade;
+        }
+        
+        var pedidos = await _pedidoRepository.Buscar(dto);
+        var pedidosMapeados = Mapper.Map<PagedDto<PedidoDto>>(pedidos);
         
         var httpClient = new HttpClient();
         foreach (var pedidoDto in pedidosMapeados.Itens)

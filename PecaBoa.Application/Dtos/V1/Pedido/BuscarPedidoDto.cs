@@ -15,6 +15,9 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
     public string? Modelo { get; set; } = null!;
     public DateOnly? AnoDeFabricacao { get; set; } = null!;
     public string? Cor { get; set; } = null!;
+    public string? Cidade { get; set; }
+    public string Uf { get; set; } = null!;
+    
     public override void AplicarFiltro(ref IQueryable<Domain.Entities.Pedido> query)
     {
         var expression = MontarExpressao();
@@ -61,6 +64,16 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
         if (!string.IsNullOrWhiteSpace(Cor))
         {
             query = query.Where(c => c.Cor.Contains(Cor));
+        }
+
+        if (!string.IsNullOrEmpty(Cidade))
+        {
+            query = query.Where(c => c.Usuario.Cidade.Contains(Cidade));
+        }
+
+        if (!string.IsNullOrEmpty(Uf))
+        {
+            query = query.Where(c => c.Usuario.Uf.Contains(Uf));
         }
 
         query = query.Where(expression);
