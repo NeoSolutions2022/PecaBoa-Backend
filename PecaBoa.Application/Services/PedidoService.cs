@@ -329,13 +329,7 @@ public class PedidoService : BaseService, IPedidoService
         var lojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         var lojista = await _lojistaRepository.ObterPorId(lojistaId);
 
-        if (lojista == null)
-        {
-            Notificator.Handle("Não foi encontrado nenhum lojista com esse id");
-            return new PagedDto<PedidoDto>();
-        }
-
-        if (string.IsNullOrEmpty(dto.Uf) && string.IsNullOrEmpty(dto.Cidade))
+        if (dto.BuscarTodos && string.IsNullOrEmpty(dto.Uf) && string.IsNullOrEmpty(dto.Cidade))
         {
             dto.Cidade = lojista.Cidade;
         }

@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using PecaBoa.Application.Contracts;
@@ -17,12 +18,14 @@ public class OrcamentoService : BaseService, IOrcamentoService
     private readonly IOrcamentoRepository _orcamentoRepository;
     private readonly IFileService _fileService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IPedidoRepository _pedidoRepository;
     
-    public OrcamentoService(IMapper mapper, INotificator notificator, IOrcamentoRepository orcamentoRepository, IFileService fileService, IHttpContextAccessor httpContextAccessor) : base(mapper, notificator)
+    public OrcamentoService(IMapper mapper, INotificator notificator, IOrcamentoRepository orcamentoRepository, IFileService fileService, IHttpContextAccessor httpContextAccessor, IPedidoRepository pedidoRepository) : base(mapper, notificator)
     {
         _orcamentoRepository = orcamentoRepository;
         _fileService = fileService;
         _httpContextAccessor = httpContextAccessor;
+        _pedidoRepository = pedidoRepository;
     }
 
     public async Task<OrcamentoDto?> Adicionar(CadastrarOrcamentoDto dto)
@@ -34,6 +37,19 @@ public class OrcamentoService : BaseService, IOrcamentoService
         orcamento.StatusId = (int)EStatus.AnuncioAtivo;
         orcamento.CriadoEm = DateTime.UtcNow;
         orcamento.AtualizadoEm = DateTime.UtcNow;
+
+        var pedido = await _pedidoRepository.ObterPorId(dto.PedidoId);
+        if (pedido == null)
+        {
+            Notificator.Handle("Não existe pedido com o Id informado.");
+            return null;
+        }
+        
+        if (pedido.Orcamentos.Count >= 10)
+        {
+            Notificator.Handle("O Pedido selecionado atingiu o limite de orçamentos");
+            return null;
+        }
         
         _orcamentoRepository.Adicionar(orcamento);
         

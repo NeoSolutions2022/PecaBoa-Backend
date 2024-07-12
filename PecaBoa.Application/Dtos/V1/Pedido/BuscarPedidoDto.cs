@@ -17,6 +17,7 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
     public string? Cor { get; set; } = null!;
     public string? Cidade { get; set; }
     public string Uf { get; set; } = null!;
+    public bool BuscarTodos { get; set; } = false;
     
     public override void AplicarFiltro(ref IQueryable<Domain.Entities.Pedido> query)
     {
