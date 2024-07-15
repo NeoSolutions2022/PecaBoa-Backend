@@ -47,6 +47,12 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
         builder.Property(c => c.StatusId)
             .IsRequired();
 
+        builder.Property(c => c.DataFim)
+            .HasColumnType("timestamp");
+
+        builder.Property(c => c.DataLimite)
+            .HasColumnType("timestamp");
+
         builder
             .HasOne(c => c.Status)
             .WithMany(c => c.Pedidos)

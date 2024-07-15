@@ -67,6 +67,9 @@ public class PedidoService : BaseService, IPedidoService
         pedido.StatusId = (int)EStatus.AnuncioAtivo;
         pedido.CriadoEm = DateTime.UtcNow;
         pedido.AtualizadoEm = DateTime.UtcNow;
+
+        pedido.DataFim = pedido.CriadoEm.AddHours(24);
+        pedido.DataLimite = pedido.CriadoEm.AddDays(3);
         
         if (!await Validar(pedido))
         {
@@ -262,6 +265,41 @@ public class PedidoService : BaseService, IPedidoService
         }
 
         Notificator.Handle("Não foi possível alterar as fotos");
+    }
+
+    public async Task<bool> RenovarPedido(int id)
+    {
+        var pedido = await _pedidoRepository.ObterPorId(id);
+
+        if (pedido == null)
+        {
+            Notificator.Handle("Pedido não encontrado.");
+            return false;
+        }
+
+        if (pedido.DataLimite <= DateTime.UtcNow)
+        {
+            Notificator.Handle("O pedido passou do limite de renovação.");
+            return false;
+        }
+
+        if (pedido.Desativado)
+        {
+            Notificator.Handle("O pedido já está desativado.");
+            return false;
+        }
+
+        if (pedido.DataFim.AddDays(1) <= pedido.DataLimite)
+        {
+            pedido.DataFim = pedido.DataFim.AddDays(1);
+            pedido.AtualizadoEm = DateTime.UtcNow;
+
+            _pedidoRepository.Alterar(pedido);
+            return await _pedidoRepository.UnitOfWork.Commit();
+        }
+        
+        Notificator.Handle("O pedido não pode ser renovado pois já atingiu o limite de renovação.");
+        return false;
     }
 
     public async Task Desativar(int id)

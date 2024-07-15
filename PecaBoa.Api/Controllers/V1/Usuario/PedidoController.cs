@@ -107,6 +107,19 @@ public class PedidoController : Lojista.MainController
         await _pedidoService.Reativar(id);
         return NoContentResponse();
     }
+    
+    [HttpPatch("renovar/{id}")]
+    [SwaggerOperation(Summary = "Renovar Pedido - Usuario.", Tags = new[] { "Usuario - Pedido" })]
+    [ClaimsAuthorize("Usuario", ETipoUsuario.Usuario)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RenovarPedido(int id)
+    {
+        await _pedidoService.RenovarPedido(id);
+        return NoContentResponse();
+    }
 
     [HttpPatch("alterar-foto")]
     [SwaggerOperation(Summary = "Alterar a foto de um pedido ou serviço - Usuario.",

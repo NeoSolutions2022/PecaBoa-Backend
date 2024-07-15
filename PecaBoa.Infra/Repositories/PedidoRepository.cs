@@ -32,6 +32,7 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     public async Task<IResultadoPaginado<Pedido>> Buscar(IBuscaPaginada<Pedido> filtro)
     {
         var query = Context.Pedidos
+            .Where(c => c.Orcamentos.Count < 10)
             .Include(c => c.Usuario)
             .Include(c => c.Orcamentos)
             .AsQueryable();
@@ -44,6 +45,13 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
             .Where(c => c.UsuarioId == id)
             .Include(c => c.Orcamentos)
             .Include(c => c.Usuario)
+            .ToListAsync();
+    }
+
+    public async Task<List<Pedido>> ObterPedidosParaInativar()
+    {
+        return await Context.Pedidos
+            .Where(c => c.DataFim <= DateTime.UtcNow && !c.Desativado)
             .ToListAsync();
     }
 
