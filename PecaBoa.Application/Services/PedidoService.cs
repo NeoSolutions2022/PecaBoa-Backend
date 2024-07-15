@@ -68,8 +68,8 @@ public class PedidoService : BaseService, IPedidoService
         pedido.CriadoEm = DateTime.UtcNow;
         pedido.AtualizadoEm = DateTime.UtcNow;
 
-        pedido.DataFim = pedido.CriadoEm.AddHours(24);
-        pedido.DataLimite = pedido.CriadoEm.AddDays(3);
+        pedido.DataFim = DateTime.SpecifyKind(pedido.CriadoEm.AddHours(24), DateTimeKind.Unspecified);
+        pedido.DataLimite = DateTime.SpecifyKind(pedido.CriadoEm.AddDays(3), DateTimeKind.Unspecified);
         
         if (!await Validar(pedido))
         {
