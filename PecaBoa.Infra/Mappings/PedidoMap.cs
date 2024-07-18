@@ -67,21 +67,9 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
             .OnDelete(DeleteBehavior.Restrict);
         
         builder
-            .HasOne(c => c.TipoDePeca)
-            .WithMany(c => c.Pedidos)
-            .HasForeignKey(c => c.TipoDePecaId)
-            .OnDelete(DeleteBehavior.Restrict);
-        
-        builder
             .HasOne(c => c.Modelo)
             .WithMany(c => c.Pedidos)
             .HasForeignKey(c => c.ModeloId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder
-            .HasOne(c => c.CategoriaVeiculo)
-            .WithMany(c => c.Pedidos)
-            .HasForeignKey(c => c.CategoriaVeiculoId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
