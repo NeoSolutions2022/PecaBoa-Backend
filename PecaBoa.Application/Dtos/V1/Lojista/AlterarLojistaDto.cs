@@ -21,4 +21,5 @@ public class AlterarLojistaDto
     public string? Telefone { get; set; }
     public string Uf { get; set; } = null!;
     public string Categoria { get; set; } = null!;
+    public IFormFile? Foto { get; set; }
 }

@@ -19,6 +19,10 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .IsRequired()
             .HasMaxLength(9);
         
+        builder.Property(c => c.Foto)
+            .IsRequired(false)
+            .HasMaxLength(1500);
+        
         builder
             .Property(c => c.Cidade)
             .IsRequired()

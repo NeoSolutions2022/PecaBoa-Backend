@@ -104,5 +104,9 @@ public class LojistaValidator : AbstractValidator<Lojista>
             .WithMessage("UF deve possuir 2 caracteres!")
             .NotEmpty()
             .WithMessage("UF não pode ser vazio!");
+        
+        RuleFor(p => p.Foto)
+            .MaximumLength(1500)
+            .WithMessage("Foto deve ter no máximo 1500 caracteres");
     }
 }

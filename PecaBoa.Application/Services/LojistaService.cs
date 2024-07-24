@@ -73,6 +73,12 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         var lojista = Mapper.Map<Lojista>(dto);
+        
+        if (dto.Foto is { Length : > 0 })
+        {
+            lojista.Foto = await _fileService.Upload(dto.Foto);
+        }
+        
         if (!await Validar(lojista))
         {
             return null;
@@ -107,6 +113,16 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         Mapper.Map(dto, lojista);
+        
+        if (dto.Foto is { Length : > 0 })
+        {
+            lojista.Foto = await _fileService.Upload(dto.Foto);
+        }
+        else
+        {
+            lojista.Foto = null;
+        }
+        
         if (!await Validar(lojista))
         {
             return null;
