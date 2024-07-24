@@ -28,6 +28,7 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
         return await Context.Pedidos
             .Include(c => c.Usuario)
             .Include(c => c.Orcamentos)
+            .ThenInclude(c => c.Lojista)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
     public async Task<IResultadoPaginado<Pedido>> Buscar(IBuscaPaginada<Pedido> filtro)
