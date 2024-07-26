@@ -4,13 +4,12 @@ using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Usuario;
 using PecaBoa.Application.Email;
 using PecaBoa.Application.Notification;
-using PecaBoa.Core.Enums;
 using PecaBoa.Core.Settings;
 using PecaBoa.Domain.Contracts.Repositories;
 using PecaBoa.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using PecaBoa.Application.Dtos.V1.GruposDeAcesso;
 
 namespace PecaBoa.Application.Services;
 
@@ -21,13 +20,15 @@ public class UsuarioService : BaseService, IUsuarioService
     private readonly IFileService _fileService;
     private readonly AppSettings _appSettings;
     private readonly IEmailService _emailService;
+    private readonly IGrupoAcessoRepository _grupoAcessoRepository;
 
-    public UsuarioService(IMapper mapper, INotificator notificator, IUsuarioRepository usuarioRepository, IPasswordHasher<Usuario> passwordHasher, IFileService fileService, IOptions<AppSettings> appSettings, IEmailService emailService) : base(mapper, notificator)
+    public UsuarioService(IMapper mapper, INotificator notificator, IUsuarioRepository usuarioRepository, IPasswordHasher<Usuario> passwordHasher, IFileService fileService, IOptions<AppSettings> appSettings, IEmailService emailService, IGrupoAcessoRepository grupoAcessoRepository) : base(mapper, notificator)
     {
         _usuarioRepository = usuarioRepository;
         _passwordHasher = passwordHasher;
         _fileService = fileService;
         _emailService = emailService;
+        _grupoAcessoRepository = grupoAcessoRepository;
         _appSettings = appSettings.Value;
     }
 
@@ -98,6 +99,46 @@ public class UsuarioService : BaseService, IUsuarioService
         return null;
     }
 
+    public async Task<UsuarioDto?> AdicionarUsuarioGrupoAcesso(AdicionarUsuarioGrupoAcessoDto usuarioGrupoAcessoDto)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(usuarioGrupoAcessoDto.UserId);
+        if (usuario == null)
+        {
+            Notificator.Handle("Não foi encontrado nenhum usuario com esse id");
+            return null;
+        }
+        
+        var grupoAcessoIds = usuarioGrupoAcessoDto.GrupoAcesso.Select(g => g.GrupoAcessoId).ToList();
+        var gruposAcessoExistentes = await _grupoAcessoRepository.ObterPorIds(grupoAcessoIds);
+        
+        if (gruposAcessoExistentes.Count != grupoAcessoIds.Count)
+        {
+            Notificator.Handle("Um ou mais grupos de acesso informados não existem");
+            return null;
+        }
+
+        foreach (var grupoAcesso in gruposAcessoExistentes)
+        {
+            if (!usuario.GrupoAcessos.Any(ga => ga.GrupoAcessoId == grupoAcesso.Id))
+            {
+                usuario.GrupoAcessos.Add(new GrupoAcessoUsuario
+                {
+                    GrupoAcessoId = grupoAcesso.Id,
+                    UsuarioId = usuario.Id
+                });
+            }
+        }
+        
+        if (await _usuarioRepository.UnitOfWork.Commit())
+        {
+            var usuarioDto = Mapper.Map<UsuarioDto>(usuario);
+            return usuarioDto;
+        }
+        
+        Notificator.Handle("Não foi possível alterar o Usuario");
+        return null;
+    }
+
     public async Task<UsuarioDto?> ObterPorId(int id)
     {
         var usuario = await _usuarioRepository.ObterPorId(id);
@@ -136,7 +177,7 @@ public class UsuarioService : BaseService, IUsuarioService
 
     public async Task AlterarSenha(int id)
     {
-        var usuario = await _usuarioRepository.FistOrDefault(f => f.Id == id);
+        var usuario = await _usuarioRepository.FirstOrDefault(f => f.Id == id);
         if (usuario == null)
         {
             Notificator.HandleNotFoundResource();
@@ -206,7 +247,7 @@ public class UsuarioService : BaseService, IUsuarioService
 
     public async Task Remover(int id)
     {
-        var usuario = await _usuarioRepository.FistOrDefault(c => c.Id == id);
+        var usuario = await _usuarioRepository.FirstOrDefault(c => c.Id == id);
         if (usuario == null)
         {
             Notificator.Handle("Não existe um Usuario com o id informado");
@@ -230,7 +271,7 @@ public class UsuarioService : BaseService, IUsuarioService
             Notificator.Handle(validationResult.Errors);
         }
         
-        var usuarioExistente = await _usuarioRepository.FistOrDefault(c =>
+        var usuarioExistente = await _usuarioRepository.FirstOrDefault(c =>
             c.Cpf == usuario.Cpf || c.Email == usuario.Email && c.Id != usuario.Id);
         if (usuarioExistente != null)
         {

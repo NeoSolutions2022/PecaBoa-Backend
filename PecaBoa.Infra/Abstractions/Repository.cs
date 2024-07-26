@@ -43,7 +43,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
         return await _dbSet.AsNoTrackingWithIdentityResolution().Where(predicate).ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntity?> FistOrDefault(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> FirstOrDefault(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
         return await _dbSet.AsNoTrackingWithIdentityResolution().Where(predicate)
             .FirstOrDefaultAsync(cancellationToken);

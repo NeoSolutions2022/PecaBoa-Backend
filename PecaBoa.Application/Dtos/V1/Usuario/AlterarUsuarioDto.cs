@@ -16,4 +16,7 @@ public class AlterarUsuarioDto
     public string Bairro { get; set; } = null!;
     public int Numero { get; set; }
     public string? Complemento { get; set; }
+    
+    
+    public List<ManterGrupoAcessoUsuarioDto> GrupoAcessos { get; set; } = new();
 }

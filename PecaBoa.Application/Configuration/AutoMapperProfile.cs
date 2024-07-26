@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using PecaBoa.Application.Dtos.V1.Base;
+using PecaBoa.Application.Dtos.V1.GruposDeAcesso;
 using PecaBoa.Application.Dtos.V1.Orcamento;
+using PecaBoa.Application.Dtos.V1.Permissoes;
+using PecaBoa.Application.Dtos.V1.Usuario;
 using PecaBoa.Application.Dtos.V1.Usuario.CategoriaVeiculo;
 using PecaBoa.Application.Dtos.V1.Usuario.CondicaoPeca;
 using PecaBoa.Application.Dtos.V1.Usuario.Marca;
@@ -43,6 +46,8 @@ public class AutoMapperProfile : Profile
             .ReverseMap();
 
         CreateMap<PecaBoa.Application.Dtos.V1.Usuario.CadastrarUsuarioDto, Usuario>()
+            .ForMember(dest => dest.GrupoAcessos, opt 
+                => opt.MapFrom(src => src.GrupoAcessos))
             .AfterMap((_, dest) => dest.Cpf = dest.Cpf.SomenteNumeros())
             .AfterMap((_, dest) => dest.Cep = dest.Cep.SomenteNumeros())
             .AfterMap((_, dest) => dest.Telefone = dest.Telefone.SomenteNumeros())
@@ -50,6 +55,12 @@ public class AutoMapperProfile : Profile
 
         CreateMap<PagedDto<PecaBoa.Application.Dtos.V1.Usuario.UsuarioDto>, ResultadoPaginado<Usuario>>()
             .ReverseMap();
+
+        CreateMap<GrupoAcessoUsuarioDto, GrupoAcessoUsuario>()
+            .ForMember(dest => dest.UsuarioId, opt
+                => opt.MapFrom(src => src.GrupoAcessoId))
+            .ReverseMap();
+            
 
         #endregion
 
@@ -117,6 +128,28 @@ public class AutoMapperProfile : Profile
         CreateMap<OrcamentoDto, AlterarOrcamentoDto>()
             .ReverseMap();
         CreateMap<ResultadoPaginado<Orcamento>, PagedDto<OrcamentoDto>>();
+        CreateMap<AlterarOrcamentoDto, Orcamento>()
+            .ReverseMap();
+
+        #endregion
+        
+        #region GrupoAcesso
+
+        CreateMap<GrupoAcesso, GrupoAcessoDto>().ReverseMap();
+        CreateMap<GrupoAcesso, CadastrarGrupoAcessoDto>().ReverseMap();
+        CreateMap<GrupoAcesso, AlterarGrupoAcessoDto>().ReverseMap();
+        CreateMap<ResultadoPaginado<GrupoAcesso>, PagedDto<GrupoAcessoDto>>().ReverseMap();
+        
+        CreateMap<GrupoAcessoPermissao, GrupoAcessoPermissaoDto>().ReverseMap();
+        CreateMap<GrupoAcessoPermissao, ManterGrupoAcessoPermissaoDto>().ReverseMap();
+        CreateMap<PagedDto<PermissaoDto>, ResultadoPaginado<Permissao>>()
+            .ReverseMap();
+        CreateMap<PermissaoDto, Permissao>()
+            .ReverseMap();
+        CreateMap<CadastrarPermissaoDto, Permissao>()
+            .ReverseMap();
+        CreateMap<AlterarPermissaoDto, Permissao>()
+            .ReverseMap();
 
         #endregion
     }

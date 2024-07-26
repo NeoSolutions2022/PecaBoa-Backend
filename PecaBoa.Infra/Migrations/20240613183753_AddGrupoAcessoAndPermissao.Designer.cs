@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PecaBoa.Infra.Context;
@@ -11,9 +12,10 @@ using PecaBoa.Infra.Context;
 namespace PecaBoa.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240613183753_AddGrupoAcessoAndPermissao")]
+    partial class AddGrupoAcessoAndPermissao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,10 +138,7 @@ namespace PecaBoa.Infra.Migrations
             modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcesso", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Administrador")
                         .ValueGeneratedOnAdd()
@@ -217,47 +216,6 @@ namespace PecaBoa.Infra.Migrations
                     b.HasIndex("PermissaoId");
 
                     b.ToTable("GrupoAcessoPermissao");
-                });
-
-            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcessoUsuario", b =>
-                {
-                    b.Property<int>("GrupoAcessoId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("AtualizadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("AtualizadoPor")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("AtualizadoPorAdmin")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("CriadoPor")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("CriadoPorAdmin")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("Desativado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.HasKey("GrupoAcessoId", "UsuarioId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("GrupoAcessoUsuario");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
@@ -863,6 +821,17 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcesso", b =>
+                {
+                    b.HasOne("PecaBoa.Domain.Entities.Usuario", "Usuario")
+                        .WithMany("GrupoAcessos")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcessoPermissao", b =>
                 {
                     b.HasOne("PecaBoa.Domain.Entities.GrupoAcesso", "GrupoAcesso")
@@ -880,25 +849,6 @@ namespace PecaBoa.Infra.Migrations
                     b.Navigation("GrupoAcesso");
 
                     b.Navigation("Permissao");
-                });
-
-            modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcessoUsuario", b =>
-                {
-                    b.HasOne("PecaBoa.Domain.Entities.GrupoAcesso", "GrupoAcesso")
-                        .WithMany("Usuarios")
-                        .HasForeignKey("GrupoAcessoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("PecaBoa.Domain.Entities.Usuario", "Usuario")
-                        .WithMany("GrupoAcessos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("GrupoAcesso");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Modelo", b =>
@@ -1011,8 +961,6 @@ namespace PecaBoa.Infra.Migrations
             modelBuilder.Entity("PecaBoa.Domain.Entities.GrupoAcesso", b =>
                 {
                     b.Navigation("Permissoes");
-
-                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>

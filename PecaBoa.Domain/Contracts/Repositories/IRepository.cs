@@ -13,7 +13,7 @@ public interface IRepository<T> : IDisposable where T : BaseEntity, IAggregateRo
         CancellationToken cancellationToken = default);
 
     Task<List<T>> Buscar(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
-    Task<T?> FistOrDefault(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
+    Task<T?> FirstOrDefault(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
     Task<int> Count(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
     Task<bool> Any(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
 }
