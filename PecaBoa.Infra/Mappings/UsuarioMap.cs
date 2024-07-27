@@ -86,6 +86,10 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
             .IsRequired(false);
         
         builder
+            .Property(c => c.Status)
+            .IsRequired(false);
+        
+        builder
             .HasMany(c => c.Pedidos)
             .WithOne(c => c.Usuario)
             .HasForeignKey(c => c.UsuarioId)

@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using PecaBoa.Domain.Contracts;
+using PecaBoa.Domain.Entities.Enum;
 using PecaBoa.Domain.Validation;
 
 namespace PecaBoa.Domain.Entities;
@@ -23,7 +24,8 @@ public class Usuario : Entity, ISoftDelete, IAggregateRoot
     public bool Desativado { get; set; }
     public Guid? CodigoResetarSenha { get; set; }
     public DateTime? CodigoResetarSenhaExpiraEm { get; set; }
-    public List<Pedido> Pedidos { get; set; } = new();
+    public EStatusUsuario? Status { get; set; }
+    
     public List<GrupoAcessoUsuario> GrupoAcessos { get; set; } = new();
     public virtual List<Pedido> Pedidos { get; set; } = new();
     public List<Usuario> Usuarios { get; set; } = new();
