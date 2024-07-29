@@ -47,6 +47,12 @@ public class UsuarioService : BaseService, IUsuarioService
         }
         
         var usuario = Mapper.Map<Usuario>(dto);
+        
+        if (dto.Foto is { Length : > 0 })
+        {
+            usuario.Foto = await _fileService.Upload(dto.Foto);
+        }
+        
         if (!await Validar(usuario))
         {
             return null;
@@ -81,6 +87,16 @@ public class UsuarioService : BaseService, IUsuarioService
         }
 
         Mapper.Map(dto, usuario);
+        
+        if (dto.Foto is { Length : > 0 })
+        {
+            usuario.Foto = await _fileService.Upload(dto.Foto);
+        }
+        else
+        {
+            usuario.Foto = null;
+        }
+        
         if (!await Validar(usuario))
         {
             return null;

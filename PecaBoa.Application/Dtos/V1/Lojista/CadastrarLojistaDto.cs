@@ -5,7 +5,7 @@ namespace PecaBoa.Application.Dtos.V1.Lojista;
 
 public class CadastrarLojistaDto
 {
-    public IFormFile Foto { get; set; }
+    public IFormFile? Foto { get; set; }
     public string Nome { get; set; } = null!;
     public string NomeFantasia { get; set; } = null!;
     public string Responsavel { get; set; } = null!;
