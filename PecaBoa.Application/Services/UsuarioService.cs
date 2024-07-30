@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Usuario;
@@ -10,6 +11,7 @@ using PecaBoa.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using PecaBoa.Application.Dtos.V1.GruposDeAcesso;
+using PecaBoa.Core.Extensions;
 
 namespace PecaBoa.Application.Services;
 
@@ -21,14 +23,16 @@ public class UsuarioService : BaseService, IUsuarioService
     private readonly AppSettings _appSettings;
     private readonly IEmailService _emailService;
     private readonly IGrupoAcessoRepository _grupoAcessoRepository;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UsuarioService(IMapper mapper, INotificator notificator, IUsuarioRepository usuarioRepository, IPasswordHasher<Usuario> passwordHasher, IFileService fileService, IOptions<AppSettings> appSettings, IEmailService emailService, IGrupoAcessoRepository grupoAcessoRepository) : base(mapper, notificator)
+    public UsuarioService(IMapper mapper, INotificator notificator, IUsuarioRepository usuarioRepository, IPasswordHasher<Usuario> passwordHasher, IFileService fileService, IOptions<AppSettings> appSettings, IEmailService emailService, IGrupoAcessoRepository grupoAcessoRepository, IHttpContextAccessor httpContextAccessor) : base(mapper, notificator)
     {
         _usuarioRepository = usuarioRepository;
         _passwordHasher = passwordHasher;
         _fileService = fileService;
         _emailService = emailService;
         _grupoAcessoRepository = grupoAcessoRepository;
+        _httpContextAccessor = httpContextAccessor;
         _appSettings = appSettings.Value;
     }
 
@@ -221,6 +225,31 @@ public class UsuarioService : BaseService, IUsuarioService
         }
     }
 
+    public async Task AlterarSenhaSemEnvioEmail(AlterarSenhaUsuarioSemEnvioEmailDto dto)
+    {
+        if (dto.Senha != dto.ConfirmarSenha)
+        {
+            Notificator.Handle("As senhas não conferem!");
+            return;
+        }
+        
+        var usuario = await _usuarioRepository.ObterPorId(Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()));
+        if (usuario == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        usuario.Senha = _passwordHasher.HashPassword(usuario, dto.Senha);
+        _usuarioRepository.Alterar(usuario);
+        if (await _usuarioRepository.UnitOfWork.Commit())
+        {
+            return;
+        }
+        
+        Notificator.Handle("Não foi possivel alterar a senha");
+    }
+
     public async Task Desativar(int id)
     {
         var usuario = await _usuarioRepository.ObterPorId(id);
@@ -278,6 +307,49 @@ public class UsuarioService : BaseService, IUsuarioService
         
         Notificator.Handle("Não foi possível remover o Usuario");
         return;
+    }
+
+    public async Task AlterarFoto(AlterarFotoUsuarioDto dto)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()));
+        if (usuario is null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        if (dto.Foto is { Length : > 0 })
+        {
+            usuario.Foto = await _fileService.Upload(dto.Foto);
+        }
+        
+        _usuarioRepository.Alterar(usuario);
+        if (await _usuarioRepository.UnitOfWork.Commit())
+        {
+            return;
+        }
+
+        Notificator.Handle("Não foi possível alterar as fotos");
+    }
+
+    public async Task RemoverFoto()
+    {
+        var usuario = await _usuarioRepository.ObterPorId(Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()));
+        if (usuario is null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        usuario.Foto = null;
+        _usuarioRepository.Alterar(usuario);
+
+        if (await _usuarioRepository.UnitOfWork.Commit())
+        {
+            return;
+        }
+
+        Notificator.Handle("Não foi possível alterar as fotos");
     }
 
     private async Task<bool> Validar(Usuario usuario)

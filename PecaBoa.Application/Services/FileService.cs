@@ -18,15 +18,21 @@ public class FileService : BaseService, IFileService
 
     public async Task<string> Upload(IFormFile arquivo)
     {
-        var connectionString = _config.GetValue<string>("UploadConnectionString");
+        var uploadDirectory = _config.GetValue<string>("UploadSettings:PublicBasePath");
         var fileName = GenerateNewFileName(arquivo.FileName);
-        var containerName = _config.GetValue<string>("UploadContainerName");
+        var filePath = Path.Combine(uploadDirectory, fileName);
         
-        BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-        BlobClient blob = container.GetBlobClient(fileName);
-        await blob.UploadAsync(arquivo.OpenReadStream());
-
-        return blob.Uri.AbsoluteUri;
+        if (!Directory.Exists(uploadDirectory))
+        {
+            Directory.CreateDirectory(uploadDirectory);
+        }
+        
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await arquivo.CopyToAsync(stream);
+        }
+        
+        return filePath;
     }
 
     private static string GenerateNewFileName(string name)

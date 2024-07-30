@@ -126,4 +126,30 @@ public class LojistaController : MainController
         await _lojistaService.AlterarSenha(id);
         return OkResponse();
     }
+    
+    [HttpPatch("alterar-foto")]
+    [SwaggerOperation(Summary = "Alterar a foto do Lojista.",
+        Tags = new[] { "Usuario - Lojista" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> AlterarFoto([FromForm] AlterarFotoLojistaDto dto)
+    {
+        await _lojistaService.AlterarFoto(dto);
+        return NoContentResponse();
+    }
+
+    [HttpPatch("remover-foto")]
+    [SwaggerOperation(Summary = "Remover a foto do Lojista.",
+        Tags = new[] { "Usuario - Lojista" })]
+    [ClaimsAuthorize("Lojista", ETipoUsuario.Lojista)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> RemoverFoto()
+    {
+        await _lojistaService.RemoverFoto();
+        return NoContentResponse();
+    }
 }

@@ -14,7 +14,10 @@ public interface IUsuarioService
     Task<UsuarioDto?> ObterPorEmail(string email);
     Task<UsuarioDto?> ObterPorCpf(string cpf);
     public Task AlterarSenha(int id);
+    public Task AlterarSenhaSemEnvioEmail(AlterarSenhaUsuarioSemEnvioEmailDto dto);
     Task Desativar(int id);
     Task Reativar(int id);
     Task Remover(int id);
+    Task AlterarFoto(AlterarFotoUsuarioDto dto);
+    Task RemoverFoto();
 }
