@@ -39,4 +39,74 @@ public class UsuariosController : MainController
         await _usuarioService.AlterarSenha(id);
         return OkResponse();
     }
+    
+    [HttpPost("alterar-senha-sem email")]
+    [SwaggerOperation(Summary = "alterar a senha sem envio de Email.", Tags = new[] { "Usuario - Usuario" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AlterarSenhaSemEnvioEmail(AlterarSenhaUsuarioSemEnvioEmailDto dto)
+    {
+        await _usuarioService.AlterarSenhaSemEnvioEmail(dto);
+        return OkResponse();
+    }
+    
+    [HttpPatch("alterar-foto")]
+    [SwaggerOperation(Summary = "Alterar a foto do Usuario.",
+        Tags = new[] { "Usuario - Usuario" })]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> AlterarFoto([FromForm] AlterarFotoUsuarioDto dto)
+    {
+        await _usuarioService.AlterarFoto(dto);
+        return NoContentResponse();
+    }
+
+    [HttpPatch("remover-foto")]
+    [SwaggerOperation(Summary = "Remover a foto do Usuario.",
+        Tags = new[] { "Usuario - Usuario" })]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> RemoverFoto()
+    {
+        await _usuarioService.RemoverFoto();
+        return NoContentResponse();
+    }
+    
+    [HttpPatch("Desativar/{id}")]
+    [SwaggerOperation(Summary = "Desativar um Usuario.", Tags = new [] { "Usuario - Usuario" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Desativar(int id)
+    {
+        await _usuarioService.Desativar(id);
+        return NoContentResponse();
+    }
+    
+    [HttpPatch("reativar/{id}")]
+    [SwaggerOperation(Summary = "Reativar um Usuario.", Tags = new [] { "Usuario - Usuario" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Reativar(int id)
+    {
+        await _usuarioService.Reativar(id);
+        return NoContentResponse();
+    }
+
+    [HttpDelete]
+    [SwaggerOperation(Summary = "Remover um Usuario.", Tags = new[] { "Usuario - Usuario" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Remover(int id)
+    {
+        await _usuarioService.Remover(id);
+        return NoContentResponse();
+    }
 }

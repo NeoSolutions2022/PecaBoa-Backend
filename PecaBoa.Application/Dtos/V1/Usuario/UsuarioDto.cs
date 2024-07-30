@@ -3,6 +3,7 @@
 public class UsuarioDto
 {
     public int Id { get; set; }
+    public string? Foto { get; set; }
     public string Nome { get; set; } = null!;
     public string? NomeSocial { get; set; }
     public string Email { get; set; } = null!;

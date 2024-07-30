@@ -14,10 +14,13 @@ public interface ILojistaService
     Task<LojistaDto?> ObterPorCnpj(string cnpj);
     Task<LojistaDto?> ObterPorCpf(string cpf);
     Task AlterarSenha(int id);
+    public Task AlterarSenhaSemEnvioEmail(AlterarSenhaLojistaSemEnvioEmailDto dto);
     Task Desativar(int id);
     Task AlterarDescricao(int id, string descricao);
     Task Reativar(int id);
     Task AtivarAnuncio(int id);
     Task DesativarAnuncio(int id);
     Task Remover(int id);
+    Task AlterarFoto(AlterarFotoLojistaDto dto);
+    Task RemoverFoto();
 }

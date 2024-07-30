@@ -50,6 +50,10 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
             .IsRequired()
             .HasMaxLength(60);
         
+        builder.Property(c => c.Foto)
+            .IsRequired(false)
+            .HasMaxLength(1500);
+        
         builder
             .Property(c => c.NomeSocial)
             .IsRequired(false)
@@ -89,6 +93,6 @@ public class UsuarioMap : IEntityTypeConfiguration<Usuario>
             .HasMany(c => c.Pedidos)
             .WithOne(c => c.Usuario)
             .HasForeignKey(c => c.UsuarioId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
