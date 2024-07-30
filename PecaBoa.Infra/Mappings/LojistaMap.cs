@@ -102,6 +102,6 @@ public class LojistaMap : IEntityTypeConfiguration<Lojista>
             .HasMany(c => c.Orcamentos)
             .WithOne(c => c.Lojista)
             .HasForeignKey(c => c.LojistaId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
