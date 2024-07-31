@@ -29,6 +29,8 @@ public class Lojista : Entity, IAggregateRoot, ISoftDelete
     //public bool AnuncioPago { get; set; }
     //public DateTime? DataPagamentoAnuncio { get; set; }
     //public DateTime? DataExpiracaoAnuncio { get; set; }
+    public Inscricao Inscricao { get; set; } = null!;
+    public List<LojistaCartaoDeCredito> LojistaCartoesDeCredito { get; set; } = new();
     public List<Orcamento> Orcamentos { get; set; } = new();
 
     public override bool Validar(out ValidationResult validationResult)

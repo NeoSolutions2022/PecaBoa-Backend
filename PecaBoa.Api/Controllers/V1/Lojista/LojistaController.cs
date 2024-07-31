@@ -1,10 +1,13 @@
-﻿using PecaBoa.Application.Contracts;
+﻿using Microsoft.AspNetCore.Authorization;
+using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Lojista;
 using PecaBoa.Application.Notification;
 using PecaBoa.Core.Authorization;
 using PecaBoa.Core.Enums;
 using Microsoft.AspNetCore.Mvc;
+using PecaBoa.Application.Adapters.Asaas.Application.Dtos.V1.Payments;
+using PecaBoa.Application.Dtos.V1.Lojista.Inscricoes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace PecaBoa.Api.Controllers.V1.Lojista;
@@ -125,5 +128,31 @@ public class LojistaController : MainController
     {
         await _lojistaService.AlterarSenha(id);
         return OkResponse();
+    }
+    
+    [HttpPost("inscricao")]
+    [AllowAnonymous]
+    [SwaggerOperation(Summary = "Criar a inscrição de um lojista.", Tags = new[] { "Usuario - Lojista" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Inscricao([FromBody] CadastrarInscricaoDto dto)
+    {
+        await _lojistaService.Inscricao(dto);
+        return OkResponse();
+    }
+    
+    [HttpPost("hook")]
+    [AllowAnonymous]
+    [SwaggerOperation(Summary = "Verify payment.", Tags = new[] { "User - Plan" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> VerifyPayment([FromBody] SubscriptionHookDto dto)
+    {
+        await _lojistaService.VerifyPayment(dto);
+        return OkResponse("");
     }
 }

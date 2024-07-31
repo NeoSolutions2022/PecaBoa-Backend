@@ -9,7 +9,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class OrcamentoRepository : Repository<Orcamento>, IOrcamentoRepository
 {
-    public OrcamentoRepository(BaseApplicationDbContext context) : base(context)
+    public OrcamentoRepository(ApplicationDbContext context) : base(context)
     {
     }
 

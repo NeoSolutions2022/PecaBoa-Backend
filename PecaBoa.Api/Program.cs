@@ -75,6 +75,8 @@ app.UseMigrations(app.Services);
 
 app.UseHttpsRedirection();
 
+app.UseSwaggerConfig();
+
 app.UseAuthentication();
 
 app.UseAuthorization();

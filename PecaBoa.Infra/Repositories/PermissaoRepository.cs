@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class PermissaoRepository : Repository<Permissao>, IPermissaoRepository
 {
-    public PermissaoRepository(BaseApplicationDbContext context) : base(context)
+    public PermissaoRepository(ApplicationDbContext context) : base(context)
     {
     }
 

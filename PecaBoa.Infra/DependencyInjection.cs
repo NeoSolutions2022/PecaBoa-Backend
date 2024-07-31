@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PecaBoa.Domain.Entities;
 using PecaBoa.Infra.Context;
 using PecaBoa.Infra.Repositories;
 
@@ -27,25 +26,20 @@ public static class DependencyInjection
                 : new AuthenticatedUser();
         });
 
-        service.AddDbContext<ApplicationDbContext>(optionsAction =>
+        service.AddDbContext<ApplicationDbContext>(options =>
         {
-            optionsAction.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), npgsqlOptionsAction =>
-            {
-                npgsqlOptionsAction.EnableRetryOnFailure();
-            });
-            optionsAction.EnableDetailedErrors();
-            optionsAction.EnableSensitiveDataLogging();
-        });
-        
-        service.AddScoped<BaseApplicationDbContext>(serviceProvider =>
-        {
-            return serviceProvider.GetRequiredService<ApplicationDbContext>();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            options.UseNpgsql(connectionString!);
+            options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging();
         });
     }
 
     public static void ConfigureRepositories(this IServiceCollection service)
     {
         service
+            .AddScoped<ILojistaCartaoDeCreditoRepository, LojistaCartaoDeCreditoRepository>()
+            .AddScoped<IInscricaoRepository, InscricaoRepository>()
             .AddScoped<IUsuarioRepository, UsuarioRepository>()
             .AddScoped<ILojistaRepository, LojistaRepository>()
             .AddScoped<IAdministradorRepository, AdministradorRepository>()

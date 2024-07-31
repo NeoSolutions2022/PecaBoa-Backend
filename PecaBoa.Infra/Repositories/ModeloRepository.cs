@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class ModeloRepository : Repository<Modelo>, IModeloRepository
 {
-    public ModeloRepository(BaseApplicationDbContext context) : base(context)
+    public ModeloRepository(ApplicationDbContext context) : base(context)
     {
     }
 

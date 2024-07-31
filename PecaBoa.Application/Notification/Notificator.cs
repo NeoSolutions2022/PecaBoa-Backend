@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Results;
+using PecaBoa.Application.Notification.CustomerEntitiesError;
 
 namespace PecaBoa.Application.Notification;
 
@@ -26,6 +27,11 @@ public class Notificator : INotificator
     {
         failures
             .ForEach(err => Handle(err.ErrorMessage));
+    }
+    
+    public void Handle(AsaasError asaasError)
+    {
+        asaasError.Errors.ForEach(c => Handle($"Asaas error: {c.Code} - {c.Description}"));
     }
 
     public void HandleNotFoundResource()

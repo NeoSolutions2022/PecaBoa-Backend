@@ -1,5 +1,8 @@
-﻿using PecaBoa.Application.Dtos.V1.Base;
+﻿using PecaBoa.Application.Adapters.Asaas.Application.Dtos.V1.Payments;
+using PecaBoa.Application.Adapters.Asaas.Application.Dtos.V1.Subscriptions;
+using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Lojista;
+using PecaBoa.Application.Dtos.V1.Lojista.Inscricoes;
 
 namespace PecaBoa.Application.Contracts;
 
@@ -20,4 +23,6 @@ public interface ILojistaService
     Task AtivarAnuncio(int id);
     Task DesativarAnuncio(int id);
     Task Remover(int id);
+    Task<SubscriptionResponseDto?> Inscricao(CadastrarInscricaoDto dto);
+    Task VerifyPayment(SubscriptionHookDto dto);
 }

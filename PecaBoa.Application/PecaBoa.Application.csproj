@@ -29,6 +29,7 @@
         <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
         <PackageReference Include="Npgsql" Version="6.0.0" />
+        <PackageReference Include="RestSharp" Version="111.4.0" />
         <PackageReference Include="ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher" Version="1.4.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
     </ItemGroup>
@@ -48,6 +49,10 @@
         <Reference Include="FluentEmail.MailKit">
             <HintPath>..\deps\FluentEmail.MailKit\FluentEmail.MailKit.dll</HintPath>
         </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Adapters\" />
     </ItemGroup>
 
 </Project>

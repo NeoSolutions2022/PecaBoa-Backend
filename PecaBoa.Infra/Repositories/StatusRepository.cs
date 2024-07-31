@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class StatusRepository : Repository<Status>, IStatusRepository
 {
-    public StatusRepository(BaseApplicationDbContext context) : base(context)
+    public StatusRepository(ApplicationDbContext context) : base(context)
     {
     }
 

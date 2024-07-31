@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class MarcaRepository : Repository<Marca>, IMarcaRepository
 {
-    public MarcaRepository(BaseApplicationDbContext context) : base(context)
+    public MarcaRepository(ApplicationDbContext context) : base(context)
     {
     }
 

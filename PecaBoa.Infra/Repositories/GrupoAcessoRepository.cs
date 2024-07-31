@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class GrupoAcessoRepository : Repository<GrupoAcesso>, IGrupoAcessoRepository
 {
-    public GrupoAcessoRepository(BaseApplicationDbContext context) : base(context)
+    public GrupoAcessoRepository(ApplicationDbContext context) : base(context)
     {
     }
 
