@@ -88,6 +88,12 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         var lojista = Mapper.Map<Lojista>(dto);
+        
+        if (dto.Foto is { Length : > 0 })
+        {
+            lojista.Foto = await _fileService.Upload(dto.Foto);
+        }
+        
         if (!await Validar(lojista))
         {
             return null;
@@ -256,6 +262,16 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         Mapper.Map(dto, lojista);
+        
+        if (dto.Foto is { Length : > 0 })
+        {
+            lojista.Foto = await _fileService.Upload(dto.Foto);
+        }
+        else
+        {
+            lojista.Foto = null;
+        }
+        
         if (!await Validar(lojista))
         {
             return null;
@@ -309,7 +325,7 @@ public class LojistaService : BaseService, ILojistaService
         return null;
     }
 
-    public async Task<LojistaDto?> ObterPorCpf(string cpf) //ToDo: olhar depois
+    public async Task<LojistaDto?> ObterPorCpf(string cpf)
     {
         var lojista = await _lojistaRepository.ObterPorCpf(cpf);
         if (lojista != null)
@@ -350,6 +366,31 @@ public class LojistaService : BaseService, ILojistaService
                     ExpiracaoEmHoras = codigoExpiraEmHoras
                 });
         }
+    }
+
+    public async Task AlterarSenhaSemEnvioEmail(AlterarSenhaLojistaSemEnvioEmailDto dto)
+    {
+        if (dto.Senha != dto.ConfirmarSenha)
+        {
+            Notificator.Handle("As senhas não conferem!");
+            return;
+        }
+        
+        var lojista = await _lojistaRepository.ObterPorId(Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()));
+        if (lojista == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        lojista.Senha = _passwordHasher.HashPassword(lojista, dto.Senha);
+        _lojistaRepository.Alterar(lojista);
+        if (await _lojistaRepository.UnitOfWork.Commit())
+        {
+            return;
+        }
+        
+        Notificator.Handle("Não foi possivel alterar a senha");
     }
 
     public async Task Desativar(int id)
@@ -469,6 +510,49 @@ public class LojistaService : BaseService, ILojistaService
         }
 
         Notificator.Handle("Não foi possível remover o lojista");
+    }
+
+    public async Task AlterarFoto(AlterarFotoLojistaDto dto)
+    {
+        var lojista = await _lojistaRepository.ObterPorId(Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()));
+        if (lojista is null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        if (dto.Foto is { Length : > 0 })
+        {
+            lojista.Foto = await _fileService.Upload(dto.Foto);
+        }
+        
+        _lojistaRepository.Alterar(lojista);
+        if (await _lojistaRepository.UnitOfWork.Commit())
+        {
+            return;
+        }
+
+        Notificator.Handle("Não foi possível alterar a foto");
+    }
+
+    public async Task RemoverFoto()
+    {
+        var lojista = await _lojistaRepository.ObterPorId(Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId()));
+        if (lojista is null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        lojista.Foto = null;
+        _lojistaRepository.Alterar(lojista);
+
+        if (await _lojistaRepository.UnitOfWork.Commit())
+        {
+            return;
+        }
+
+        Notificator.Handle("Não foi possível alterar a foto");
     }
 
     private async Task<bool> Validar(Lojista lojista)

@@ -5,6 +5,7 @@ namespace PecaBoa.Application.Dtos.V1.Lojista;
 public class LojistaDto
 {
     public int Id { get; set; }
+    public string? Foto { get; set; }
     public string Cep { get; set; } = null!;
     public string Cidade { get; set; } = null!;
     public string? Cnpj { get; set; }

@@ -7,6 +7,7 @@ namespace PecaBoa.Domain.Entities;
 
 public class Lojista : Entity, IAggregateRoot, ISoftDelete
 {
+    public string? Foto { get; set; }
     public string Cep { get; set; } = null!;
     public string Cidade { get; set; } = null!;
     public string? Cnpj { get; set; }

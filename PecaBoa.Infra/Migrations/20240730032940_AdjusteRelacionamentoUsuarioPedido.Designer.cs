@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PecaBoa.Infra.Context;
@@ -11,9 +12,10 @@ using PecaBoa.Infra.Context;
 namespace PecaBoa.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240730032940_AdjusteRelacionamentoUsuarioPedido")]
+    partial class AdjusteRelacionamentoUsuarioPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,54 +262,6 @@ namespace PecaBoa.Infra.Migrations
                     b.ToTable("GrupoAcessoUsuario");
                 });
 
-            modelBuilder.Entity("PecaBoa.Domain.Entities.Inscricao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AtualizadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("AtualizadoPor")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("AtualizadoPorAdmin")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("CriadoPor")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("CriadoPorAdmin")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("Desativado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("EhRecorrente")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("InscricaoAcabaEm")
-                        .HasColumnType("date");
-
-                    b.Property<int>("LojistaId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LojistaId")
-                        .IsUnique();
-
-                    b.ToTable("Inscricoes");
-                });
-
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
                 {
                     b.Property<int>("Id")
@@ -421,99 +375,6 @@ namespace PecaBoa.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Lojistas");
-                });
-
-            modelBuilder.Entity("PecaBoa.Domain.Entities.LojistaCartaoDeCredito", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AddressNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("AtualizadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("AtualizadoPor")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("AtualizadoPorAdmin")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Ccv")
-                        .IsRequired()
-                        .HasMaxLength(4)
-                        .HasColumnType("character varying(4)");
-
-                    b.Property<string>("CpfCnpj")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CreditCardToken")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("CriadoPor")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("CriadoPorAdmin")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ExpiryMonth")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("character varying(2)");
-
-                    b.Property<string>("ExpiryYear")
-                        .IsRequired()
-                        .HasMaxLength(4)
-                        .HasColumnType("character varying(4)");
-
-                    b.Property<string>("HolderName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("LastNumbers")
-                        .IsRequired()
-                        .HasMaxLength(4)
-                        .HasColumnType("character varying(4)");
-
-                    b.Property<int>("LojistaId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LojistaId");
-
-                    b.ToTable("LojistaCartoesDeCredito");
                 });
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Marca", b =>
@@ -1050,28 +911,6 @@ namespace PecaBoa.Infra.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("PecaBoa.Domain.Entities.Inscricao", b =>
-                {
-                    b.HasOne("PecaBoa.Domain.Entities.Lojista", "Lojista")
-                        .WithOne("Inscricao")
-                        .HasForeignKey("PecaBoa.Domain.Entities.Inscricao", "LojistaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Lojista");
-                });
-
-            modelBuilder.Entity("PecaBoa.Domain.Entities.LojistaCartaoDeCredito", b =>
-                {
-                    b.HasOne("PecaBoa.Domain.Entities.Lojista", "Lojista")
-                        .WithMany("LojistaCartoesDeCredito")
-                        .HasForeignKey("LojistaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lojista");
-                });
-
             modelBuilder.Entity("PecaBoa.Domain.Entities.Modelo", b =>
                 {
                     b.HasOne("PecaBoa.Domain.Entities.Marca", "Marca")
@@ -1188,11 +1027,6 @@ namespace PecaBoa.Infra.Migrations
 
             modelBuilder.Entity("PecaBoa.Domain.Entities.Lojista", b =>
                 {
-                    b.Navigation("Inscricao")
-                        .IsRequired();
-
-                    b.Navigation("LojistaCartoesDeCredito");
-
                     b.Navigation("Orcamentos");
                 });
 

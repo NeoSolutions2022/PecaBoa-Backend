@@ -17,6 +17,7 @@ public interface ILojistaService
     Task<LojistaDto?> ObterPorCnpj(string cnpj);
     Task<LojistaDto?> ObterPorCpf(string cpf);
     Task AlterarSenha(int id);
+    public Task AlterarSenhaSemEnvioEmail(AlterarSenhaLojistaSemEnvioEmailDto dto);
     Task Desativar(int id);
     Task AlterarDescricao(int id, string descricao);
     Task Reativar(int id);
@@ -25,4 +26,6 @@ public interface ILojistaService
     Task Remover(int id);
     Task<SubscriptionResponseDto?> Inscricao(CadastrarInscricaoDto dto);
     Task VerifyPayment(SubscriptionHookDto dto);
+    Task AlterarFoto(AlterarFotoLojistaDto dto);
+    Task RemoverFoto();
 }

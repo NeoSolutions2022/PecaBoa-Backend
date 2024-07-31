@@ -9,5 +9,6 @@ public interface IOrcamentoRepository : IRepository<Orcamento>
     void Alterar(Orcamento orcamento);
     Task<Orcamento?> ObterPorId(int id);
     Task<IResultadoPaginado<Orcamento>> Buscar(IBuscaPaginada<Orcamento> filtro);
+    Task<List<Orcamento>> BuscarOrcamentosLojista(int id);
     void Remover(Orcamento orcamento);
 }

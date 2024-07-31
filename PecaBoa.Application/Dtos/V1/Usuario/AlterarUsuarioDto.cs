@@ -1,4 +1,6 @@
-﻿namespace PecaBoa.Application.Dtos.V1.Usuario;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace PecaBoa.Application.Dtos.V1.Usuario;
 
 public class AlterarUsuarioDto
 {
@@ -16,7 +18,7 @@ public class AlterarUsuarioDto
     public string Bairro { get; set; } = null!;
     public int Numero { get; set; }
     public string? Complemento { get; set; }
-    
+    public IFormFile? Foto { get; set; }
     
     public List<ManterGrupoAcessoUsuarioDto> GrupoAcessos { get; set; } = new();
 }

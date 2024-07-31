@@ -5,6 +5,7 @@ namespace PecaBoa.Application.Dtos.V1.Usuario;
 
 public class CadastrarUsuarioDto
 {
+    public IFormFile? Foto { get; set; }
     public string Nome { get; set; } = null!;
     public string? NomeSocial { get; set; }
     public string Email { get; set; } = null!;
