@@ -4,6 +4,7 @@ using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Base;
 using PecaBoa.Application.Dtos.V1.Orcamento;
 using PecaBoa.Application.Notification;
+using PecaBoa.Core.Authorization;
 using PecaBoa.Core.Enums;
 using PecaBoa.Core.Extensions;
 using PecaBoa.Domain.Contracts.Repositories;
@@ -17,12 +18,14 @@ public class OrcamentoService : BaseService, IOrcamentoService
     private readonly IOrcamentoRepository _orcamentoRepository;
     private readonly IFileService _fileService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAuthenticatedUser _authenticatedUser;
     
-    public OrcamentoService(IMapper mapper, INotificator notificator, IOrcamentoRepository orcamentoRepository, IFileService fileService, IHttpContextAccessor httpContextAccessor) : base(mapper, notificator)
+    public OrcamentoService(IMapper mapper, INotificator notificator, IOrcamentoRepository orcamentoRepository, IFileService fileService, IHttpContextAccessor httpContextAccessor, IAuthenticatedUser authenticatedUser) : base(mapper, notificator)
     {
         _orcamentoRepository = orcamentoRepository;
         _fileService = fileService;
         _httpContextAccessor = httpContextAccessor;
+        _authenticatedUser = authenticatedUser;
     }
 
     public async Task<OrcamentoDto?> Adicionar(CadastrarOrcamentoDto dto)
@@ -144,6 +147,13 @@ public class OrcamentoService : BaseService, IOrcamentoService
     {
         var orcamentos = await _orcamentoRepository.Buscar(dto);
         return Mapper.Map<PagedDto<OrcamentoDto>>(orcamentos);
+    }
+
+    public async Task<List<OrcamentoDto>> BuscarOrcamentosLojista()
+    {
+        var orcamentos = await _orcamentoRepository.BuscarOrcamentosLojista(_authenticatedUser.Id);
+
+        return Mapper.Map<List<OrcamentoDto>>(orcamentos);
     }
 
     public async Task AlterarFoto(AlterarFotoOrcamentoDto dto)

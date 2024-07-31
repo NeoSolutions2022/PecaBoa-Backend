@@ -16,6 +16,18 @@ public class UsuariosController : MainController
         _usuarioService = usuarioService;
     }
 
+    [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Obter um Usuario por Id.", Tags = new [] { "Usuario - Usuario" })]
+    [ProducesResponseType(typeof(UsuarioDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ObterPorId(int id)
+    {
+        var usuario = await _usuarioService.ObterPorId(id);
+        return OkResponse(usuario);
+    }
+    
     [HttpPut("{id}")]
     [SwaggerOperation(Summary = "Atualizar um Usuario.", Tags = new[] { "Usuario - Usuario" })]
     [ProducesResponseType(typeof(UsuarioDto), StatusCodes.Status200OK)]
