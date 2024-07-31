@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class CategoriaVeiculoRepository : Repository<CategoriaVeiculo>, ICategoriaVeiculoRepository
 {
-    public CategoriaVeiculoRepository(BaseApplicationDbContext context) : base(context)
+    public CategoriaVeiculoRepository(ApplicationDbContext context) : base(context)
     {
     }
 

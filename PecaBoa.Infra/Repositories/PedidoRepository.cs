@@ -9,7 +9,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class PedidoRepository : Repository<Pedido>, IPedidoRepository
 {
-    public PedidoRepository(BaseApplicationDbContext context) : base(context)
+    public PedidoRepository(ApplicationDbContext context) : base(context)
     {
     }
 

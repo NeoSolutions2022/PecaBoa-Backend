@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class TipoDePecaRepository : Repository<TipoDePeca>, ITipoDePecaRepository
 {
-    public TipoDePecaRepository(BaseApplicationDbContext context) : base(context)
+    public TipoDePecaRepository(ApplicationDbContext context) : base(context)
     {
     }
 

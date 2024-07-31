@@ -11,6 +11,7 @@ using PecaBoa.Infra;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PecaBoa.Application.Adapters.Asaas;
 using ScottBrady91.AspNetCore.Identity;
 
 namespace PecaBoa.Application;
@@ -22,8 +23,10 @@ public static class DependencyInjection
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
         services.Configure<UploadSettings>(configuration.GetSection("UploadSettings"));
+        services.Configure<AsaasSettings>(configuration.GetSection("AsaasSettings"));
 
         services.ConfigureDataBase(configuration);
+        services.ConfigureAssas();
         services.ConfigureRepositories();
 
         services
@@ -44,6 +47,7 @@ public static class DependencyInjection
             .AddScoped<IAdministradorService, AdministradorService>();
 
         services
+            .AddScoped<ILojistaCartaoDeCreditoService, LojistaCartaoDeCreditoService>()
             .AddScoped<IAuthService, AuthService>()
             .AddScoped<IPedidoService, PedidoService>()
             .AddScoped<IOrcamentoService, OrcamentoService>()

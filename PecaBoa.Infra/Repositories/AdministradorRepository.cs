@@ -9,7 +9,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class AdministradorRepository : Repository<Administrador>, IAdministradorRepository
 {
-    public AdministradorRepository(BaseApplicationDbContext context) : base(context)
+    public AdministradorRepository(ApplicationDbContext context) : base(context)
     {
     }
 

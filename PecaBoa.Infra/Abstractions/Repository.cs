@@ -13,9 +13,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 {
     private bool _isDisposed;
     private readonly DbSet<TEntity> _dbSet;
-    protected readonly BaseApplicationDbContext Context;
+    protected readonly ApplicationDbContext Context;
 
-    public Repository(BaseApplicationDbContext context)
+    public Repository(ApplicationDbContext context)
     {
         _dbSet = context.Set<TEntity>();
         Context = context;

@@ -9,7 +9,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class LojistaRepository : Repository<Lojista>, ILojistaRepository
 {
-    public LojistaRepository(BaseApplicationDbContext context) : base(context)
+    public LojistaRepository(ApplicationDbContext context) : base(context)
     {
     }
 
@@ -27,6 +27,7 @@ public class LojistaRepository : Repository<Lojista>, ILojistaRepository
     {
         return await Context.Lojistas
             .Include(c => c.Orcamentos)
+            .Include(c => c.Inscricao)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 

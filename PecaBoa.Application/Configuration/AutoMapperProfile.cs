@@ -11,6 +11,7 @@ using PecaBoa.Application.Dtos.V1.Usuario.Modelo;
 using PecaBoa.Application.Dtos.V1.Usuario.Status;
 using PecaBoa.Application.Dtos.V1.Usuario.TipoDePeca;
 using PecaBoa.Core.Extensions;
+using PecaBoa.Domain.Contracts.Paginacao;
 using PecaBoa.Domain.Entities;
 using PecaBoa.Domain.Paginacao;
 
@@ -151,6 +152,35 @@ public class AutoMapperProfile : Profile
         CreateMap<AlterarPermissaoDto, Permissao>()
             .ReverseMap();
 
+        #endregion
+        
+        #region LojistaCartaoDeCredito
+        
+        CreateMap<Dtos.V1.Lojista.LojistaCartoesDeCredito.LojistaCartaoDeCreditoDto, LojistaCartaoDeCredito>()
+            .AfterMap((_, dest) => dest.Number = dest.Number.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.Phone = dest.Phone.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.CpfCnpj = dest.CpfCnpj.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.PostalCode = dest.PostalCode.SomenteNumeros()!)
+            .ReverseMap();
+        
+        CreateMap<Dtos.V1.Lojista.LojistaCartoesDeCredito.CreateLojistaCartaoDeCreditoDto, LojistaCartaoDeCredito>()
+            .AfterMap((_, dest) => dest.Number = dest.Number.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.Phone = dest.Phone.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.CpfCnpj = dest.CpfCnpj.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.PostalCode = dest.PostalCode.SomenteNumeros()!)
+            .ReverseMap();
+        
+        CreateMap<Dtos.V1.Lojista.LojistaCartoesDeCredito.UpdateLojistaCartaoDeCreditoDto, LojistaCartaoDeCredito>()
+            .AfterMap((_, dest) => dest.Number = dest.Number.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.Phone = dest.Phone.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.CpfCnpj = dest.CpfCnpj.SomenteNumeros()!)
+            .AfterMap((_, dest) => dest.PostalCode = dest.PostalCode.SomenteNumeros()!)
+            .ReverseMap();
+        
+        CreateMap<Dtos.V1.Lojista.LojistaCartoesDeCredito.LojistaCartaoDeCreditoDto, ResultadoPaginado<LojistaCartaoDeCredito>>().ReverseMap();
+        
+        CreateMap<Dtos.V1.Base.PagedDto<Dtos.V1.Lojista.LojistaCartoesDeCredito.LojistaCartaoDeCreditoDto>, IResultadoPaginado<LojistaCartaoDeCredito>>().ReverseMap();
+        
         #endregion
     }
 }

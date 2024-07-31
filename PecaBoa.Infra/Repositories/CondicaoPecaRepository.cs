@@ -8,7 +8,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class CondicaoPecaRepository : Repository<CondicaoPeca>, ICondicaoPecaRepository
 {
-    public CondicaoPecaRepository(BaseApplicationDbContext context) : base(context)
+    public CondicaoPecaRepository(ApplicationDbContext context) : base(context)
     {
     }
 
