@@ -43,6 +43,18 @@ public class OrcamentoController : MainController
         var orcamento = await _orcamentoService.Buscar(dto);
         return OkResponse(orcamento);
     }
+    
+    [HttpGet("Orcamentos-do-Lojista")]
+    [SwaggerOperation(Summary = "Listar Orcamento do Lojista - Lojista.",
+        Tags = new[] { "Lojista - Orcamento" })]
+    [ProducesResponseType(typeof(List<OrcamentoDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> ListarOrcamentoLojista()
+    {
+        var orcamentos = await _orcamentoService.BuscarOrcamentosLojista();
+        return OkResponse(orcamentos);
+    }
 
     [HttpPost]
     [SwaggerOperation(Summary = "Cadastrar Orcamento - Lojista.",

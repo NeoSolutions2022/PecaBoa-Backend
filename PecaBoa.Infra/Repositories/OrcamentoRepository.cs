@@ -41,6 +41,15 @@ public class OrcamentoRepository : Repository<Orcamento>, IOrcamentoRepository
         return await base.Buscar(query, filtro);
     }
 
+    public async Task<List<Orcamento>> BuscarOrcamentosLojista(int id)
+    {
+        return await Context.Orcamentos
+            .Where(c => c.LojistaId == id)
+            .Include(c => c.Pedido)
+            .Include(c => c.Lojista)
+            .ToListAsync();
+    }
+
     public void Remover(Orcamento orcamento)
     {
         Context.Orcamentos.Remove(orcamento);
