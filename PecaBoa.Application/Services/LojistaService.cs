@@ -31,9 +31,10 @@ public class LojistaService : BaseService, ILojistaService
     private readonly ISubscriptionService _subscriptionService;
     private readonly ILojistaCartaoDeCreditoService _lojistaCartaoDeCreditoService;
     private readonly IPaymentService _paymentService;
+    private readonly IFileService _fileService;
 
     public LojistaService(IMapper mapper, INotificator notificator, ILojistaRepository lojistaRepository,
-        IPasswordHasher<Lojista> passwordHasher, IOptions<AppSettings> appSettings, IEmailService emailService, IHttpContextAccessor httpContextAccessor, ICustomerService customerService, ISubscriptionService subscriptionService, ILojistaCartaoDeCreditoService lojistaCartaoDeCreditoService, IPaymentService paymentService) : base(mapper, notificator)
+        IPasswordHasher<Lojista> passwordHasher, IOptions<AppSettings> appSettings, IEmailService emailService, IHttpContextAccessor httpContextAccessor, ICustomerService customerService, ISubscriptionService subscriptionService, ILojistaCartaoDeCreditoService lojistaCartaoDeCreditoService, IPaymentService paymentService, IFileService fileService) : base(mapper, notificator)
     {
         _lojistaRepository = lojistaRepository;
         _passwordHasher = passwordHasher;
@@ -43,6 +44,7 @@ public class LojistaService : BaseService, ILojistaService
         _subscriptionService = subscriptionService;
         _lojistaCartaoDeCreditoService = lojistaCartaoDeCreditoService;
         _paymentService = paymentService;
+        _fileService = fileService;
         _appSettings = appSettings.Value;
     }
 

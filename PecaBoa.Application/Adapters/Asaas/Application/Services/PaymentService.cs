@@ -65,27 +65,14 @@ public class PaymentService : BaseService, IPaymentService
                     return;
                 }
                 
-                var subscriptions = await _subscriptionService.GetByCustomerId(customer.Id);
-                if (!(subscriptions!.Data!.OrderBy(s => s.NextDueDate).First().NextDueDate >= DateTime.Now))
-                {
-                    user.Desativado = true;
-                    _lojistaRepository.Alterar(user);
-                    if (await _lojistaRepository.UnitOfWork.Commit())
-                    {
-                        return;
-                    }
-                    
-                    Notificator.Handle("Um erro ocorreu ao tentar desabilitar o usuario");
-                    return;
-                }
-                
-                _lojistaRepository.Remover(user);
+                user.Desativado = true;
+                _lojistaRepository.Alterar(user);
                 if (await _lojistaRepository.UnitOfWork.Commit())
                 {
                     return;
                 }
-                
-                Notificator.Handle("Um erro ocorreu ao tentar remover o usuario");
+                    
+                Notificator.Handle("Um erro ocorreu ao tentar desabilitar o usuario");
                 return;
             }
 
