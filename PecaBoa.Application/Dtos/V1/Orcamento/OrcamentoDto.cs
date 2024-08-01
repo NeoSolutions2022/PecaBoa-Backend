@@ -21,6 +21,7 @@ public class OrcamentoDto
     public int PedidoId { get; set; }
     public int LojistaId { get; set; }
     public bool Desativado { get; set; }
+    public DateTime CriadoEm { get; set; }
 
     public CondicaoPecaDto CondicaoPeca { get; set; } = null!;
     public StatusDto Status { get; set; } = null!;

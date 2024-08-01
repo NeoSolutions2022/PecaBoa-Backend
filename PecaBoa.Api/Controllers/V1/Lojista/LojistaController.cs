@@ -130,6 +130,19 @@ public class LojistaController : MainController
         return OkResponse();
     }
     
+    [HttpPost("alterar-senha-sem-email")]
+    [SwaggerOperation(Summary = "alterar a senha sem envio de Email.", Tags = new[] { "Usuario - Lojista" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AlterarSenhaSemEnvioEmail(AlterarSenhaLojistaSemEnvioEmailDto dto)
+    {
+        await _lojistaService.AlterarSenhaSemEnvioEmail(dto);
+        return OkResponse();
+    }
+    
     [HttpPost("inscricao")]
     [AllowAnonymous]
     [SwaggerOperation(Summary = "Criar a inscrição de um lojista.", Tags = new[] { "Usuario - Lojista" })]
