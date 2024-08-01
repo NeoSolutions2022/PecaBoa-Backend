@@ -16,19 +16,21 @@ public class PedidoService : BaseService, IPedidoService
 {
     private readonly IAuthenticatedUser _authenticatedUser;
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly ILojistaRepository _lojistaRepository;
     private readonly IPedidoRepository _pedidoRepository;
     private readonly IFileService _fileService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public PedidoService(IMapper mapper, INotificator notificator,
         IPedidoRepository pedidoRepository, IFileService fileService,
-        IHttpContextAccessor httpContextAccessor, IAuthenticatedUser authenticatedUser, IUsuarioRepository usuarioRepository) : base(mapper, notificator)
+        IHttpContextAccessor httpContextAccessor, IAuthenticatedUser authenticatedUser, IUsuarioRepository usuarioRepository, ILojistaRepository lojistaRepository) : base(mapper, notificator)
     {
         _pedidoRepository = pedidoRepository;
         _fileService = fileService;
         _httpContextAccessor = httpContextAccessor;
         _authenticatedUser = authenticatedUser;
         _usuarioRepository = usuarioRepository;
+        _lojistaRepository = lojistaRepository;
     }
 
     public async Task<PedidoDto?> Adicionar(CadastrarPedidoDto dto)
@@ -65,6 +67,9 @@ public class PedidoService : BaseService, IPedidoService
         pedido.StatusId = (int)EStatus.AnuncioAtivo;
         pedido.CriadoEm = DateTime.UtcNow;
         pedido.AtualizadoEm = DateTime.UtcNow;
+
+        pedido.DataFim = DateTime.SpecifyKind(pedido.CriadoEm.AddHours(24), DateTimeKind.Unspecified);
+        pedido.DataLimite = DateTime.SpecifyKind(pedido.CriadoEm.AddDays(3), DateTimeKind.Unspecified);
         
         if (!await Validar(pedido))
         {
@@ -262,6 +267,41 @@ public class PedidoService : BaseService, IPedidoService
         Notificator.Handle("Não foi possível alterar as fotos");
     }
 
+    public async Task<bool> RenovarPedido(int id)
+    {
+        var pedido = await _pedidoRepository.ObterPorId(id);
+
+        if (pedido == null)
+        {
+            Notificator.Handle("Pedido não encontrado.");
+            return false;
+        }
+
+        if (pedido.DataLimite <= DateTime.UtcNow)
+        {
+            Notificator.Handle("O pedido passou do limite de renovação.");
+            return false;
+        }
+
+        if (pedido.Desativado)
+        {
+            Notificator.Handle("O pedido já está desativado.");
+            return false;
+        }
+
+        if (pedido.DataFim.AddDays(1) <= pedido.DataLimite)
+        {
+            pedido.DataFim = pedido.DataFim.AddDays(1);
+            pedido.AtualizadoEm = DateTime.UtcNow;
+
+            _pedidoRepository.Alterar(pedido);
+            return await _pedidoRepository.UnitOfWork.Commit();
+        }
+        
+        Notificator.Handle("O pedido não pode ser renovado pois já atingiu o limite de renovação.");
+        return false;
+    }
+
     public async Task Desativar(int id)
     {
         var pedido = await _pedidoRepository.ObterPorId(id);
@@ -324,8 +364,16 @@ public class PedidoService : BaseService, IPedidoService
 
     public async Task<PagedDto<PedidoDto>> Buscar(BuscarPedidoDto dto)
     {
-        var administrador = await _pedidoRepository.Buscar(dto);
-        var pedidosMapeados = Mapper.Map<PagedDto<PedidoDto>>(administrador);
+        var lojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
+        var lojista = await _lojistaRepository.ObterPorId(lojistaId);
+
+        if (dto.BuscarTodos && string.IsNullOrEmpty(dto.Uf) && string.IsNullOrEmpty(dto.Cidade))
+        {
+            dto.Cidade = lojista.Cidade;
+        }
+        
+        var pedidos = await _pedidoRepository.Buscar(dto);
+        var pedidosMapeados = Mapper.Map<PagedDto<PedidoDto>>(pedidos);
         
         var httpClient = new HttpClient();
         foreach (var pedidoDto in pedidosMapeados.Itens)

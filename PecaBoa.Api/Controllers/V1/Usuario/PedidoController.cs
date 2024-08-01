@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PecaBoa.Application.Contracts;
 using PecaBoa.Application.Dtos.V1.Base;
@@ -32,6 +33,7 @@ public class PedidoController : Lojista.MainController
         return OkResponse(pedido);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     [SwaggerOperation(Summary = "Buscar Pedido - Usuario.",
         Tags = new[] { "Usuario - Pedido" })]
@@ -103,6 +105,19 @@ public class PedidoController : Lojista.MainController
     public async Task<IActionResult> Reativar(int id)
     {
         await _pedidoService.Reativar(id);
+        return NoContentResponse();
+    }
+    
+    [HttpPatch("renovar/{id}")]
+    [SwaggerOperation(Summary = "Renovar Pedido - Usuario.", Tags = new[] { "Usuario - Pedido" })]
+    [ClaimsAuthorize("Usuario", ETipoUsuario.Usuario)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RenovarPedido(int id)
+    {
+        await _pedidoService.RenovarPedido(id);
         return NoContentResponse();
     }
 

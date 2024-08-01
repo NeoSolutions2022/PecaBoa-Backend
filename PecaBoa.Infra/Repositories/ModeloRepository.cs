@@ -13,4 +13,8 @@ public class ModeloRepository : Repository<Modelo>, IModeloRepository
     }
 
     public async Task<List<Modelo>> Listar() => await Context.Modelos.ToListAsync();
+    public async Task<List<Modelo>> ListarPorMarcaId(int marcaId)
+    {
+        return await Context.Modelos.Where(c => c.MarcaId == marcaId).ToListAsync();
+    }
 }

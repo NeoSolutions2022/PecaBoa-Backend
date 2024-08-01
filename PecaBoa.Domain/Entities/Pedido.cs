@@ -23,12 +23,12 @@ public class Pedido : Entity, IAggregateRoot, ISoftDelete
     public int UsuarioId { get; set; }
     public int TipoDePecaId { get; set; }
     public int StatusId { get; set; }
+    public DateTime DataFim { get; set; }
+    public DateTime DataLimite { get; set; }
     
     public Usuario Usuario { get; set; } = null!;
     public Marca Marca { get; set; } = null!;
     public Modelo Modelo { get; set; } = null!;
-    public CategoriaVeiculo CategoriaVeiculo { get; set; } = null!;
-    public TipoDePeca TipoDePeca { get; set; } = null!;
     public Status Status { get; set; } = null!;
     public List<Orcamento> Orcamentos { get; set; } = new();
 

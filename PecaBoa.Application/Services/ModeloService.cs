@@ -21,4 +21,10 @@ public class ModeloService : IModeloService
         var modelos = await _modeloRepository.Listar();
         return _mapper.Map<List<ModeloDto>>(modelos);
     }
+
+    public async Task<List<ModeloDto>> ListarPorMarcaId(int marcaId)
+    {
+        var modelos = await _modeloRepository.ListarPorMarcaId(marcaId);
+        return _mapper.Map<List<ModeloDto>>(modelos);
+    }
 }

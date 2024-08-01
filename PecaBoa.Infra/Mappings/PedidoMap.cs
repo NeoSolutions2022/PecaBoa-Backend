@@ -47,6 +47,12 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
         builder.Property(c => c.StatusId)
             .IsRequired();
 
+        builder.Property(c => c.DataFim)
+            .HasColumnType("timestamp");
+
+        builder.Property(c => c.DataLimite)
+            .HasColumnType("timestamp");
+
         builder
             .HasOne(c => c.Status)
             .WithMany(c => c.Pedidos)
@@ -61,21 +67,9 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
             .OnDelete(DeleteBehavior.Restrict);
         
         builder
-            .HasOne(c => c.TipoDePeca)
-            .WithMany(c => c.Pedidos)
-            .HasForeignKey(c => c.TipoDePecaId)
-            .OnDelete(DeleteBehavior.Restrict);
-        
-        builder
             .HasOne(c => c.Modelo)
             .WithMany(c => c.Pedidos)
             .HasForeignKey(c => c.ModeloId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder
-            .HasOne(c => c.CategoriaVeiculo)
-            .WithMany(c => c.Pedidos)
-            .HasForeignKey(c => c.CategoriaVeiculoId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

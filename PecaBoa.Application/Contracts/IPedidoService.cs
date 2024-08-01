@@ -8,6 +8,7 @@ public interface IPedidoService
     Task<PedidoDto?> Adicionar(CadastrarPedidoDto dto);
     Task<PedidoDto?> Alterar(int id, AlterarPedidoDto dto);
     Task<PedidoDto?> ObterPorId(int id);
+    Task<bool> RenovarPedido(int id);
     Task Desativar(int id);
     Task Reativar(int id);
     Task Remover(int id);

@@ -66,6 +66,9 @@ public static class DependencyInjection
             .AddScoped<IPasswordHasher<Usuario>, Argon2PasswordHasher<Usuario>>()
             .AddScoped<IPasswordHasher<Lojista>, Argon2PasswordHasher<Lojista>>()
             .AddScoped<IPasswordHasher<Administrador>, Argon2PasswordHasher<Administrador>>();
+
+        services
+            .AddHostedService<UpdateStatusService>();
     }
     
     // public static void UseStaticFileConfiguration(this IApplicationBuilder app, IConfiguration configuration)

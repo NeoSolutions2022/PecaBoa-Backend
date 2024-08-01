@@ -25,4 +25,13 @@ public class ModeloController : BaseController
     {
         return await _modeloService.Listar();
     }
+    
+    [HttpGet("MarcaId")]
+    [AllowAnonymous]
+    [SwaggerOperation(Summary = "Listar Modelos por Marca.", Tags = new [] { "Usuario - Modelos" })]
+    [ProducesResponseType(typeof(ModeloDto),StatusCodes.Status200OK)]
+    public async Task<List<ModeloDto>> ListarPorMarcaId(int marcaId)
+    {
+        return await _modeloService.ListarPorMarcaId(marcaId);
+    }
 }
