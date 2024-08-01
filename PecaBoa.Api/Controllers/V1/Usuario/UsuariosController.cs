@@ -52,7 +52,7 @@ public class UsuariosController : MainController
         return OkResponse();
     }
     
-    [HttpPost("alterar-senha-sem email")]
+    [HttpPost("alterar-senha-sem-email")]
     [SwaggerOperation(Summary = "alterar a senha sem envio de Email.", Tags = new[] { "Usuario - Usuario" })]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
