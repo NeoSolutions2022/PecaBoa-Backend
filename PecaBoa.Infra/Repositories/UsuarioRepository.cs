@@ -9,7 +9,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
 {
-    public UsuarioRepository(BaseApplicationDbContext context) : base(context)
+    public UsuarioRepository(ApplicationDbContext context) : base(context)
     {
     }
 
@@ -25,17 +25,20 @@ public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
 
     public async Task<Usuario?> ObterPorId(int id)
     {
-        return await Context.Usuarios.FirstOrDefaultAsync(c => c.Id == id);
+        return await Context.Usuarios
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<Usuario?> ObterPorEmail(string email)
     {
-        return await Context.Usuarios.FirstOrDefaultAsync(c => c.Email == email);
+        return await Context.Usuarios
+            .FirstOrDefaultAsync(c => c.Email == email);
     }
 
     public async Task<Usuario?> ObterPorCpf(string cpf)
     {
-        return await Context.Usuarios.FirstOrDefaultAsync(c => c.Cpf == cpf);
+        return await Context.Usuarios
+            .FirstOrDefaultAsync(c => c.Cpf == cpf);
     }
 
     public void Remover(Usuario usuario)

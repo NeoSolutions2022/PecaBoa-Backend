@@ -12,6 +12,7 @@ public interface IOrcamentoService
     Task Reativar(int id);
     Task Remover(int id);
     Task<PagedDto<OrcamentoDto>> Buscar(BuscarOrcamentoDto dto);
+    Task<List<OrcamentoDto>> BuscarOrcamentosLojista();
     Task AlterarFoto(AlterarFotoOrcamentoDto dto);
     Task RemoverFoto(RemoverFotosOrcamentoDto dto);
 }

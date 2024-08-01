@@ -7,6 +7,7 @@ namespace PecaBoa.Domain.Entities;
 
 public class Lojista : Entity, IAggregateRoot, ISoftDelete
 {
+    public string? Foto { get; set; }
     public string Cep { get; set; } = null!;
     public string Cidade { get; set; } = null!;
     public string? Cnpj { get; set; }
@@ -29,6 +30,8 @@ public class Lojista : Entity, IAggregateRoot, ISoftDelete
     //public bool AnuncioPago { get; set; }
     //public DateTime? DataPagamentoAnuncio { get; set; }
     //public DateTime? DataExpiracaoAnuncio { get; set; }
+    public Inscricao Inscricao { get; set; } = null!;
+    public List<LojistaCartaoDeCredito> LojistaCartoesDeCredito { get; set; } = new();
     public List<Orcamento> Orcamentos { get; set; } = new();
 
     public override bool Validar(out ValidationResult validationResult)

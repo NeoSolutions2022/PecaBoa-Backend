@@ -65,7 +65,7 @@ public class UsuariosController : MainController
         return OkResponse(usuario);
     }
 
-    [HttpPatch("ativar/{id}")]
+    [HttpPatch("Desativar/{id}")]
     [SwaggerOperation(Summary = "Desativar um Usuario.", Tags = new [] { "Gerencia - Usuario" })]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

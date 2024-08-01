@@ -62,6 +62,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseApiConfiguration(app.Services, app.Environment);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -74,6 +76,8 @@ app.UseCors(myAllowSpecificOrigins);
 app.UseMigrations(app.Services);
 
 app.UseHttpsRedirection();
+
+app.UseSwaggerConfig();
 
 app.UseAuthentication();
 

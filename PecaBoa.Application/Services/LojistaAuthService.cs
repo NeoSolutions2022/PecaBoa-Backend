@@ -44,6 +44,19 @@ public class LojistaAuthService : BaseService, ILojistaAuthService
             return null;
         }
 
+        //todo: Remover o comentario quando todo o financeiro estiver pronto
+        // if (lojista.Inscricao.Desativado)
+        // {
+        //     if (lojista.Inscricao.InscricaoAcabaEm < DateTime.Now)
+        //     {
+        //         Notificator.Handle("A inscrição do usuário está desativada! Por favor, regularize sua inscrição. Ou entre em contato com o administrador do sistema.");
+        //         return null;
+        //     }
+        //     
+        //     Notificator.Handle("A inscrição do usuário está desativada! Por favor, entre em contato com o administrador do sistema");
+        //     return null;
+        // }
+
         var result = _lojistapasswordHasher.VerifyHashedPassword(lojista, lojista.Senha, loginDto.Senha);
         if (result != PasswordVerificationResult.Failed)
         {

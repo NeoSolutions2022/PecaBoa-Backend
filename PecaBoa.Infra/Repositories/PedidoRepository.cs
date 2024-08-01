@@ -9,7 +9,7 @@ namespace PecaBoa.Infra.Repositories;
 
 public class PedidoRepository : Repository<Pedido>, IPedidoRepository
 {
-    public PedidoRepository(BaseApplicationDbContext context) : base(context)
+    public PedidoRepository(ApplicationDbContext context) : base(context)
     {
     }
 
@@ -27,6 +27,7 @@ public class PedidoRepository : Repository<Pedido>, IPedidoRepository
     {
         return await Context.Pedidos
             .Include(c => c.Usuario)
+            .Include(c => c.Orcamentos)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
     public async Task<IResultadoPaginado<Pedido>> Buscar(IBuscaPaginada<Pedido> filtro)
