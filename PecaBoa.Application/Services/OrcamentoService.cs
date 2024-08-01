@@ -32,6 +32,31 @@ public class OrcamentoService : BaseService, IOrcamentoService
     {
         var orcamento = Mapper.Map<Orcamento>(dto);
         
+        if (dto.Foto is { Length : > 0 })
+        {
+            orcamento.Foto = await _fileService.Upload(dto.Foto);
+        }
+
+        if (dto.Foto2 is { Length : > 0 })
+        {
+            orcamento.Foto2 = await _fileService.Upload(dto.Foto2);
+        }
+
+        if (dto.Foto3 is { Length : > 0 })
+        {
+            orcamento.Foto3 = await _fileService.Upload(dto.Foto3);
+        }
+
+        if (dto.Foto4 is { Length : > 0 })
+        {
+            orcamento.Foto4 = await _fileService.Upload(dto.Foto4);
+        }
+
+        if (dto.Foto5 is { Length : > 0 })
+        {
+            orcamento.Foto5 = await _fileService.Upload(dto.Foto5);
+        }
+        
         orcamento.LojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         orcamento.Desativado = false;
         orcamento.StatusId = (int)EStatus.AnuncioAtivo;
