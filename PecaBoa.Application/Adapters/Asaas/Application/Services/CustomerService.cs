@@ -8,6 +8,7 @@ using PecaBoa.Application.Adapters.Asaas.Application.Dtos.V1.Customers;
 using PecaBoa.Application.Notification;
 using PecaBoa.Application.Notification.CustomerEntitiesError;
 using PecaBoa.Application.Services;
+using PecaBoa.Core.Extensions;
 using PecaBoa.Core.Settings;
 using RestSharp;
 
@@ -28,7 +29,7 @@ public class CustomerService : BaseService, ICustomerService
         var request = new RestRequest("");
         request.AddHeader("accept", "application/json");
         request.AddHeader("content-type", "application/json");
-        request.AddHeader("access_token", $"{_asaasSettings.AccessToken}");
+        request.AddHeader("access_token", $"{_asaasSettings.AccessToken.FromBase64()}");
         var response = await client.ExecuteGetAsync(request);
         if (response.IsSuccessful)
         {
@@ -54,7 +55,7 @@ public class CustomerService : BaseService, ICustomerService
         var request = new RestRequest("");
         request.AddHeader("accept", "application/json");
         request.AddHeader("content-type", "application/json");
-        request.AddHeader("access_token", $"{_asaasSettings.AccessToken}");
+        request.AddHeader("access_token", $"{_asaasSettings.AccessToken.FromBase64()}");
         var response = await client.ExecuteGetAsync(request);
         switch (response.StatusCode)
         {
@@ -96,7 +97,7 @@ public class CustomerService : BaseService, ICustomerService
         var request = new RestRequest("");
         request.AddHeader("accept", "application/json");
         request.AddHeader("content-type", "application/json");
-        request.AddHeader("access_token", $"{_asaasSettings.AccessToken}");
+        request.AddHeader("access_token", $"{_asaasSettings.AccessToken.FromBase64()}");
         var json = JsonConvert.SerializeObject(dto, new JsonSerializerSettings
         {
             ContractResolver = new DefaultContractResolver
@@ -148,7 +149,7 @@ public class CustomerService : BaseService, ICustomerService
         var request = new RestRequest("");
         request.AddHeader("accept", "application/json");
         request.AddHeader("content-type", "application/json");
-        request.AddHeader("access_token", $"{_asaasSettings.AccessToken}");
+        request.AddHeader("access_token", $"{_asaasSettings.AccessToken.FromBase64()}");
         var response = await client.DeleteAsync(request);
 
         switch (response.StatusCode)

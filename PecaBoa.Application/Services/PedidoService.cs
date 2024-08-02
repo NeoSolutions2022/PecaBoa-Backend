@@ -8,6 +8,7 @@ using PecaBoa.Domain.Contracts.Repositories;
 using PecaBoa.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using PecaBoa.Core.Authorization;
+using PecaBoa.Domain.Contracts.Paginacao;
 using PecaBoa.Domain.Entities.Enum;
 
 namespace PecaBoa.Application.Services;
@@ -366,41 +367,32 @@ public class PedidoService : BaseService, IPedidoService
     {
         var lojistaId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.ObterUsuarioId());
         var lojista = await _lojistaRepository.ObterPorId(lojistaId);
-
-        if (dto.BuscarTodos && string.IsNullOrEmpty(dto.Uf) && string.IsNullOrEmpty(dto.Cidade))
+        var cidadeToSearch = dto.Cidade;
+        var ufToSearch = dto.Uf;
+        
+        if (string.IsNullOrEmpty(dto.Cidade))
         {
             dto.Cidade = lojista.Cidade;
         }
         
         var pedidos = await _pedidoRepository.Buscar(dto);
-        var pedidosMapeados = Mapper.Map<PagedDto<PedidoDto>>(pedidos);
-        
-        var httpClient = new HttpClient();
-        foreach (var pedidoDto in pedidosMapeados.Itens)
+        if (pedidos.Itens.Count != 0)
         {
-            if (!string.IsNullOrEmpty(pedidoDto.Foto))
-            {
-                pedidoDto.FotoByte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto);
-            }
-            if (!string.IsNullOrEmpty(pedidoDto.Foto2))
-            {
-                pedidoDto.Foto2Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto2);
-            }
-            if (!string.IsNullOrEmpty(pedidoDto.Foto3))
-            {
-                pedidoDto.Foto3Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto3);
-            }
-            if (!string.IsNullOrEmpty(pedidoDto.Foto4))
-            {
-                pedidoDto.Foto4Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto4);
-            }
-            if (!string.IsNullOrEmpty(pedidoDto.Foto5))
-            {
-                pedidoDto.Foto5Byte = await DownloadPhotoAsync(httpClient, pedidoDto.Foto5);
-            }
+            return Mapper.Map<PagedDto<PedidoDto>>(pedidos); 
         }
-
-        return pedidosMapeados;
+        
+        dto.Cidade = null;
+        dto.Uf = lojista.Uf;
+        pedidos = await _pedidoRepository.Buscar(dto);
+        if (pedidos.Itens.Count != 0)
+        {
+            return Mapper.Map<PagedDto<PedidoDto>>(pedidos);
+        }
+        
+        dto.Cidade = cidadeToSearch;
+        dto.Uf = ufToSearch;
+        pedidos = await _pedidoRepository.Buscar(dto);
+        return Mapper.Map<PagedDto<PedidoDto>>(pedidos);
     }
 
     public async Task<PedidoDto?> ObterPorId(int id)
