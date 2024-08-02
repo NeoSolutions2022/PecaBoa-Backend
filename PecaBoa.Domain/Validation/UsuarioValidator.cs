@@ -81,8 +81,6 @@ public class UsuarioValidator : AbstractValidator<Usuario>
         RuleFor(u => u.Senha)
             .MinimumLength(8)
             .WithMessage("Senha deve ter no mínimo 8 caracteres!")
-            .MaximumLength(15)
-            .WithMessage("Senha deve ter no máximo 15 caracteres!")
             .NotEmpty()
             .WithMessage("Senha não pode ser vazio!");
 

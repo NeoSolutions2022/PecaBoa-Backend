@@ -101,8 +101,9 @@ public class UsuarioService : BaseService, IUsuarioService
             usuario.Foto = null;
         }
         
-        if (!await Validar(usuario))
+        if (!usuario.Validar(out var validationResult))
         {
+            Notificator.Handle(validationResult.Errors);
             return null;
         }
         
@@ -230,6 +231,12 @@ public class UsuarioService : BaseService, IUsuarioService
         if (dto.Senha != dto.ConfirmarSenha)
         {
             Notificator.Handle("As senhas não conferem!");
+            return;
+        }
+        
+        if (dto.Senha.Length < 5)
+        {
+            Notificator.Handle("Senha deve ter no mínimo 8 caracteres!");
             return;
         }
         

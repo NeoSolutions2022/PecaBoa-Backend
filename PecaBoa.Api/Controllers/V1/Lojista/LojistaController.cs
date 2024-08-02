@@ -130,7 +130,7 @@ public class LojistaController : MainController
         return OkResponse();
     }
     
-    [HttpPost("alterar-senha-sem-email")]
+    [HttpPatch("alterar-senha-sem-email")]
     [SwaggerOperation(Summary = "alterar a senha sem envio de Email.", Tags = new[] { "Usuario - Lojista" })]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
