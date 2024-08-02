@@ -234,7 +234,7 @@ public class UsuarioService : BaseService, IUsuarioService
             return;
         }
         
-        if (dto.Senha.Length < 5)
+        if (dto.Senha.Length < 8)
         {
             Notificator.Handle("Senha deve ter no mínimo 8 caracteres!");
             return;
