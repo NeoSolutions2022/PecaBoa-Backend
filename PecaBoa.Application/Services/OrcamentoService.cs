@@ -179,9 +179,22 @@ public class OrcamentoService : BaseService, IOrcamentoService
         Notificator.Handle("Não foi possível reativar o Orçamento");
     }
 
-    public Task Remover(int id)
+    public async Task Remover(int id)
     {
-        throw new NotImplementedException();
+        var orcamento = await _orcamentoRepository.ObterPorId(id);
+        if (orcamento == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return;
+        }
+
+        _orcamentoRepository.Remover(orcamento);
+        if (await _orcamentoRepository.UnitOfWork.Commit())
+        {
+            return;
+        }
+        
+        Notificator.Handle("Não foi possível remover o Orçamento");
     }
 
     public async Task<PagedDto<OrcamentoDto>> Buscar(BuscarOrcamentoDto dto)
