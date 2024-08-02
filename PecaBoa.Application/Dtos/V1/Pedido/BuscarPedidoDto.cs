@@ -6,18 +6,17 @@ namespace PecaBoa.Application.Dtos.V1.Pedido;
 
 public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
 {
-    public string? NomePeca { get; set; } = null!;
-    public string? Descricao { get; set; } = null!; 
+    public string? NomePeca { get; set; }
+    public string? Descricao { get; set; } 
     public EStatus? StatusId { get; set; }
     public ETipoPeca? TipoDePecaId { get; set; }
     public ECategoriaVeiculo? CategoriaVeiculoId { get; set; }
-    public string? Marca { get; set; } = null!;
-    public string? Modelo { get; set; } = null!;
-    public DateOnly? AnoDeFabricacao { get; set; } = null!;
-    public string? Cor { get; set; } = null!;
+    public string? Marca { get; set; }
+    public string? Modelo { get; set; }
+    public DateOnly? AnoDeFabricacao { get; set; }
+    public string? Cor { get; set; }
     public string? Cidade { get; set; }
-    public string Uf { get; set; } = null!;
-    public bool BuscarTodos { get; set; } = false;
+    public string? Uf { get; set; }
     
     public override void AplicarFiltro(ref IQueryable<Domain.Entities.Pedido> query)
     {
@@ -25,7 +24,7 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
 
         if (!string.IsNullOrWhiteSpace(NomePeca))
         {
-            query = query.Where(c => c.NomePeca.Contains(NomePeca));
+            query = query.Where(c => c.NomePeca.ToLower().Contains(NomePeca.ToLower()));
         }
         
         if (!string.IsNullOrWhiteSpace(Descricao))
@@ -69,12 +68,12 @@ public class BuscarPedidoDto : BuscaPaginadaDto<Domain.Entities.Pedido>
 
         if (!string.IsNullOrEmpty(Cidade))
         {
-            query = query.Where(c => c.Usuario.Cidade.Contains(Cidade));
+            query = query.Where(c => c.Usuario.Cidade.ToLower().Contains(Cidade.ToLower()));
         }
 
         if (!string.IsNullOrEmpty(Uf))
         {
-            query = query.Where(c => c.Usuario.Uf.Contains(Uf));
+            query = query.Where(c => c.Usuario.Uf.ToLower().Contains(Uf.ToLower()));
         }
 
         query = query.Where(expression);
