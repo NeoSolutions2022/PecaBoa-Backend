@@ -274,8 +274,9 @@ public class LojistaService : BaseService, ILojistaService
             lojista.Foto = null;
         }
         
-        if (!await Validar(lojista))
+        if (!lojista.Validar(out var validationResult))
         {
+            Notificator.Handle(validationResult.Errors);
             return null;
         }
 
@@ -375,6 +376,12 @@ public class LojistaService : BaseService, ILojistaService
         if (dto.Senha != dto.ConfirmarSenha)
         {
             Notificator.Handle("As senhas não conferem!");
+            return;
+        }
+        
+        if (dto.Senha.Length < 8)
+        {
+            Notificator.Handle("Senha deve ter no mínimo 8 caracteres!");
             return;
         }
         
